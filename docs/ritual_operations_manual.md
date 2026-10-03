@@ -7,6 +7,8 @@
 - **Pseudo-al-Majriti / al-Qurtubi:** *The Goal of the Wise* (*Ghayat al-Hakim* / *The Picatrix*, c. 10th–11th C.)  
 - **The Greek Magical Papyri:** (*Papyri Graecae Magicae* / PGM, c. 2nd BCE – 5th CE)
 
+> **Exhaustive Operative Companion:** For the comprehensive 4-work master operational textbook detailing **Love Work**, **Binding Work**, **Cleansing Work**, and **Protection Work** with exact magic squares, talismanic lamellae, vocalized invocations, and multi-domain effects matrices, consult [docs/four_operative_works_master_manual.md](four_operative_works_master_manual.md).
+
 ---
 
 ## Master Astrological Blueprint for Ritual Timing

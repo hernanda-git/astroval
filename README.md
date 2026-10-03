@@ -52,6 +52,14 @@ Rather than static emotional categories, Astroval maps 100% of human life and mu
 * **Bind / Fix (*'Aqd wa-Tathbīt*):** Freezing slanderers, locking perimeters, halting legal assaults.
 * **Dissolve / Sever (*Tafriq wa-Ibtāl*):** Cord-cutting, breaking curses, purging toxins, dissolving corruption.
 
+### 4. Master Four Operative Works Intelligence Console
+Interactive dedicated grimoiric console covering:
+- ❤️ **Love Work (*Al-Hubb & Al-'Ishq*):** Rigorous application of the *Picatrix* Scorpio-Venus doctrine (proscribing sweet attraction while Venus is in detriment/retrograde; detailing cord-cutting *Tafriq* & PGM Underworld Aphrodite sovereignty rites).
+- 🔒 **Binding Work (*Al-'Aqd & Defixiones*):** Saturn culmination at $+75.25^\circ$ NW near Zenith, 3x3 Magic Square (*Wafq*), cold iron padlocks, lead lamellae, and tongue-tying (*'Aqd al-Lisan*).
+- 🌊 **Cleansing Work (*Al-Taharah & Lustratio*):** Domicile Moon in Cancer conjunct Sirius, 7-herb lustral baths (*Ghusl al-Ibtal*), uncrossing curses (*Ibtal al-Sihr*), and auric repair.
+- 🛡️ **Protection Work (*Al-Tahsin & Apotropaics*):** Mars-Pluto exact $0^\circ 10'$ opposition kinetic mirror shield, 4-corner iron boundary stakes, and Archangelic canopy.
+- **Master Manual:** [`docs/four_operative_works_master_manual.md`](docs/four_operative_works_master_manual.md).
+
 ---
 
 ## 🗂️ Project Structure & Documentation Index
@@ -71,6 +79,7 @@ astroval/
 ├── docs/
 │   ├── conditions.md               # Consolidated Verbatim Sky Data Benchmark
 │   ├── expanded_domain_taxonomy.md # 12-Dimensional Life & Astral Taxonomy
+│   ├── four_operative_works_master_manual.md # Master Manual: Love, Binding, Cleansing & Protection
 │   ├── ritual_correspondences.md   # Grimoiric Sourcebook (Agrippa, Shams, Picatrix, PGM)
 │   ├── ritual_operations_manual.md # Domain-by-Domain Practical Operations Manual
 │   └── planetary_hours_guide.md    # 24-Hour Proportional Chronometry Delineations

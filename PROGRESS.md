@@ -20,7 +20,8 @@
 | **M7: Interactive Web Dashboard & UX** | ✅ **COMPLETE** | 2026-10-04 | Designed high-tier responsive [`index.html`](index.html) with live clock, aspect filter lens, and dossiers. |
 | **M8: Antigravity Skill & Agent Specs** | ✅ **COMPLETE** | 2026-10-04 | Authored autonomous agent instructions in [`SKILL.md`](SKILL.md) and [`AGENT.md`](AGENT.md). |
 | **M9: Verification & Accuracy Audit** | ✅ **COMPLETE** | 2026-10-04 | Benchmarked against NASA JPL Horizons and BMKG Jakarta tables in [`VERIFICATION.md`](VERIFICATION.md). |
-| **M10: Git Publication & CI/CD Pipeline** | 🔄 **IN PROGRESS** | 2026-10-04 | Initializing GitHub repository, committing tree, and setting up GitHub Pages action. |
+| **M10: Git Publication & CI/CD Pipeline** | ✅ **COMPLETE** | 2026-10-04 | Published repository to `hernanda-git/astroval` and enabled live GitHub Pages. |
+| **M11: Four Operative Works Engine** | ✅ **COMPLETE** | 2026-10-04 | Implemented Love, Binding, Cleansing & Protection console in `index.html` and authored [`docs/four_operative_works_master_manual.md`](docs/four_operative_works_master_manual.md). |
 
 ---
 

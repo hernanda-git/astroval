@@ -46,6 +46,12 @@
   - *Prescribed:* Evening accounting, auditing contracts, cryptography, private occult study (*Kashf*).
   - *Proscribed:* Rash verbal arguments or making spontaneous promises.
 
+* **Operative Works Breakdown (Love, Binding, Cleansing, Protection):**
+  - ❤️ **Love Work [Proscribed (20%)]:** Venus in detriment/Rx. Avoid sweet attraction or reconciliations. Only suitable for analytical grief journaling.
+  - 🔒 **Binding Work [Moderate (65%)]:** Mercury in Scorpio square Mars/Pluto. Effective for binding deceitful rumors, fraud, or slandering words.
+  - 🌊 **Cleansing Work [High (82%)]:** Fomalhaut exact trine (0°01′) purges mental confusion, cognitive distortion, and intellectual fog.
+  - 🛡️ **Protection Work [Fortified (78%)]:** Apotropaic against commercial fraud, data breach, and malicious misdirection; Hermes boundary seal.
+
 ---
 
 ### N-02. Second Nocturnal Hour: The Moon (*Al-Qamar*)
@@ -64,6 +70,12 @@
   - *Prescribed:* Soaking in herbal sea salt baths, emotional clearing, house cleansing, honoring maternal ancestors.
   - *Proscribed:* Social exhibitionism or seeking external validation.
 
+* **Operative Works Breakdown (Love, Binding, Cleansing, Protection):**
+  - ❤️ **Love Work [Severance Only (35%)]:** Moon trine Venus Rx in Scorpio allows gentle dissolution of past emotional attachments without malice.
+  - 🔒 **Binding Work [Good (75%)]:** Moon square Saturn allows binding through emotional resonance or silencing domestic complaints.
+  - 🌊 **Cleansing Work [Supreme (96%)]:** Moon in Domicile Cancer conjunct Sirius (1°37′). Peak window for herbal salt baths and evil eye purging.
+  - 🛡️ **Protection Work [High (85%)]:** Maternal psychic shield; protects infants, homes, dreams, and personal sanctuary from night terror.
+
 ---
 
 ### N-03. Third Nocturnal Hour: Saturn (*Zuhal*)
@@ -81,6 +93,12 @@
   - *Prescribed:* Deep contemplative meditation, structural boundary-setting, lead talismanic work, resolving debts.
   - *Proscribed:* Seeking favors from authorities, light romantic encounters, or frivolity.
 
+* **Operative Works Breakdown (Love, Binding, Cleansing, Protection):**
+  - ❤️ **Love Work [Strictly Forbidden (05%)]:** Saturn culminating in Aries square Moon. Invocations of love curdle into freezing contempt and bitter hatred.
+  - 🔒 **Binding Work [Supreme Peak (99%)]:** Last Quarter Moon exact square Saturn. Master window for lead defixiones, padlocks, and tongue-tying.
+  - 🌊 **Cleansing Work [Moderate (55%)]:** Too heavy and melancholic for gentle purification; only suitable for harsh exorcisms of stubborn haunts.
+  - 🛡️ **Protection Work [Maximum (98%)]:** Saturnian stone fortress. Driving iron boundary stakes into the four corners of the perimeter.
+
 ---
 
 ### N-04. Fourth Nocturnal Hour: Jupiter (*Al-Mushtari*)
@@ -96,6 +114,12 @@
   Lifts the oppressive weight of the preceding Saturn hour. Expands philosophical vision, ethical clarity, and generosity. Inspires confidence in long-term destiny.
   - *Prescribed:* Spiritual prayer, reading sacred theology/philosophy, consulting mentors, talismanic consecrations of Jupiter.
   - *Proscribed:* Overindulgence or speculative financial gambling.
+
+* **Operative Works Breakdown (Love, Binding, Cleansing, Protection):**
+  - ❤️ **Love Work [Mild Detachment (45%)]:** Benevolent philosophical perspective on relationships; excellent for forgiving past emotional debts.
+  - 🔒 **Binding Work [Moderate (60%)]:** Binding unjust corporate predators or legal adversaries to strict ethical covenants.
+  - 🌊 **Cleansing Work [High (88%)]:** Spiritual elevation and sanctification; washing away poverty consciousness and moral guilt.
+  - 🛡️ **Protection Work [High (90%)]:** Archangelic canopy of Sachiel and Raphael; invokes divine mercy and protection from corrupt officials.
 
 ---
 
@@ -115,6 +139,12 @@
   - *Prescribed:* **Apotropaic defense, breaking psychic interference, charging protective iron amulets, spiritual martial arts.**
   - *Proscribed:* Driving aggressively, entering volatile arguments, or initiating unprovoked conflicts.
 
+* **Operative Works Breakdown (Love, Binding, Cleansing, Protection):**
+  - ❤️ **Love Work [Catastrophic Hazard (02%)]:** Mars opposite Pluto (0°10′). Love rituals will provoke violent rage, physical confrontation, and ruin.
+  - 🔒 **Binding Work [High (86%)]:** Aggressive iron chain bindings; shattering the astral weapons of an enemy before they strike.
+  - 🌊 **Cleansing Work [Purging by Fire (75%)]:** Cauterizing energetic wounds; scorching demonic parasites and burning contaminated spiritual ties.
+  - 🛡️ **Protection Work [Invincible (99%)]:** Kinetic mirror shield; reflects hexes, curses, and malice back to sender with tenfold velocity.
+
 ---
 
 ### N-06. Sixth Nocturnal Hour: The Sun (*Al-Shams*)
@@ -128,6 +158,12 @@
   The midnight nadir forces intense soul-accounting. Stripped of daylit vanity and false prestige, the self confronts its authentic center, ethical justice (Libra), and karmic liabilities.
   - *Prescribed:* Solitary contemplation, humbling the ego, praying for divine guidance, reconciling inner paradoxes.
   - *Proscribed:* Arrogant displays of self-righteousness.
+
+* **Operative Works Breakdown (Love, Binding, Cleansing, Protection):**
+  - ❤️ **Love Work [Poor / Discordant (30%)]:** Sun in Fall in Libra opposite Saturn. Ego clashes, patronizing behavior, and mutual resentment.
+  - 🔒 **Binding Work [Moderate (65%)]:** Binding oath-breakers by invoking the Solar all-seeing eye under the earth.
+  - 🌊 **Cleansing Work [Moderate (70%)]:** Subterranean solar purification; illuminating deeply repressed shadow patterns.
+  - 🛡️ **Protection Work [High (85%)]:** Royal star Aldebaran trine Sun; shields the soul's sovereign dignity against humiliation.
 
 ---
 
@@ -148,6 +184,12 @@
   - *Prescribed:* **Cord-cutting (*Tafriq al-Batil*), unbinding trauma bonds, shadow erotic integration, transmuting emotional grief into poetry.**
   - *Proscribed:* Romantic proposals, marriage rites, naive attraction spells, luxury investments.
 
+* **Operative Works Breakdown (Love, Binding, Cleansing, Protection):**
+  - ❤️ **Love Work [Supreme for Severance (95%)]:** Venus stationary in Scorpio. Picatrix and Shams cord-cutting (Tafriq). Cut toxic cords with iron blade.
+  - 🔒 **Binding Work [High (84%)]:** Binding erotic obsession and lust-based attachments; tying knots to hold sexual boundaries firm.
+  - 🌊 **Cleansing Work [High (86%)]:** Cleansing reproductive and sacral chakra trauma; washing away lingering astral imprints of past lovers.
+  - 🛡️ **Protection Work [Moderate (68%)]:** Warding against psychic seduction, emotional manipulation, and narcissistic entrapment.
+
 ---
 
 ### N-08. Eighth Nocturnal Hour: Mercury (*'Utarid*) — [Benchmark Instant 00:44 WIB & Live Clock]
@@ -165,6 +207,12 @@
   - *Prescribed:* **Scrying with clear quartz, deciphering encrypted or esoteric texts, talismanic cryptography, receiving sudden intellectual epiphanies.**
   - *Proscribed:* Careless gossip or signing unexamined legal papers.
 
+* **Operative Works Breakdown (Love, Binding, Cleansing, Protection):**
+  - ❤️ **Love Work [Analytical Only (25%)]:** Scrying relational root causes; intellectual autopsy of failed relationships.
+  - 🔒 **Binding Work [High (92%)]:** Mercury in Scorpio under Saturn day. Supreme for silencing slanders, courtroom witnesses, and liars.
+  - 🌊 **Cleansing Work [Supreme (95%)]:** Exact Fomalhaut Trine (0°01′). Archangel Gabriel cleanses intellect, removes confusion, and purifies sight.
+  - 🛡️ **Protection Work [High (88%)]:** Hermetic boundary herms; protects esoteric books, private manuscripts, ciphers, and travel.
+
 ---
 
 ### N-09. Ninth Nocturnal Hour: The Moon (*Al-Qamar*)
@@ -181,6 +229,12 @@
   - *Prescribed:* Dream incubation petitions (*oneiromancy*), pacifying enemy wrath (*Thymokatochon*), water scrying.
   - *Proscribed:* Consuming heavy toxic foods or engaging in loud worldly debauchery.
 
+* **Operative Works Breakdown (Love, Binding, Cleansing, Protection):**
+  - ❤️ **Love Work [Shadow Dream Severance (38%)]:** Dream incubation to release deceased or departed lovers; unbinding unconscious emotional hooks.
+  - 🔒 **Binding Work [High (88%)]:** Binding nocturnal incubi, succubi, night hags, and predatory thought-forms feeding on sleep.
+  - 🌊 **Cleansing Work [Supreme (98%)]:** Deepest night Moon in Cancer entering Mansion 9 (Al-Tarf). Maximum uncrossing bath potency.
+  - 🛡️ **Protection Work [High (92%)]:** Casting the sacred lunar silver circle around the bed; shielding oneiromancy and lucid dreaming.
+
 ---
 
 ### N-10. Tenth Nocturnal Hour: Saturn (*Zuhal*)
@@ -196,6 +250,12 @@
   - *Prescribed:* **Padlock binding (*'Aqd al-Lisan*), setting four-corner property stakes, deep solitary prayer.**
   - *Proscribed:* Social revelry or frivolity.
 
+* **Operative Works Breakdown (Love, Binding, Cleansing, Protection):**
+  - ❤️ **Love Work [Strictly Forbidden (01%)]:** Saturn near zenith descending. Love petitions turn into cold estrangement, sterility, and silence.
+  - 🔒 **Binding Work [Supreme Peak (99%)]:** 4-corner iron boundary stakes; lead defixio buried in earth; absolute lockdown of all adversaries.
+  - 🌊 **Cleansing Work [Deep Earth Purge (60%)]:** Drawing deep somatic trauma down through the soles of the feet into the bedrock of the earth.
+  - 🛡️ **Protection Work [Maximum (99%)]:** The Iron Wall of Cassiel. Complete sealing of the physical house against all astral intrusion.
+
 ---
 
 ### N-11. Eleventh Nocturnal Hour: Jupiter (*Al-Mushtari*)
@@ -208,6 +268,12 @@
   A magnificent, expansive pre-dawn hour. Inspires hope, spiritual elevation, and divine favor.
   - *Prescribed:* Morning prayers (*Dua / Tahajjud*), reciting the Names of Mercy (*Yā Rahmān, Yā 'Azīz*), petitioning spiritual mentors.
   - *Proscribed:* Cynicism, despair, or pettiness.
+
+* **Operative Works Breakdown (Love, Binding, Cleansing, Protection):**
+  - ❤️ **Love Work [Compassion / Grace (50%)]:** Spiritual agape and benevolent release; blessing former partners from a safe, detached distance.
+  - 🔒 **Binding Work [Moderate (62%)]:** Judicial restraining; binding unjust predators by appealing to higher divine law.
+  - 🌊 **Cleansing Work [High (92%)]:** Pre-dawn divine light infusion; washing the subtle bodies with high-vibrational celestial grace.
+  - 🛡️ **Protection Work [High (94%)]:** Archangelic shield of light; grants invulnerability against spiritual despair and demonic taunts.
 
 ---
 
@@ -222,6 +288,12 @@
   Electric morning vigor. The martial energy shakes off nocturnal sleep and charges the physical body for action.
   - *Prescribed:* Vigorous physical exercise, banishing nightmares, declaring spiritual boundaries for the day ahead.
   - *Proscribed:* Starting explosive domestic quarrels at the breakfast table.
+
+* **Operative Works Breakdown (Love, Binding, Cleansing, Protection):**
+  - ❤️ **Love Work [Combative Friction (05%)]:** Volatile martial anger; explosive breakups; severing ties through confrontation.
+  - 🔒 **Binding Work [High (85%)]:** Breaking an enemy's binding cords; snapping astral chains through raw martial assertion.
+  - 🌊 **Cleansing Work [Scorching Purge (78%)]:** Dragon's blood and pepper fumigation; scorching lingering poltergeists before dawn.
+  - 🛡️ **Protection Work [Maximum (98%)]:** Mars rising on eastern horizon opposite Pluto. Activating the impenetrable kinetic war shield.
 
 ---
 
@@ -293,3 +365,9 @@
 * **ASTRONOMICAL PEAK EVENT:**
   - **Exact Sun–Saturn Opposition:** Culminates at **19:29 WIB** (`12:29 UTC`).
 * **Total Effect:** The ultimate culmination of the Sun-Saturn axis. Earth sits directly between the Sun and Saturn. Maximum structural karmic weight, sealing agreements, and definitive closure of open matters.
+
+* **Operative Works Breakdown (Love, Binding, Cleansing, Protection):**
+  - ❤️ **Love Work [Sovereign Self-Love (40%)]:** Sun rises in Libra. Focus strictly on reclaiming self-respect and establishing balanced mutual dignity.
+  - 🔒 **Binding Work [High (80%)]:** Binding solemn covenants and formal legal oaths at sunrise; sealing solar contracts.
+  - 🌊 **Cleansing Work [High (90%)]:** Dawn lustration; greeting the first rays of sunlight to burn away nocturnal miasma and nightmare residue.
+  - 🛡️ **Protection Work [High (92%)]:** Solar armor of Raphael; creating a shimmering golden aura that repels darkness and depression.
