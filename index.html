@@ -7,7 +7,7 @@
   <link rel="icon" type="image/svg+xml" href="public/natal_chart.svg">
   <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
     
     :root {
       --bg-space: #070a13;
@@ -53,6 +53,17 @@
       border-bottom: 2px solid #38bdf8;
     }
 
+    .hour-chip.active-live {
+      background: linear-gradient(135deg, rgba(2, 132, 199, 0.35) 0%, rgba(99, 102, 241, 0.35) 100%);
+      border-color: #38bdf8;
+      box-shadow: 0 0 18px rgba(56, 189, 248, 0.4);
+    }
+
+    .hour-chip.selected {
+      border-color: #f59e0b;
+      background: rgba(245, 158, 11, 0.15);
+    }
+
     @keyframes pulseGlow {
       0%, 100% { opacity: 0.8; filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.6)); }
       50% { opacity: 1; filter: drop-shadow(0 0 16px rgba(245, 158, 11, 0.9)); }
@@ -62,87 +73,246 @@
 </head>
 <body class="text-slate-100 min-h-screen antialiased selection:bg-sky-500 selection:text-white">
 
-  <!-- Top Announcement / Live Astral Clock Bar -->
-  <aside class="border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-xl sticky top-0 z-50 transition-all">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex flex-col md:flex-row md:items-center justify-between gap-3 text-xs">
+  <!-- ==================== NATURAL (NON-FIXED / NON-STICKY) HEADER ==================== -->
+  <header class="border-b border-slate-800/80 bg-slate-950/90 transition-all">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
       
-      <!-- Live Clock & Active Hour Badge -->
-      <div class="flex items-center flex-wrap gap-3">
-        <div class="flex items-center gap-2 bg-slate-900 border border-slate-800 px-3 py-1.5 rounded-xl shadow-inner">
-          <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
-          <span class="text-slate-400 font-mono">JAKARTA (WIB):</span>
-          <span id="liveClockText" class="font-mono font-bold text-amber-300 text-sm tracking-wider">--:--:-- WIB</span>
-        </div>
-
-        <div id="liveHourBadge" class="flex items-center gap-2 bg-gradient-to-r from-sky-950/60 to-indigo-950/60 border border-sky-800/60 px-3 py-1.5 rounded-xl">
-          <span class="text-sky-400 font-bold">⚡ ACTIVE HOUR:</span>
-          <span id="activeHourName" class="font-bold text-white tracking-wide">8th Night (Mercury / 'Utarid)</span>
-          <span class="text-slate-400">•</span>
-          <span id="activeHourTimer" class="font-mono text-emerald-400 font-semibold">28m 14s remaining</span>
+      <!-- Logo & Geographic Coordinates -->
+      <div class="flex items-center gap-3">
+        <span class="text-3xl text-amber-400 pulse-glow">✦</span>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-xl sm:text-2xl font-extrabold font-cinzel tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-white to-sky-200">
+              ASTROVAL
+            </h1>
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-sky-950 text-sky-400 border border-sky-800">
+              100% NASA JPL / Swiss Ephemeris
+            </span>
+          </div>
+          <p class="text-xs text-slate-400 font-mono mt-0.5">
+            Jakarta Center: <span class="text-slate-300">6°12′32″ S, 106°50′44″ E</span> • Elev: 10m • Timezone: WIB (UTC+7)
+          </p>
         </div>
       </div>
 
-      <!-- Navigation & Quick Links -->
-      <div class="flex items-center gap-2.5">
-        <span class="hidden sm:inline-block px-2.5 py-1 rounded-md bg-amber-950/50 text-amber-300 border border-amber-800/40 font-cinzel font-semibold">
-          Saturday Night (Saturn Day)
-        </span>
-        <button onclick="toggleAudioChime()" id="audioBtn" class="px-2.5 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-slate-200 transition flex items-center gap-1.5" title="Toggle Hour Transition Chime">
+      <!-- Live Clock & Benchmark Tags -->
+      <div class="flex flex-wrap items-center gap-2.5 text-xs font-mono">
+        <div class="flex items-center gap-2 bg-slate-900 border border-slate-800 px-3 py-1.5 rounded-xl shadow-inner">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+          <span class="text-slate-400">JAKARTA:</span>
+          <span id="liveClockText" class="font-bold text-amber-300 tracking-wider">--:--:-- WIB</span>
+        </div>
+
+        <button onclick="toggleAudioChime()" id="audioBtn" class="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-400 hover:text-slate-200 transition flex items-center gap-1.5">
           <span>🔔</span> <span class="hidden sm:inline">Chime: Off</span>
         </button>
-        <a href="docs/conditions.md" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition font-medium">
+
+        <a href="docs/conditions.md" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition">
           📄 Raw Data
         </a>
-        <a href="public/natal_chart.svg" download="jakarta_natal_chart_2026.svg" class="px-3 py-1.5 rounded-lg bg-sky-600 hover:bg-sky-500 text-white transition font-medium shadow-sm flex items-center gap-1">
+        <a href="public/natal_chart.svg" download="jakarta_natal_chart_2026.svg" class="px-3 py-1.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white transition shadow-sm flex items-center gap-1 font-bold">
           <span>⬇️</span> SVG Wheel
         </a>
       </div>
 
     </div>
-  </aside>
-
-  <!-- Hero Header -->
-  <header class="max-w-7xl mx-auto px-4 sm:px-6 pt-8 pb-4">
-    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-slate-800 pb-6">
-      <div>
-        <div class="flex items-center gap-3">
-          <span class="text-3xl text-amber-400 pulse-glow">✦</span>
-          <div>
-            <span class="text-xs uppercase tracking-widest text-sky-400 font-semibold">100% NASA JPL / Swiss Ephemeris Precision</span>
-            <h1 class="text-2xl sm:text-4xl font-extrabold font-cinzel tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-white to-sky-200">
-              ASTROVAL JAKARTA
-            </h1>
-          </div>
-        </div>
-        <p class="text-xs sm:text-sm text-slate-400 mt-2 max-w-2xl leading-relaxed">
-          Daily high-precision astrometric ephemeris, Placidus celestial wheel, proportional 24-hour chronometry, and 12-dimensional Grimoiric intelligence for Jakarta (<span class="font-mono text-slate-300">6°12′32″ S, 106°50′44″ E</span>).
-        </p>
-      </div>
-
-      <!-- Quick Benchmark Specs -->
-      <div class="flex flex-wrap gap-2 text-xs font-mono">
-        <div class="px-3 py-2 rounded-xl bg-slate-900/90 border border-slate-800">
-          <span class="text-slate-500 block text-[10px]">ASCENDANT (ASC)</span>
-          <span class="text-amber-400 font-bold">19°39′ Cancer</span>
-        </div>
-        <div class="px-3 py-2 rounded-xl bg-slate-900/90 border border-slate-800">
-          <span class="text-slate-500 block text-[10px]">MIDHEAVEN (MC)</span>
-          <span class="text-red-400 font-bold">25°40′ Aries</span>
-        </div>
-        <div class="px-3 py-2 rounded-xl bg-slate-900/90 border border-slate-800">
-          <span class="text-slate-500 block text-[10px]">LUNAR PHASE</span>
-          <span class="text-sky-400 font-bold">Last Quarter (48.1%)</span>
-        </div>
-        <div class="px-3 py-2 rounded-xl bg-slate-900/90 border border-slate-800">
-          <span class="text-slate-500 block text-[10px]">ZENITH CULMINATION</span>
-          <span class="text-slate-200 font-bold">Saturn Rx (+75.2°)</span>
-        </div>
-      </div>
-    </div>
   </header>
 
-  <!-- Main Workspace -->
-  <main class="max-w-7xl mx-auto px-4 sm:px-6 py-6">
+  <!-- ==================== HERO OVERVIEW & ASTRONOMICAL BENCHMARKS ==================== -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 pt-6 pb-2">
+    <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-3 text-xs font-mono">
+      <div class="p-3 rounded-2xl bg-slate-900/80 border border-slate-800/80">
+        <span class="text-slate-500 block text-[10px]">SOLAR DAY RULER</span>
+        <span class="text-amber-400 font-bold font-cinzel text-sm">Saturday (Saturn)</span>
+        <span class="text-[10px] text-slate-400 block mt-0.5">Sunrise-to-Sunrise</span>
+      </div>
+      <div class="p-3 rounded-2xl bg-slate-900/80 border border-slate-800/80">
+        <span class="text-slate-500 block text-[10px]">ASCENDANT (ASC)</span>
+        <span class="text-sky-400 font-bold text-sm">19°39′ Cancer</span>
+        <span class="text-[10px] text-slate-400 block mt-0.5">Eastern Horizon</span>
+      </div>
+      <div class="p-3 rounded-2xl bg-slate-900/80 border border-slate-800/80">
+        <span class="text-slate-500 block text-[10px]">MIDHEAVEN (MC)</span>
+        <span class="text-red-400 font-bold text-sm">25°40′ Aries</span>
+        <span class="text-[10px] text-slate-400 block mt-0.5">Upper Zenith Meridian</span>
+      </div>
+      <div class="p-3 rounded-2xl bg-slate-900/80 border border-slate-800/80">
+        <span class="text-slate-500 block text-[10px]">LUNAR PHASE</span>
+        <span class="text-teal-400 font-bold text-sm">Last Qtr (48.1%)</span>
+        <span class="text-[10px] text-slate-400 block mt-0.5">Exact: 3 Oct 20:25 WIB</span>
+      </div>
+      <div class="p-3 rounded-2xl bg-slate-900/80 border border-slate-800/80">
+        <span class="text-slate-500 block text-[10px]">PEAK OPPOSITION</span>
+        <span class="text-rose-400 font-bold text-sm">Mars ☍ Pluto (0°10′)</span>
+        <span class="text-[10px] text-slate-400 block mt-0.5">Near-Exact Tension</span>
+      </div>
+      <div class="p-3 rounded-2xl bg-slate-900/80 border border-slate-800/80">
+        <span class="text-slate-500 block text-[10px]">ROYAL STAR CONTACT</span>
+        <span class="text-emerald-400 font-bold text-sm">☿ △ Fomalhaut (0°01′)</span>
+        <span class="text-[10px] text-slate-400 block mt-0.5">Supreme Intellect Gnosis</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== MASTER PLANETARY HOURS & TOTAL STRUCTURAL INTERPLAY SECTION ==================== -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 py-6">
+    <div class="bg-slate-900/90 border border-slate-800 rounded-3xl p-5 sm:p-7 shadow-2xl glow-card">
+      
+      <!-- Section Header with Real-Time Active Hour Indicator -->
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-5">
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="text-amber-400 text-lg">⏱️</span>
+            <h2 class="text-lg sm:text-xl font-bold font-cinzel text-white">
+              24-Hour Proportional Chronometry & Structural Interplay Matrix
+            </h2>
+          </div>
+          <p class="text-xs text-slate-400 mt-1">
+            Unequal proportional hours calculated from exact Jakarta sunrise & sunset. Click any hour to view its total combined effect across all aspects, positions, and fixed stars.
+          </p>
+        </div>
+
+        <!-- Distinct Active Hour Mark Badge -->
+        <div id="liveActiveHourCard" class="flex items-center gap-3 bg-gradient-to-r from-sky-950 via-indigo-950 to-slate-900 border-2 border-sky-500/80 px-4 py-2.5 rounded-2xl shadow-lg">
+          <div class="w-3.5 h-3.5 rounded-full bg-emerald-400 animate-ping"></div>
+          <div>
+            <div class="text-[10px] font-bold text-sky-400 uppercase tracking-widest">CURRENT ACTIVE HOUR MARK</div>
+            <div id="activeHourTitle" class="text-sm font-bold text-white font-mono">8th Night: Mercury ('Utarid)</div>
+          </div>
+          <div class="border-l border-slate-700 pl-3">
+            <span id="activeHourCountdown" class="text-xs font-mono font-bold text-emerald-400 block">--m --s left</span>
+            <span class="text-[10px] text-slate-400 block">Duration: 59m 10s</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Nocturnal & Diurnal Hour Grids -->
+      <div class="mt-6 flex flex-col gap-5">
+        
+        <!-- Nocturnal Grid (Saturday Night) -->
+        <div>
+          <div class="flex items-center justify-between mb-2.5">
+            <span class="text-xs font-bold text-slate-300 flex items-center gap-1.5 font-mono">
+              <span>🌙</span> NOCTURNAL HOURS (Saturday Night: Sunset 17:46 $\rightarrow$ Sunrise 05:36) • Length: 59m 10s
+            </span>
+            <span class="text-[11px] text-slate-400 font-mono">Ruler: Saturn (Sabt)</span>
+          </div>
+          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2" id="nocturnalGrid">
+            <!-- Rendered dynamically by JavaScript -->
+          </div>
+        </div>
+
+        <!-- Diurnal Grid (Sunday Day) -->
+        <div>
+          <div class="flex items-center justify-between mb-2.5">
+            <span class="text-xs font-bold text-slate-300 flex items-center gap-1.5 font-mono">
+              <span>☀️</span> DIURNAL HOURS (Sunday Day: Sunrise 05:36 $\rightarrow$ Sunset 17:46) • Length: 60m 49s
+            </span>
+            <span class="text-[11px] text-slate-400 font-mono">Ruler: Sun (Ahad)</span>
+          </div>
+          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2" id="diurnalGrid">
+            <!-- Rendered dynamically by JavaScript -->
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ==================== TOTAL STRUCTURAL INTERPLAY DOSSIER CARD ==================== -->
+      <div id="hourDetailDossier" class="mt-8 border-t border-slate-800 pt-6">
+        <div class="bg-slate-950/80 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-inner">
+          
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800/80 pb-4">
+            <div class="flex items-center gap-3">
+              <span id="detailHourGlyph" class="text-4xl text-teal-400 font-bold">☿</span>
+              <div>
+                <div class="flex items-center gap-2">
+                  <h3 id="detailHourName" class="text-lg font-bold text-white font-cinzel">8th Nocturnal Hour: Mercury ('Utarid)</h3>
+                  <span id="detailHourPeriodTag" class="px-2 py-0.5 rounded text-[10px] font-bold bg-sky-950 text-sky-400 border border-sky-800">NOCTURNAL</span>
+                </div>
+                <p id="detailHourTimeRange" class="text-xs font-mono text-amber-300 mt-0.5">00:40:37 – 01:39:46 WIB (Duration: 59m 10s)</p>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3 text-xs font-mono">
+              <div class="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800">
+                <span class="text-slate-500 block text-[10px]">CHALDEAN SPHERE</span>
+                <span id="detailHourSphere" class="text-slate-200 font-bold">2nd Sphere</span>
+              </div>
+              <div class="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800">
+                <span class="text-slate-500 block text-[10px]">ARCHANGEL</span>
+                <span id="detailHourArchangel" class="text-sky-300 font-bold">Michael</span>
+              </div>
+              <div class="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800">
+                <span class="text-slate-500 block text-[10px]">DIVINE NAME (SHAMS)</span>
+                <span id="detailHourDivineName" class="text-amber-300 font-bold">Yā 'Alīmu Yā Hakīm</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- The Multi-Layer Structural Grid -->
+          <div class="mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+            
+            <!-- Column 1: Hour Ruler Astrometric State -->
+            <div class="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800 flex flex-col justify-between">
+              <div>
+                <span class="text-slate-400 font-bold block mb-1.5 uppercase text-[10px] tracking-wider">1. RULER SKY POSITION & DIGNITY</span>
+                <div class="space-y-1 font-mono text-[11px]">
+                  <div>Tropical: <span id="rulerTropical" class="text-teal-400 font-bold">04°13′ Scorpio</span></div>
+                  <div>Sidereal: <span id="rulerSidereal" class="text-slate-300">09°59′ Libra (Chitra)</span></div>
+                  <div>Jakarta Alt/Az: <span id="rulerAltAz" class="text-emerald-400">−67.7° / 199° SSW</span></div>
+                  <div>Motion Speed: <span id="rulerMotion" class="text-slate-200 font-bold">Direct (−0.1 Mag)</span></div>
+                  <div>Dignity State: <span id="rulerDignity" class="text-amber-400 font-semibold">Peregrine (Fomalhaut Trine)</span></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Column 2: Activated Interplanetary Aspects -->
+            <div class="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800 flex flex-col justify-between">
+              <div>
+                <span class="text-slate-400 font-bold block mb-1.5 uppercase text-[10px] tracking-wider">2. ACTIVATED INTERPLANETARY ASPECTS</span>
+                <div id="hourAspectsList" class="space-y-1 font-mono text-[11px]">
+                  <div class="text-orange-400 font-medium">□ Square Mars (0°57′ Sep)</div>
+                  <div class="text-orange-400 font-medium">□ Square Pluto (1°07′ Sep)</div>
+                  <div class="text-purple-400 font-medium">☌ Conjunct Venus Rx (4°16′ App)</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Column 3: Fixed Stars & Lunar/Solar Interplay -->
+            <div class="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800 flex flex-col justify-between">
+              <div>
+                <span class="text-slate-400 font-bold block mb-1.5 uppercase text-[10px] tracking-wider">3. FIXED STARS & LUMARY TENSION</span>
+                <div id="hourStarLuminaries" class="space-y-1 font-mono text-[11px]">
+                  <div class="text-teal-300 font-bold">★ △ Fomalhaut (0°01′ Exact!)</div>
+                  <div class="text-sky-300">☽ Moon: +4.6° ENE (Last Qtr 48.1%)</div>
+                  <div class="text-amber-300">☉ Sun: −72.5° (Nadir Midnight)</div>
+                  <div class="text-slate-400">Horizon: Mars rises ~01:33 WIB</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Column 4: Grimoiric Operative Impact -->
+            <div class="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800 flex flex-col justify-between">
+              <div>
+                <span class="text-slate-400 font-bold block mb-1.5 uppercase text-[10px] tracking-wider">4. GRIMOIRIC & DOMAIN DIRECTIVES</span>
+                <div id="hourGrimoiricDirectives" class="space-y-1 text-[11px] leading-relaxed">
+                  <div class="text-emerald-400 font-semibold">✓ Prescribed: <span id="hourPrescribed" class="text-slate-300 font-normal">Kashf al-Asrar, scrying, cryptography</span></div>
+                  <div class="text-rose-400 font-semibold">✗ Avoid: <span id="hourAvoid" class="text-slate-300 font-normal">Signing unexamined contracts</span></div>
+                  <div class="text-amber-400 font-semibold">Domain Peak: <span id="hourDomainPeak" class="text-slate-200 font-normal">DOM-03 (Intellect & Ciphers)</span></div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== MAIN WORKSPACE: WHEEL & MULTI-TAB DOSSIERS ==================== -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 py-4">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
       
       <!-- ==================== LEFT COLUMN: INTERACTIVE WHEEL & CONTROLS (7 Cols) ==================== -->
@@ -410,7 +580,7 @@
             </svg>
           </div>
 
-          <!-- Bottom Legend -->
+          <!-- Bottom Wheel Legend -->
           <div class="mt-4 flex flex-wrap justify-center items-center gap-4 text-xs text-slate-400 border-t border-slate-800 pt-3 w-full">
             <span class="flex items-center gap-1.5"><span class="w-3 h-0.5 bg-red-500 inline-block"></span> Opposition (180°)</span>
             <span class="flex items-center gap-1.5"><span class="w-3 h-0.5 border-t border-dashed border-orange-500 inline-block"></span> Square (90°)</span>
@@ -487,7 +657,6 @@
         <div class="bg-slate-900 border border-slate-800 rounded-3xl p-5 shadow-xl glow-card">
           <div class="flex border-b border-slate-800 pb-3 gap-1.5 overflow-x-auto text-xs font-semibold" id="tabNav">
             <button onclick="changeTab('ephemeris')" class="tab-btn active px-3 py-1.5 rounded-lg transition" data-tab="ephemeris">Ephemeris</button>
-            <button onclick="changeTab('hours')" class="tab-btn px-3 py-1.5 rounded-lg transition text-slate-400 hover:text-slate-200" data-tab="hours">24h Hours</button>
             <button onclick="changeTab('domains')" class="tab-btn px-3 py-1.5 rounded-lg transition text-slate-400 hover:text-slate-200" data-tab="domains">12 Domains</button>
             <button onclick="changeTab('aspects')" class="tab-btn px-3 py-1.5 rounded-lg transition text-slate-400 hover:text-slate-200" data-tab="aspects">Aspect Matrix</button>
             <button onclick="changeTab('stars')" class="tab-btn px-3 py-1.5 rounded-lg transition text-slate-400 hover:text-slate-200" data-tab="stars">Fixed Stars</button>
@@ -591,54 +760,7 @@
             </table>
           </div>
 
-          <!-- TAB 2: 24-Hour Proportional Chronometry Grid -->
-          <div id="tab-hours" class="tab-content mt-4 hidden space-y-2 text-xs">
-            <div class="p-2.5 rounded-xl bg-slate-950/70 border border-slate-800 flex justify-between items-center">
-              <span class="font-bold text-sky-400">Saturday Night (Saturn Day)</span>
-              <span class="text-slate-400 font-mono text-[11px]">Nocturnal Hour: ~59m 10s</span>
-            </div>
-            
-            <div class="grid grid-cols-2 gap-2 text-[11px] font-mono">
-              <div class="p-2 rounded-lg bg-slate-950 border border-slate-800/80 flex justify-between">
-                <span>1. 17:46 – 18:45</span> <span class="text-teal-400 font-bold">☿ Mercury</span>
-              </div>
-              <div class="p-2 rounded-lg bg-slate-950 border border-slate-800/80 flex justify-between">
-                <span>2. 18:45 – 19:44</span> <span class="text-sky-400 font-bold">☽ Moon</span>
-              </div>
-              <div class="p-2 rounded-lg bg-slate-950 border border-slate-800/80 flex justify-between">
-                <span>3. 19:44 – 20:43</span> <span class="text-slate-300 font-bold">♄ Saturn</span>
-              </div>
-              <div class="p-2 rounded-lg bg-slate-950 border border-slate-800/80 flex justify-between">
-                <span>4. 20:43 – 21:43</span> <span class="text-amber-400 font-bold">♃ Jupiter</span>
-              </div>
-              <div class="p-2 rounded-lg bg-slate-950 border border-slate-800/80 flex justify-between">
-                <span>5. 21:43 – 22:42</span> <span class="text-red-400 font-bold">♂ Mars</span>
-              </div>
-              <div class="p-2 rounded-lg bg-slate-950 border border-slate-800/80 flex justify-between">
-                <span>6. 22:42 – 23:41</span> <span class="text-amber-400 font-bold">☉ Sun</span>
-              </div>
-              <div class="p-2 rounded-lg bg-slate-950 border border-slate-800/80 flex justify-between">
-                <span>7. 23:41 – 00:40</span> <span class="text-pink-400 font-bold">♀ Venus</span>
-              </div>
-              <div class="p-2 rounded-lg bg-sky-950/60 border border-sky-600 flex justify-between text-white font-bold animate-pulse">
-                <span>8. 00:40 – 01:39</span> <span class="text-teal-300">☿ Mercury ★</span>
-              </div>
-              <div class="p-2 rounded-lg bg-slate-950 border border-slate-800/80 flex justify-between">
-                <span>9. 01:39 – 02:38</span> <span class="text-sky-400 font-bold">☽ Moon</span>
-              </div>
-              <div class="p-2 rounded-lg bg-slate-950 border border-slate-800/80 flex justify-between">
-                <span>10. 02:38 – 03:38</span> <span class="text-slate-300 font-bold">♄ Saturn</span>
-              </div>
-              <div class="p-2 rounded-lg bg-slate-950 border border-slate-800/80 flex justify-between">
-                <span>11. 03:38 – 04:37</span> <span class="text-amber-400 font-bold">♃ Jupiter</span>
-              </div>
-              <div class="p-2 rounded-lg bg-slate-950 border border-slate-800/80 flex justify-between">
-                <span>12. 04:37 – 05:36</span> <span class="text-red-400 font-bold">♂ Mars</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- TAB 3: 12-Dimensional Life & Grimoiric Dossiers -->
+          <!-- TAB 2: 12-Dimensional Life & Grimoiric Dossiers -->
           <div id="tab-domains" class="tab-content mt-4 hidden space-y-2.5 text-xs max-h-[460px] overflow-y-auto pr-1">
             
             <!-- DOM-01 -->
@@ -709,7 +831,7 @@
 
           </div>
 
-          <!-- TAB 4: Aspect Matrix -->
+          <!-- TAB 3: Aspect Matrix -->
           <div id="tab-aspects" class="tab-content mt-4 hidden overflow-x-auto">
             <table class="w-full text-left text-xs font-mono text-[11px]">
               <thead class="text-slate-400 border-b border-slate-800 uppercase text-[10px]">
@@ -734,7 +856,7 @@
             </table>
           </div>
 
-          <!-- TAB 5: Fixed Stars -->
+          <!-- TAB 4: Fixed Stars -->
           <div id="tab-stars" class="tab-content mt-4 hidden overflow-x-auto">
             <table class="w-full text-left text-xs font-mono text-[11px]">
               <thead class="text-slate-400 border-b border-slate-800 uppercase text-[10px]">
@@ -779,9 +901,9 @@
     </div>
   </footer>
 
-  <!-- Interactive JavaScript Controller -->
+  <!-- ==================== INTERACTIVE JAVASCRIPT CONTROLLER ==================== -->
   <script>
-    // Live Clock Simulation
+    // Live Clock Engine
     function updateClock() {
       const now = new Date();
       const options = { timeZone: 'Asia/Jakarta', hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' };
@@ -791,7 +913,453 @@
     setInterval(updateClock, 1000);
     updateClock();
 
-    // Planet Data Inspector
+    // ==================== MASTER 24-HOUR INTERPLAY DATABASE ====================
+    // Complete synthesis across Ruler, Dignity, Alt/Az, Activated Aspects, Fixed Stars, Sun/Moon tension, Grimoiric directives, and 12-domain impact!
+    const masterHoursData = [
+      // NOCTURNAL HOURS (Saturday Night, 3-4 Oct 2026)
+      {
+        id: "N-01", num: 1, period: "NOCTURNAL", name: "1st Night: Mercury ('Utarid)",
+        time: "17:46:29 – 18:45:39 WIB", duration: "59m 10s",
+        ruler: "Mercury", glyph: "☿", color: "#2dd4bf", sphere: "2nd Sphere",
+        archangel: "Michael", divineName: "Yā 'Alīm Yā Hakīm",
+        tropical: "04°13′ Scorpio (4th House)", sidereal: "09°59′ Libra (Chitra)",
+        altAz: "−0.1° → −14.2° / WSW (Setting)", speed: "Direct (−0.1 Mag)",
+        dignity: "Peregrine (Fomalhaut Trine)",
+        aspects: ["△ Fomalhaut (0°01′ Exact!)", "□ Mars (0°57′ Sep)", "□ Pluto (1°07′ Sep)", "☌ Venus Rx (4°16′ App)"],
+        starsLuminaries: ["★ Royal Star Fomalhaut Trine", "☉ Sun: Dusk Twilight (0° → −14°)", "☽ Moon: Below East Horizon (−12°)"],
+        prescribed: "Evening accounting, auditing contracts, cryptography, private occult research (Kashf)",
+        avoid: "Rash verbal arguments, spontaneous promises",
+        domainPeak: "DOM-03 (Intellect & Ciphers)",
+        isLiveActive: false
+      },
+      {
+        id: "N-02", num: 2, period: "NOCTURNAL", name: "2nd Night: The Moon (Al-Qamar)",
+        time: "18:45:39 – 19:44:48 WIB", duration: "59m 10s",
+        ruler: "Moon", glyph: "☽", color: "#38bdf8", sphere: "1st Sphere",
+        archangel: "Gabriel", divineName: "Yā Qaddūs Yā Fattāh",
+        tropical: "12°50′ Cancer (12th House)", sidereal: "18°36′ Gemini (Ardra)",
+        altAz: "−12° → −1° ENE (Ascending)", speed: "Direct (48.1% Waning)",
+        dignity: "Home Domicile (Chart Ruler)",
+        aspects: ["☌ Sirius (1°37′ App)", "□ Saturn Rx (1°29′ Sep)", "□ Sun (2°19′ Sep)", "△ Venus Rx (4°21′ App)"],
+        starsLuminaries: ["★ Behenian Star Sirius Conjunction", "☉ Sun: Past −18° (Deep Night)", "☽ Moon: Preparing to clear ENE horizon"],
+        prescribed: "Herbal salt baths, emotional purging, house clearing, ancestral devotion",
+        avoid: "Social exhibitionism, seeking external validation",
+        domainPeak: "DOM-06 (Somatic Healing) & DOM-12",
+        isLiveActive: false
+      },
+      {
+        id: "N-03", num: 3, period: "NOCTURNAL", name: "3rd Night: Saturn (Zuhal)",
+        time: "19:44:48 – 20:43:58 WIB", duration: "59m 10s",
+        ruler: "Saturn", glyph: "♄", color: "#e2e8f0", sphere: "7th Sphere",
+        archangel: "Cassiel", divineName: "Yā Hayyu Yā Qayyūm",
+        tropical: "11°22′ Aries (12th House)", sidereal: "17°08′ Pisces (Revati)",
+        altAz: "+25° → +38° ENE", speed: "Retrograde (+0.2 Mag)",
+        dignity: "Fall in Aries (Near Zenith Culmination)",
+        aspects: ["☍ Sun (0°50′ App)", "□ Moon (1°29′ Sep)", "□ Sirius in Cancer"],
+        starsLuminaries: ["ASTRONOMICAL EVENT: Exact Last Quarter Moon at 20:25 WIB!", "☉ Sun: Deep Nadir", "☽ Moon: Climbing above horizon"],
+        prescribed: "Contemplative meditation, boundary setting, lead talismanic work, resolving debts",
+        avoid: "Seeking favors from authorities, light romantic encounters, frivolity",
+        domainPeak: "DOM-08 (Crisis & Debt) & DOM-04",
+        isLiveActive: false
+      },
+      {
+        id: "N-04", num: 4, period: "NOCTURNAL", name: "4th Night: Jupiter (Al-Mushtari)",
+        time: "20:43:58 – 21:43:08 WIB", duration: "59m 10s",
+        ruler: "Jupiter", glyph: "♃", color: "#fbbf24", sphere: "6th Sphere",
+        archangel: "Sachiel", divineName: "Yā 'Azīz Yā Rahīm",
+        tropical: "20°05′ Leo (1st House)", sidereal: "25°50′ Cancer (Ashlesha)",
+        altAz: "−60° → −50° East (Unrisen)", speed: "Direct (−1.9 Mag)",
+        dignity: "Co-present with Mars in Leo (Sun Domicile)",
+        aspects: ["△ Midheaven in Aries (25°40′)", "✶ Ascendant Axis (Cancer 19°39′)"],
+        starsLuminaries: ["☽ Moon: Freshly risen (+0.5° ENE)", "☉ Sun: −45° Nadir descent"],
+        prescribed: "Spiritual prayer, reading sacred theology, consulting mentors, benevolent seals",
+        avoid: "Overpromising, reckless gambling, extravagant commitments",
+        domainPeak: "DOM-09 (Higher Wisdom) & DOM-11",
+        isLiveActive: false
+      },
+      {
+        id: "N-05", num: 5, period: "NOCTURNAL", name: "5th Night: Mars (Al-Mirrikh)",
+        time: "21:43:08 – 22:42:17 WIB", duration: "59m 10s",
+        ruler: "Mars", glyph: "♂", color: "#f87171", sphere: "5th Sphere",
+        archangel: "Camael", divineName: "Yā Qahhār Yā Matīn",
+        tropical: "03°16′ Leo (1st House)", sidereal: "09°02′ Cancer (Pushya)",
+        altAz: "−38° → −26° East (Rises ~01:33)", speed: "Direct (+1.1 Mag)",
+        dignity: "Peregrine (Sovereign Leo Fire)",
+        aspects: ["☍ Pluto Rx (0°10′ Exact!)", "△ Neptune Rx (0°29′ Sep)", "□ Mercury (0°57′ Sep)", "✶ Uranus (2°12′ App)"],
+        starsLuminaries: ["★ Antiscion to Royal Star Aldebaran", "Saturn approaching meridian (+60°)"],
+        prescribed: "Apotropaic defense, breaking psychic interference, charging protective iron amulets",
+        avoid: "Aggressive driving, volatile arguments, initiating unprovoked conflicts",
+        domainPeak: "DOM-01 (Vitality) & DOM-07 (Foes)",
+        isLiveActive: false
+      },
+      {
+        id: "N-06", num: 6, period: "NOCTURNAL", name: "6th Night: The Sun (Al-Shams)",
+        time: "22:42:17 – 23:41:27 WIB", duration: "59m 10s",
+        ruler: "Sun", glyph: "☉", color: "#f59e0b", sphere: "4th Sphere",
+        archangel: "Raphael", divineName: "Yā Nūr Yā Bāsit",
+        tropical: "10°32′ Libra (3rd House)", sidereal: "16°18′ Virgo (Hasta)",
+        altAz: "−70° → −72.5° (Deepest Midnight Nadir)", speed: "Direct (1.0006 AU)",
+        dignity: "Fall in Libra (Nocturnal Sect)",
+        aspects: ["☍ Saturn Rx (0°50′ App)", "□ Moon (2°19′ Sep)", "△ Aldebaran (0°21′ Exact Royal Trine!)"],
+        starsLuminaries: ["★ Aldebaran Royal Star Trine", "Earth directly between Sun and Saturn"],
+        prescribed: "Solitary soul-accounting, humbling the ego, praying for divine justice",
+        avoid: "Arrogant displays of self-righteousness, demanding obedience",
+        domainPeak: "DOM-04 (Ancestry & Roots) & DOM-10",
+        isLiveActive: false
+      },
+      {
+        id: "N-07", num: 7, period: "NOCTURNAL", name: "7th Night: Venus (Al-Zuhrah)",
+        time: "23:41:27 – 00:40:37 WIB", duration: "59m 10s",
+        ruler: "Venus", glyph: "♀", color: "#ec4899", sphere: "3rd Sphere",
+        archangel: "Anael", divineName: "Yā Wadūd Yā Latīf",
+        tropical: "08°29′ Scorpio (4th House)", sidereal: "14°15′ Libra (Swati)",
+        altAz: "−60.9° SSW", speed: "Stationary Rx (−0.017°/day)",
+        dignity: "Detriment in Scorpio (Maximum Station Condition)",
+        aspects: ["☌ Mercury (4°16′ App)", "△ Moon (4°21′ App)", "□ Mars (5°13′ App)"],
+        starsLuminaries: ["☽ Moon cleared horizon (+4.6° ENE)", "♄ Saturn dominating Zenith (+75.25° NW)"],
+        prescribed: "Cord-cutting (Tafriq), unbinding trauma bonds, shadow erotic alchemy, dark poetry",
+        avoid: "Romantic proposals, marriage rites, naive attraction spells, luxury investments",
+        domainPeak: "DOM-05 (Creativity) & DOM-08 (Crisis)",
+        isLiveActive: false
+      },
+      {
+        id: "N-08", num: 8, period: "NOCTURNAL", name: "8th Night: Mercury ('Utarid) ★",
+        time: "00:40:37 – 01:39:46 WIB", duration: "59m 10s",
+        ruler: "Mercury", glyph: "☿", color: "#2dd4bf", sphere: "2nd Sphere",
+        archangel: "Michael", divineName: "Yā 'Alīmu Yā Hakīm",
+        tropical: "04°36′ Scorpio (4th House)", sidereal: "09°59′ Libra (Chitra)",
+        altAz: "−67.7° → −68.0° SSW", speed: "Direct (−0.1 Mag)",
+        dignity: "Direct (Supreme Fomalhaut Royal Trine)",
+        aspects: ["△ Fomalhaut (0°01′ EXACT!)", "□ Mars (0°57′ Sep)", "□ Pluto (1°07′ Sep)", "☌ Venus Rx (4°16′ App)"],
+        starsLuminaries: ["★ Royal Star Fomalhaut Contact", "Mars rises ~01:33 WIB across ENE horizon"],
+        prescribed: "Kashf al-Asrar, scrying with clear quartz, deciphering encrypted texts, epiphany downloads",
+        avoid: "Signing unexamined contracts, engaging in sharp malicious gossip",
+        domainPeak: "DOM-03 (Intellect & Ciphers)",
+        isLiveActive: true // Marked as currently active live benchmark
+      },
+      {
+        id: "N-09", num: 9, period: "NOCTURNAL", name: "9th Night: The Moon (Al-Qamar)",
+        time: "01:39:46 – 02:38:56 WIB", duration: "59m 10s",
+        ruler: "Moon", glyph: "☽", color: "#38bdf8", sphere: "1st Sphere",
+        archangel: "Gabriel", divineName: "Yā Qaddūs Yā Latīf",
+        tropical: "14°13′ Cancer (12th House)", sidereal: "19°59′ Gemini (Ardra)",
+        altAz: "+15° → +27° climbing ENE", speed: "Direct (48.1% Waning)",
+        dignity: "Home Domicile (Sirius Exact Alignment)",
+        aspects: ["☌ Sirius (14° Cancer - Exact!)", "☌ Canopus (14°57′ Cancer)", "Entering 9th Mansion Al-Tarf"],
+        starsLuminaries: ["★ Sirius (Brightest Star in the Sky) Conjunction", "Jupiter rises ~02:37 WIB in East"],
+        prescribed: "Dream incubation petitions (oneiromancy), pacifying enemy wrath (Thymokatochon), water scrying",
+        avoid: "Heavy late-night eating, loud worldly dissipation",
+        domainPeak: "DOM-09 (Wisdom) & DOM-12 (Sanctuary)",
+        isLiveActive: false
+      },
+      {
+        id: "N-10", num: 10, period: "NOCTURNAL", name: "10th Night: Saturn (Zuhal)",
+        time: "02:38:56 – 03:38:06 WIB", duration: "59m 10s",
+        ruler: "Saturn", glyph: "♄", color: "#e2e8f0", sphere: "7th Sphere",
+        archangel: "Cassiel", divineName: "Yā Hayyu Yā Qayyūm",
+        tropical: "11°21′ Aries (12th House)", sidereal: "17°07′ Pisces (Revati)",
+        altAz: "+65° → +52° descending West", speed: "Retrograde (+0.2 Mag)",
+        dignity: "Fall in Aries (Opposition Axis)",
+        aspects: ["☍ Sun in Fall (0°50′ App)", "□ Moon in Cancer (1°29′ Sep)"],
+        starsLuminaries: ["Mars and Jupiter both clearly visible in East", "Deepest pre-dawn silence"],
+        prescribed: "Padlock tongue-binding ('Aqd al-Lisan), setting 4-corner boundary stakes, solitary prayer",
+        avoid: "Social celebrations, reckless frivolity",
+        domainPeak: "DOM-12 (Sanctuary) & DOM-08 (Crisis)",
+        isLiveActive: false
+      },
+      {
+        id: "N-11", num: 11, period: "NOCTURNAL", name: "11th Night: Jupiter (Al-Mushtari)",
+        time: "03:38:06 – 04:37:16 WIB", duration: "59m 10s",
+        ruler: "Jupiter", glyph: "♃", color: "#fbbf24", sphere: "6th Sphere",
+        archangel: "Sachiel", divineName: "Yā Rahmān Yā 'Azīz",
+        tropical: "20°04′ Leo (1st House)", sidereal: "25°50′ Cancer (Ashlesha)",
+        altAz: "+15° → +28° in East", speed: "Direct (−1.9 Mag Radiant)",
+        dignity: "Radiant in East with Mars",
+        aspects: ["△ Midheaven in Aries (25°40′)", "Sextile Ascendant axis"],
+        starsLuminaries: ["Luminosity high in eastern horizon", "Approaching pre-dawn twilight"],
+        prescribed: "Tahajjud morning prayer, invoking the Names of Mercy, petitioning spiritual mentors",
+        avoid: "Cynicism, despair, pettiness",
+        domainPeak: "DOM-09 (Wisdom) & DOM-10 (Vocation)",
+        isLiveActive: false
+      },
+      {
+        id: "N-12", num: 12, period: "NOCTURNAL", name: "12th Night: Mars (Al-Mirrikh)",
+        time: "04:37:16 – 05:36:26 WIB", duration: "59m 10s",
+        ruler: "Mars", glyph: "♂", color: "#f87171", sphere: "5th Sphere",
+        archangel: "Camael", divineName: "Yā Qahhār Yā Matīn",
+        tropical: "03°16′ Leo (1st House)", sidereal: "09°02′ Cancer (Pushya)",
+        altAz: "+38° → +51° high in East", speed: "Direct (+1.1 Mag)",
+        dignity: "High Eastern Ascent",
+        aspects: ["☍ Pluto Rx (0°10′ Final Night Trigger)", "□ Mercury in Scorpio"],
+        starsLuminaries: ["Astronomical Twilight (05:00) → Civil Twilight (05:14) → Sunrise (05:36)"],
+        prescribed: "Vigorous morning exercise, banishing nightmares, declaring spiritual boundaries",
+        avoid: "Starting heated domestic quarrels over breakfast",
+        domainPeak: "DOM-01 (Vitality) & DOM-07 (Foes)",
+        isLiveActive: false
+      },
+
+      // DIURNAL HOURS (Sunday Day, 4 Oct 2026)
+      {
+        id: "D-01", num: 1, period: "DIURNAL", name: "1st Day: The Sun (Al-Shams) — Sunrise",
+        time: "05:36:26 – 06:37:15 WIB", duration: "60m 49s",
+        ruler: "Sun", glyph: "☉", color: "#f59e0b", sphere: "4th Sphere",
+        archangel: "Raphael", divineName: "Yā Nūr Yā Bāsit",
+        tropical: "10°31′ Libra (1st/12th House)", sidereal: "16°18′ Virgo (Hasta)",
+        altAz: "0.0° → +14.5° climbing East", speed: "Direct (Day Ruler)",
+        dignity: "Fall in Libra (Day Ruler)",
+        aspects: ["☍ Saturn Rx in West (0°50′ App)", "△ Aldebaran (0°21′ Exact Royal Trine!)"],
+        starsLuminaries: ["Sunrise in Jakarta at 05:36:26 WIB", "Saturn setting on western horizon"],
+        prescribed: "Morning solar prayer, grounding in ethical justice, auditing leadership responsibilities",
+        avoid: "Tyrannical pride, ignoring relational fairness",
+        domainPeak: "DOM-10 (Vocation) & DOM-01 (Persona)",
+        isLiveActive: false
+      },
+      {
+        id: "D-02", num: 2, period: "DIURNAL", name: "2nd Day: Venus (Al-Zuhrah)",
+        time: "06:37:15 – 07:38:04 WIB", duration: "60m 49s",
+        ruler: "Venus", glyph: "♀", color: "#ec4899", sphere: "3rd Sphere",
+        archangel: "Anael", divineName: "Yā Wadūd Yā Latīf",
+        tropical: "08°29′ Scorpio (11th House)", sidereal: "14°15′ Libra (Swati)",
+        altAz: "+12° → +26° East", speed: "Stationary Rx (−0.017°/day)",
+        dignity: "Detriment in Scorpio",
+        aspects: ["☌ Mercury (4°16′ App)", "△ Moon (4°21′ App)"],
+        starsLuminaries: ["Sun ascending through early morning sky", "Moon high overhead"],
+        prescribed: "Private introspection on financial obligations, clearing emotional grievances",
+        avoid: "Impulse luxury retail shopping, naive romantic demands",
+        domainPeak: "DOM-02 (Wealth) & DOM-05 (Creativity)",
+        isLiveActive: false
+      },
+      {
+        id: "D-03", num: 3, period: "DIURNAL", name: "3rd Day: Mercury ('Utarid)",
+        time: "07:38:04 – 08:38:53 WIB", duration: "60m 49s",
+        ruler: "Mercury", glyph: "☿", color: "#2dd4bf", sphere: "2nd Sphere",
+        archangel: "Michael", divineName: "Yā 'Alīmu Yā Hakīm",
+        tropical: "04°36′ Scorpio (11th House)", sidereal: "09°59′ Libra (Chitra)",
+        altAz: "+24° → +38° East", speed: "Direct (−0.1 Mag)",
+        dignity: "Trine Fomalhaut (0°01′)",
+        aspects: ["△ Fomalhaut", "□ Mars", "□ Pluto"],
+        starsLuminaries: ["High morning clarity across Jakarta"],
+        prescribed: "Business correspondence, forensic data analysis, investigative research",
+        avoid: "Signing blind contracts without legal counsel",
+        domainPeak: "DOM-03 (Intellect) & DOM-11 (Allies)",
+        isLiveActive: false
+      },
+      {
+        id: "D-04", num: 4, period: "DIURNAL", name: "4th Day: The Moon (Al-Qamar)",
+        time: "08:38:53 – 09:39:42 WIB", duration: "60m 49s",
+        ruler: "Moon", glyph: "☽", color: "#38bdf8", sphere: "1st Sphere",
+        archangel: "Gabriel", divineName: "Yā Qaddūs Yā Fattāh",
+        tropical: "14°13′ Cancer", sidereal: "19°59′ Gemini (Ardra)",
+        altAz: "+75° → +85° (Culminating high in morning sky)", speed: "Direct (Last Qtr)",
+        dignity: "Domicile in Cancer",
+        aspects: ["□ Sun in Libra", "□ Saturn in Aries", "☌ Sirius"],
+        starsLuminaries: ["Moon clearly visible in morning blue sky as half-disc"],
+        prescribed: "Domestic organization, food supply management, team emotional check-ins",
+        avoid: "Launching high-risk publicity campaigns",
+        domainPeak: "DOM-04 (Home) & DOM-06 (Labor)",
+        isLiveActive: false
+      },
+      {
+        id: "D-05", num: 5, period: "DIURNAL", name: "5th Day: Saturn (Zuhal)",
+        time: "09:39:42 – 10:40:31 WIB", duration: "60m 49s",
+        ruler: "Saturn", glyph: "♄", color: "#e2e8f0", sphere: "7th Sphere",
+        archangel: "Cassiel", divineName: "Yā Hayyu Yā Qayyūm",
+        tropical: "11°21′ Aries", sidereal: "17°07′ Pisces (Revati)",
+        altAz: "Below western horizon (Nadir direction)", speed: "Retrograde",
+        dignity: "Fall in Aries (Building tension to opposition)",
+        aspects: ["☍ Sun in Libra (0°50′ App)"],
+        starsLuminaries: ["Sun ascending toward zenith"],
+        prescribed: "Heavy administrative chores, legal compliance audits, setting limits with difficult clients",
+        avoid: "Expecting lenient pardons from bureaucratic reviewers",
+        domainPeak: "DOM-10 (Vocation) & DOM-07 (Contracts)",
+        isLiveActive: false
+      },
+      {
+        id: "D-06", num: 6, period: "DIURNAL", name: "6th Day: Jupiter (Al-Mushtari)",
+        time: "10:40:31 – 11:41:20 WIB", duration: "60m 49s",
+        ruler: "Jupiter", glyph: "♃", color: "#fbbf24", sphere: "6th Sphere",
+        archangel: "Sachiel", divineName: "Yā 'Azīzu Yā Rahīm",
+        tropical: "20°04′ Leo", sidereal: "25°50′ Cancer (Ashlesha)",
+        altAz: "+60° → +45° West", speed: "Direct (−1.9 Mag)",
+        dignity: "Regal Fire",
+        aspects: ["Trine MC in Aries", "Co-present Mars"],
+        starsLuminaries: ["High noon approaching"],
+        prescribed: "Seeking mentor advice, pitching expansion plans, resolving ethical disputes",
+        avoid: "Extravagant financial commitments beyond realistic cash flow",
+        domainPeak: "DOM-09 (Wisdom) & DOM-11 (Allies)",
+        isLiveActive: false
+      },
+      {
+        id: "D-07", num: 7, period: "DIURNAL", name: "7th Day: Mars (Al-Mirrikh) — Solar Noon",
+        time: "11:41:20 – 12:42:10 WIB", duration: "60m 49s",
+        ruler: "Mars", glyph: "♂", color: "#f87171", sphere: "5th Sphere",
+        archangel: "Camael", divineName: "Yā Qahhār Yā Matīn",
+        tropical: "03°16′ Leo", sidereal: "09°02′ Cancer (Pushya)",
+        altAz: "+42° → +28° West", speed: "Direct (+1.1 Mag)",
+        dignity: "Culminating with Midday Heat",
+        aspects: ["☍ Pluto Rx (0°10′)", "□ Mercury in Scorpio"],
+        starsLuminaries: ["Peak solar illumination over Jakarta"],
+        prescribed: "High-focus physical labor, decisive executive actions, competitive sport",
+        avoid: "Heat exhaustion, impulsive angry ultimatums",
+        domainPeak: "DOM-01 (Vitality) & DOM-07 (Foes)",
+        isLiveActive: false
+      },
+      {
+        id: "D-08", num: 8, period: "DIURNAL", name: "8th Day: The Sun (Al-Shams) — Upper Culmination",
+        time: "12:42:10 – 13:42:59 WIB", duration: "60m 49s",
+        ruler: "Sun", glyph: "☉", color: "#f59e0b", sphere: "4th Sphere",
+        archangel: "Raphael", divineName: "Yā Nūr Yā Bāsit",
+        tropical: "10°31′ Libra", sidereal: "16°18′ Virgo (Hasta)",
+        altAz: "+80° → +65° (Peak Meridian Culmination)", speed: "Direct",
+        dignity: "Fall in Libra (Opp. Saturn)",
+        aspects: ["☍ Saturn Rx (Approaching peak)", "△ Aldebaran"],
+        starsLuminaries: ["Sun culminates near zenith meridian"],
+        prescribed: "Public presentations, establishing authority through diplomatic compromise",
+        avoid: "Ignoring partnership input, authoritarian hubris",
+        domainPeak: "DOM-10 (Vocation) & DOM-07 (Contracts)",
+        isLiveActive: false
+      },
+      {
+        id: "D-09", num: 9, period: "DIURNAL", name: "9th Day: Venus (Al-Zuhrah)",
+        time: "13:42:59 – 14:43:48 WIB", duration: "60m 49s",
+        ruler: "Venus", glyph: "♀", color: "#ec4899", sphere: "3rd Sphere",
+        archangel: "Anael", divineName: "Yā Wadūd Yā Latīf",
+        tropical: "08°29′ Scorpio", sidereal: "14°15′ Libra (Swati)",
+        altAz: "+60° → +45° West", speed: "Stationary Rx",
+        dignity: "Detriment in Scorpio",
+        aspects: ["☌ Mercury", "△ Moon"],
+        starsLuminaries: ["Afternoon heat settling"],
+        prescribed: "Artistic design review, deep psychotherapy, identifying emotional roadblocks",
+        avoid: "Signing financial settlements while feeling emotionally vulnerable",
+        domainPeak: "DOM-05 (Creativity) & DOM-08 (Crisis)",
+        isLiveActive: false
+      },
+      {
+        id: "D-10", num: 10, period: "DIURNAL", name: "10th Day: Mercury ('Utarid)",
+        time: "14:43:48 – 15:44:37 WIB", duration: "60m 49s",
+        ruler: "Mercury", glyph: "☿", color: "#2dd4bf", sphere: "2nd Sphere",
+        archangel: "Michael", divineName: "Yā 'Alīmu Yā Hakīm",
+        tropical: "04°36′ Scorpio", sidereal: "09°59′ Libra (Chitra)",
+        altAz: "+45° → +30° West", speed: "Direct",
+        dignity: "Trine Fomalhaut (0°01′)",
+        aspects: ["△ Fomalhaut", "□ Mars", "□ Pluto"],
+        starsLuminaries: ["Late afternoon sun descending in West"],
+        prescribed: "Technical writing, code testing, debugging complex logistics, writing treaties",
+        avoid: "Signing ambiguous service contracts",
+        domainPeak: "DOM-03 (Intellect) & DOM-02 (Wealth)",
+        isLiveActive: false
+      },
+      {
+        id: "D-11", num: 11, period: "DIURNAL", name: "11th Day: The Moon (Al-Qamar)",
+        time: "15:44:37 – 16:45:26 WIB", duration: "60m 49s",
+        ruler: "Moon", glyph: "☽", color: "#38bdf8", sphere: "1st Sphere",
+        archangel: "Gabriel", divineName: "Yā Qaddūs Yā Latīf",
+        tropical: "14°13′ Cancer", sidereal: "19°59′ Gemini",
+        altAz: "+35° → +20° West (Approaching setting)", speed: "Direct (Last Qtr)",
+        dignity: "Domicile in Cancer",
+        aspects: ["□ Sun in Libra", "□ Saturn in Aries"],
+        starsLuminaries: ["Moon descending into western horizon"],
+        prescribed: "Wrapping up daily work routines, calming the nervous system, heading home",
+        avoid: "Starting major administrative initiatives right before the close of business",
+        domainPeak: "DOM-04 (Home) & DOM-06 (Labor)",
+        isLiveActive: false
+      },
+      {
+        id: "D-12", num: 12, period: "DIURNAL", name: "12th Day: Saturn (Zuhal) — Sunset & Exact Opposition",
+        time: "16:45:26 – 17:46:15 WIB", duration: "60m 49s",
+        ruler: "Saturn", glyph: "♄", color: "#e2e8f0", sphere: "7th Sphere",
+        archangel: "Cassiel", divineName: "Yā Hayyu Yā Qayyūm",
+        tropical: "11°21′ Aries", sidereal: "17°07′ Pisces",
+        altAz: "Rising in East as Sun sets in West", speed: "Retrograde",
+        dignity: "ASTRONOMICAL OPPOSITION PEAK (19:29 WIB)",
+        aspects: ["☍ Sun in Libra (Exact Annual Opposition!)", "□ Moon in Cancer"],
+        starsLuminaries: ["Sunset in Jakarta at 17:46:15 WIB", "Saturn rises at maximum opposition brilliance"],
+        prescribed: "Definitive closure of contracts, sealing covenants in lead, long-term boundary setting",
+        avoid: "Attempting to evade karmic or legal obligations",
+        domainPeak: "DOM-10 (Vocation), DOM-07 (Contracts) & DOM-08 (Crisis)",
+        isLiveActive: false
+      }
+    ];
+
+    // Render Hour Buttons
+    function renderHoursGrids() {
+      const nocturnalContainer = document.getElementById('nocturnalGrid');
+      const diurnalContainer = document.getElementById('diurnalGrid');
+
+      nocturnalContainer.innerHTML = '';
+      diurnalContainer.innerHTML = '';
+
+      masterHoursData.forEach(h => {
+        const btn = document.createElement('button');
+        btn.id = `btn-hour-${h.id}`;
+        btn.className = `hour-chip text-left p-2.5 rounded-xl border border-slate-800 bg-slate-950/80 hover:border-slate-600 transition flex flex-col justify-between ${h.isLiveActive ? 'active-live' : ''}`;
+        btn.onclick = () => selectHour(h.id);
+
+        btn.innerHTML = `
+          <div class="flex items-center justify-between w-full">
+            <span class="font-mono text-[10px] text-slate-400">${h.id} (${h.time.split(' – ')[0]})</span>
+            <span class="font-bold text-sm" style="color: ${h.color}">${h.glyph}</span>
+          </div>
+          <div class="mt-1 font-bold text-xs truncate text-slate-200">
+            ${h.ruler} ${h.isLiveActive ? '<span class="text-emerald-400 animate-pulse text-[10px]">● LIVE</span>' : ''}
+          </div>
+        `;
+
+        if (h.period === 'NOCTURNAL') {
+          nocturnalContainer.appendChild(btn);
+        } else {
+          diurnalContainer.appendChild(btn);
+        }
+      });
+    }
+
+    function selectHour(hourId) {
+      const data = masterHoursData.find(h => h.id === hourId);
+      if (!data) return;
+
+      document.querySelectorAll('.hour-chip').forEach(c => c.classList.remove('selected'));
+      const activeBtn = document.getElementById(`btn-hour-${hourId}`);
+      if (activeBtn) activeBtn.classList.add('selected');
+
+      // Update Dossier Card
+      document.getElementById('detailHourGlyph').textContent = data.glyph;
+      document.getElementById('detailHourGlyph').style.color = data.color;
+      document.getElementById('detailHourName').textContent = data.name;
+      document.getElementById('detailHourPeriodTag').textContent = data.period;
+      document.getElementById('detailHourTimeRange').textContent = `${data.time} (Duration: ${data.duration})`;
+      document.getElementById('detailHourSphere').textContent = data.sphere;
+      document.getElementById('detailHourArchangel').textContent = data.archangel;
+      document.getElementById('detailHourDivineName').textContent = data.divineName;
+
+      // Update Column 1: Ruler Sky Position
+      document.getElementById('rulerTropical').textContent = data.tropical;
+      document.getElementById('rulerSidereal').textContent = data.sidereal;
+      document.getElementById('rulerAltAz').textContent = data.altAz;
+      document.getElementById('rulerMotion').textContent = data.speed;
+      document.getElementById('rulerDignity').textContent = data.dignity;
+
+      // Update Column 2: Aspects
+      document.getElementById('hourAspectsList').innerHTML = data.aspects.map(a => `<div class="text-orange-400 font-medium">${a}</div>`).join('');
+
+      // Update Column 3: Fixed Stars & Luminaries
+      document.getElementById('hourStarLuminaries').innerHTML = data.starsLuminaries.map(s => `<div class="text-sky-300">${s}</div>`).join('');
+
+      // Update Column 4: Grimoiric & Domain
+      document.getElementById('hourPrescribed').textContent = data.prescribed;
+      document.getElementById('hourAvoid').textContent = data.avoid;
+      document.getElementById('hourDomainPeak').textContent = data.domainPeak;
+
+      // Visual flash
+      const card = document.getElementById('hourDetailDossier');
+      card.classList.add('ring-2', 'ring-sky-500');
+      setTimeout(() => card.classList.remove('ring-2', 'ring-sky-500'), 350);
+    }
+
+    // Initialize grids and select active live hour (N-08)
+    renderHoursGrids();
+    selectHour("N-08");
+
+    // ==================== PLANET INSPECTION LOGIC ====================
     const planetCatalog = {
       moon: {
         glyph: "☽", color: "#38bdf8", name: "The Moon",
