@@ -305,104 +305,479 @@
 
           </div>
 
-          <!-- ==================== REAL-TIME 4 OPERATIVE WORKS IMPACT ROW ==================== -->
-          <div class="mt-4 pt-4 border-t border-slate-800/80">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
-              <span class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5 font-mono">
-                <span class="text-amber-400">⚡</span> REAL-TIME OPERATIVE WORKS IMPACT (FOR SELECTED HOUR):
-              </span>
-              <a href="#operativeWorksConsole" class="text-xs text-amber-400 hover:text-amber-300 font-mono transition flex items-center gap-1">
-                <span>View Full Operative Manual & Protocols</span> <span class="text-sm">↓</span>
-              </a>
+          <!-- ==================== REAL-TIME EXHAUSTIVE 14-OCCULT-TYPE OPERATIVE WORKS IMPACT MATRIX ==================== -->
+          <div class="mt-6 pt-6 border-t border-slate-800">
+            
+            <!-- Section Header & Occult Mode Banner -->
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-4">
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="text-amber-400 text-lg font-bold">⚡</span>
+                  <h4 class="text-sm sm:text-base font-bold font-cinzel text-white tracking-wide">
+                    REAL-TIME OPERATIVE WORKS IMPACT MATRIX (ALL 14 OCCULT TYPES)
+                  </h4>
+                </div>
+                <p class="text-xs text-slate-400 font-mono mt-0.5">
+                  Detailed Astrological & Grimoiric Repercussions for this Specific Planetary Hour across Agrippa, Shams al-Ma'arif, Picatrix & PGM
+                </p>
+              </div>
+
+              <div class="flex items-center gap-2 text-xs font-mono">
+                <a href="#operativeWorksConsole" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-amber-300 border border-slate-700 transition flex items-center gap-1.5">
+                  <span>📜</span> <span>14-Work Master Console</span> <span class="text-xs">↓</span>
+                </a>
+              </div>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
+            <!-- Occult Planetary Sphere & Theurgy Intelligence Banner -->
+            <div class="p-4 rounded-2xl bg-slate-950/90 border border-slate-800/80 mb-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs font-mono">
+              <div class="p-2.5 rounded-xl bg-slate-900/60 border border-slate-800">
+                <span class="text-slate-500 block text-[10px] uppercase font-bold">SPHERE & ARCHANGEL</span>
+                <span id="hourOccultArchangel" class="text-sky-300 font-bold">Michael (Mīkhā'īl)</span>
+                <span id="hourOccultSphere" class="text-slate-400 block text-[11px]">Mercury ('Utarid / Kokhav)</span>
+              </div>
+
+              <div class="p-2.5 rounded-xl bg-slate-900/60 border border-slate-800">
+                <span class="text-slate-500 block text-[10px] uppercase font-bold">AGRIPPAN SPIRIT & INTEL.</span>
+                <span id="hourOccultAgrippa" class="text-amber-300 font-bold">Tiriel & Taphthartharath</span>
+                <span id="hourOccultWafq" class="text-slate-400 block text-[11px]">8x8 Magic Square (Base 260, Total 2080)</span>
+              </div>
+
+              <div class="p-2.5 rounded-xl bg-slate-900/60 border border-slate-800">
+                <span class="text-slate-500 block text-[10px] uppercase font-bold">ARABIC RUHANIYYA (SHAMS)</span>
+                <span id="hourOccultRuhaniyya" class="text-teal-300 font-bold">Sayyid Mīkhā'īl / Shammākhin</span>
+                <span id="hourOccultMetal" class="text-slate-400 block text-[11px]">Metal: Quicksilver / Yellow Brass / Electrum</span>
+              </div>
+
+              <div class="p-2.5 rounded-xl bg-slate-900/60 border border-slate-800">
+                <span class="text-slate-500 block text-[10px] uppercase font-bold">SACRED RESINS & INCENSE</span>
+                <span id="hourOccultIncense" class="text-emerald-300 font-bold truncate block">Mastic, Pure Frankincense, Star Anise, Bay Laurel</span>
+                <span id="hourOccultMode" class="text-slate-400 block text-[11px] truncate">Hermetic Intellectual Gnosis & Cryptography</span>
+              </div>
+            </div>
+
+            <!-- Occult Pillar Filter Lens for this Hour -->
+            <div class="flex flex-wrap items-center gap-1.5 mb-4 text-xs font-mono" id="hourOccultFilters">
+              <span class="text-slate-400 mr-1 uppercase text-[10px] font-bold">Occult Pillar Filter:</span>
+              <button onclick="filterHourOccultCards('all')" class="hour-occult-btn active px-2.5 py-1 rounded-lg border border-sky-500 bg-sky-950 text-sky-200 font-bold" data-cat="all">All 14 Occult Types</button>
+              <button onclick="filterHourOccultCards('Jalb')" class="hour-occult-btn px-2.5 py-1 rounded-lg border border-slate-700 bg-slate-800 text-slate-300 hover:text-white" data-cat="Jalb">Jalb: Attraction & Elevation (3)</button>
+              <button onclick="filterHourOccultCards('Tahsin')" class="hour-occult-btn px-2.5 py-1 rounded-lg border border-slate-700 bg-slate-800 text-slate-300 hover:text-white" data-cat="Tahsin">Tahsin: Armor & Healing (4)</button>
+              <button onclick="filterHourOccultCards('Aqd')" class="hour-occult-btn px-2.5 py-1 rounded-lg border border-slate-700 bg-slate-800 text-slate-300 hover:text-white" data-cat="Aqd">'Aqd: Binding & Stasis (2)</button>
+              <button onclick="filterHourOccultCards('Tafriq')" class="hour-occult-btn px-2.5 py-1 rounded-lg border border-slate-700 bg-slate-800 text-slate-300 hover:text-white" data-cat="Tafriq">Tafriq: Severance & War (3)</button>
+              <button onclick="filterHourOccultCards('Kashf')" class="hour-occult-btn px-2.5 py-1 rounded-lg border border-slate-700 bg-slate-800 text-slate-300 hover:text-white" data-cat="Kashf">Kashf: Gnosis & Oracles (2)</button>
+            </div>
+
+            <!-- Complete 14-Card Occult Grid for Selected Hour -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 text-xs" id="hourOccultGrid">
               
-              <!-- LOVE WORK -->
-              <div class="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800/90 flex flex-col justify-between hover:border-pink-500/40 transition">
+              <!-- OCCULT WORK CARD: LOVE -->
+              <div id="hour-op-love" class="hour-occult-card p-3.5 rounded-2xl bg-slate-900/90 border border-slate-800/90 flex flex-col justify-between hover:border-slate-600 transition-all duration-200" data-cat="Jalb">
                 <div>
                   <div class="flex items-center justify-between mb-1.5">
-                    <span class="font-bold text-pink-400 flex items-center gap-1.5">
-                      <span>❤️</span> Love Work
+                    <span class="font-bold text-slate-200 flex items-center gap-1.5 text-xs">
+                      <span>❤️</span> <span id="hour-op-title-love">Love & Attraction</span>
                     </span>
-                    <span id="hourLoveRating" class="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-950 text-rose-300 border border-rose-800">
-                      Proscribed (20%)
+                    <span id="hour-op-badge-love" class="px-2 py-0.5 rounded text-[10px] font-bold font-mono" style="background-color: #94a3b822; color: #94a3b8; border: 1px solid #94a3b855;">
+                      Ineffectual (25%)
                     </span>
                   </div>
-                  <p id="hourLoveDesc" class="text-[11px] text-slate-300 font-mono leading-relaxed mt-1">
-                    Venus in detriment/Rx. Avoid sweet attraction. Only suitable for analytical grief journaling.
-                  </p>
+
+                  <div class="space-y-1 mt-2 text-[11px] font-mono">
+                    <div class="text-slate-400">
+                      <span class="text-amber-400/90 font-semibold">Astrometric Anchor:</span> <span id="hour-op-mech-love" class="text-slate-300 font-sans">Ruler Mercury interacts with Venus Stationary-Rx at 08°29′ Scorpio (Detriment).</span>
+                    </div>
+                    <div class="text-slate-400 mt-1">
+                      <span class="text-emerald-400/90 font-semibold">Occult Directive:</span> <span id="hour-op-adv-love" class="text-slate-200 font-sans">Avoid romantic petitioning; energy is distracted or discordant.</span>
+                    </div>
+                  </div>
                 </div>
-                <div class="mt-2.5 pt-2 border-t border-slate-800/60 text-[10px] text-slate-400 flex justify-between">
-                  <span>Picatrix Bk II • Agrippa Bk II</span>
-                  <span class="text-pink-400 font-bold cursor-pointer" onclick="selectOperativeWork('love'); document.getElementById('operativeWorksConsole').scrollIntoView({behavior:'smooth'});">Details →</span>
+
+                <div class="mt-3 pt-2 border-t border-slate-800/70 text-[10px] text-slate-500 flex items-center justify-between font-mono">
+                  <span id="hour-op-cat-love" class="px-1.5 py-0.2 rounded bg-slate-950 text-slate-400 border border-slate-800">Jalb</span>
+                  <a href="#work-card-love" class="text-amber-400 hover:text-white font-bold transition flex items-center gap-1">
+                    <span>Full Protocol</span> <span>→</span>
+                  </a>
                 </div>
               </div>
-
-              <!-- BINDING WORK -->
-              <div class="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800/90 flex flex-col justify-between hover:border-slate-500/40 transition">
+              <!-- OCCULT WORK CARD: SEVERANCE -->
+              <div id="hour-op-severance" class="hour-occult-card p-3.5 rounded-2xl bg-slate-900/90 border border-slate-800/90 flex flex-col justify-between hover:border-slate-600 transition-all duration-200" data-cat="Tafriq">
                 <div>
                   <div class="flex items-center justify-between mb-1.5">
-                    <span class="font-bold text-slate-200 flex items-center gap-1.5">
-                      <span>🔒</span> Binding Work
+                    <span class="font-bold text-slate-200 flex items-center gap-1.5 text-xs">
+                      <span>✂️</span> <span id="hour-op-title-severance">Cord-Cutting & Severance</span>
                     </span>
-                    <span id="hourBindingRating" class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-800 text-slate-200 border border-slate-700">
-                      High (92%)
+                    <span id="hour-op-badge-severance" class="px-2 py-0.5 rounded text-[10px] font-bold font-mono" style="background-color: #f43f5e22; color: #f43f5e; border: 1px solid #f43f5e55;">
+                      High Efficacy (80%)
                     </span>
                   </div>
-                  <p id="hourBindingDesc" class="text-[11px] text-slate-300 font-mono leading-relaxed mt-1">
-                    Mercury in Scorpio under Saturn day. Supreme for silencing slanders, courtroom witnesses, and liars.
-                  </p>
+
+                  <div class="space-y-1 mt-2 text-[11px] font-mono">
+                    <div class="text-slate-400">
+                      <span class="text-amber-400/90 font-semibold">Astrometric Anchor:</span> <span id="hour-op-mech-severance" class="text-slate-300 font-sans">Applying trine between Moon in Cancer and Venus Rx; Mars opposite Pluto (0°10′).</span>
+                    </div>
+                    <div class="text-slate-400 mt-1">
+                      <span class="text-emerald-400/90 font-semibold">Occult Directive:</span> <span id="hour-op-adv-severance" class="text-slate-200 font-sans">Sever aggressive ties and energetic leeches with dragon's blood smoke.</span>
+                    </div>
+                  </div>
                 </div>
-                <div class="mt-2.5 pt-2 border-t border-slate-800/60 text-[10px] text-slate-400 flex justify-between">
-                  <span>Shams al-Ma'arif • PGM V</span>
-                  <span class="text-slate-300 font-bold cursor-pointer" onclick="selectOperativeWork('binding'); document.getElementById('operativeWorksConsole').scrollIntoView({behavior:'smooth'});">Details →</span>
+
+                <div class="mt-3 pt-2 border-t border-slate-800/70 text-[10px] text-slate-500 flex items-center justify-between font-mono">
+                  <span id="hour-op-cat-severance" class="px-1.5 py-0.2 rounded bg-slate-950 text-slate-400 border border-slate-800">Tafriq</span>
+                  <a href="#work-card-severance" class="text-amber-400 hover:text-white font-bold transition flex items-center gap-1">
+                    <span>Full Protocol</span> <span>→</span>
+                  </a>
                 </div>
               </div>
-
-              <!-- CLEANSING WORK -->
-              <div class="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800/90 flex flex-col justify-between hover:border-sky-500/40 transition">
+              <!-- OCCULT WORK CARD: BINDING -->
+              <div id="hour-op-binding" class="hour-occult-card p-3.5 rounded-2xl bg-slate-900/90 border border-slate-800/90 flex flex-col justify-between hover:border-slate-600 transition-all duration-200" data-cat="Aqd">
                 <div>
                   <div class="flex items-center justify-between mb-1.5">
-                    <span class="font-bold text-sky-400 flex items-center gap-1.5">
-                      <span>🌊</span> Cleansing Work
+                    <span class="font-bold text-slate-200 flex items-center gap-1.5 text-xs">
+                      <span>🔒</span> <span id="hour-op-title-binding">Binding & Tongue-Tying</span>
                     </span>
-                    <span id="hourCleansingRating" class="px-2 py-0.5 rounded text-[10px] font-bold bg-sky-950 text-sky-300 border border-sky-800">
-                      Supreme (95%)
+                    <span id="hour-op-badge-binding" class="px-2 py-0.5 rounded text-[10px] font-bold font-mono" style="background-color: #94a3b822; color: #94a3b8; border: 1px solid #94a3b855;">
+                      Optimal Silencing (92%)
                     </span>
                   </div>
-                  <p id="hourCleansingDesc" class="text-[11px] text-slate-300 font-mono leading-relaxed mt-1">
-                    Exact Fomalhaut Trine (0°01′). Archangel Gabriel cleanses intellect, removes confusion, and purifies sight.
-                  </p>
+
+                  <div class="space-y-1 mt-2 text-[11px] font-mono">
+                    <div class="text-slate-400">
+                      <span class="text-amber-400/90 font-semibold">Astrometric Anchor:</span> <span id="hour-op-mech-binding" class="text-slate-300 font-sans">Saturn culminating near Zenith (+75.25° NW) in exact annual opposition to Sun.</span>
+                    </div>
+                    <div class="text-slate-400 mt-1">
+                      <span class="text-emerald-400/90 font-semibold">Occult Directive:</span> <span id="hour-op-adv-binding" class="text-slate-200 font-sans">Bind lying tongues, corporate fraud, and digital slanders under Hermes-Saturn.</span>
+                    </div>
+                  </div>
                 </div>
-                <div class="mt-2.5 pt-2 border-t border-slate-800/60 text-[10px] text-slate-400 flex justify-between">
-                  <span>Ayat al-Kursi • Domicile Moon</span>
-                  <span class="text-sky-400 font-bold cursor-pointer" onclick="selectOperativeWork('cleansing'); document.getElementById('operativeWorksConsole').scrollIntoView({behavior:'smooth'});">Details →</span>
+
+                <div class="mt-3 pt-2 border-t border-slate-800/70 text-[10px] text-slate-500 flex items-center justify-between font-mono">
+                  <span id="hour-op-cat-binding" class="px-1.5 py-0.2 rounded bg-slate-950 text-slate-400 border border-slate-800">Aqd</span>
+                  <a href="#work-card-binding" class="text-amber-400 hover:text-white font-bold transition flex items-center gap-1">
+                    <span>Full Protocol</span> <span>→</span>
+                  </a>
                 </div>
               </div>
-
-              <!-- PROTECTION WORK -->
-              <div class="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800/90 flex flex-col justify-between hover:border-amber-500/40 transition">
+              <!-- OCCULT WORK CARD: CLEANSING -->
+              <div id="hour-op-cleansing" class="hour-occult-card p-3.5 rounded-2xl bg-slate-900/90 border border-slate-800/90 flex flex-col justify-between hover:border-slate-600 transition-all duration-200" data-cat="Tahsin">
                 <div>
                   <div class="flex items-center justify-between mb-1.5">
-                    <span class="font-bold text-amber-400 flex items-center gap-1.5">
-                      <span>🛡️</span> Protection Work
+                    <span class="font-bold text-slate-200 flex items-center gap-1.5 text-xs">
+                      <span>🌊</span> <span id="hour-op-title-cleansing">Cleansing & Uncrossing</span>
                     </span>
-                    <span id="hourProtectionRating" class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-950 text-amber-300 border border-amber-800">
-                      High (88%)
+                    <span id="hour-op-badge-cleansing" class="px-2 py-0.5 rounded text-[10px] font-bold font-mono" style="background-color: #38bdf822; color: #38bdf8; border: 1px solid #38bdf855;">
+                      High Purgation (94%)
                     </span>
                   </div>
-                  <p id="hourProtectionDesc" class="text-[11px] text-slate-300 font-mono leading-relaxed mt-1">
-                    Hermetic boundary herms; protects esoteric books, private manuscripts, ciphers, and travel.
-                  </p>
+
+                  <div class="space-y-1 mt-2 text-[11px] font-mono">
+                    <div class="text-slate-400">
+                      <span class="text-amber-400/90 font-semibold">Astrometric Anchor:</span> <span id="hour-op-mech-cleansing" class="text-slate-300 font-sans">Moon in Home Domicile Cancer (12°50′) conjunct Royal Star Sirius (14°27′); waning 48.1%.</span>
+                    </div>
+                    <div class="text-slate-400 mt-1">
+                      <span class="text-emerald-400/90 font-semibold">Occult Directive:</span> <span id="hour-op-adv-cleansing" class="text-slate-200 font-sans">Fomalhaut exact trine purges mental confusion, cognitive distortion, and paranoia.</span>
+                    </div>
+                  </div>
                 </div>
-                <div class="mt-2.5 pt-2 border-t border-slate-800/60 text-[10px] text-slate-400 flex justify-between">
-                  <span>Mars-Pluto Axis • Cassiel Ward</span>
-                  <span class="text-amber-400 font-bold cursor-pointer" onclick="selectOperativeWork('protection'); document.getElementById('operativeWorksConsole').scrollIntoView({behavior:'smooth'});">Details →</span>
+
+                <div class="mt-3 pt-2 border-t border-slate-800/70 text-[10px] text-slate-500 flex items-center justify-between font-mono">
+                  <span id="hour-op-cat-cleansing" class="px-1.5 py-0.2 rounded bg-slate-950 text-slate-400 border border-slate-800">Tahsin</span>
+                  <a href="#work-card-cleansing" class="text-amber-400 hover:text-white font-bold transition flex items-center gap-1">
+                    <span>Full Protocol</span> <span>→</span>
+                  </a>
                 </div>
               </div>
+              <!-- OCCULT WORK CARD: PROTECTION -->
+              <div id="hour-op-protection" class="hour-occult-card p-3.5 rounded-2xl bg-slate-900/90 border border-slate-800/90 flex flex-col justify-between hover:border-slate-600 transition-all duration-200" data-cat="Tahsin">
+                <div>
+                  <div class="flex items-center justify-between mb-1.5">
+                    <span class="font-bold text-slate-200 flex items-center gap-1.5 text-xs">
+                      <span>🛡️</span> <span id="hour-op-title-protection">Protection & Boundary Armor</span>
+                    </span>
+                    <span id="hour-op-badge-protection" class="px-2 py-0.5 rounded text-[10px] font-bold font-mono" style="background-color: #f59e0b22; color: #f59e0b; border: 1px solid #f59e0b55;">
+                      Fortified Ward (85%)
+                    </span>
+                  </div>
 
+                  <div class="space-y-1 mt-2 text-[11px] font-mono">
+                    <div class="text-slate-400">
+                      <span class="text-amber-400/90 font-semibold">Astrometric Anchor:</span> <span id="hour-op-mech-protection" class="text-slate-300 font-sans">Mars in Leo opposite Pluto in Aquarius at 0°10′ exact orb; Saturnian 4-corner boundary anchors.</span>
+                    </div>
+                    <div class="text-slate-400 mt-1">
+                      <span class="text-emerald-400/90 font-semibold">Occult Directive:</span> <span id="hour-op-adv-protection" class="text-slate-200 font-sans">Solar golden aura armor invoked through Archangel Raphael.</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mt-3 pt-2 border-t border-slate-800/70 text-[10px] text-slate-500 flex items-center justify-between font-mono">
+                  <span id="hour-op-cat-protection" class="px-1.5 py-0.2 rounded bg-slate-950 text-slate-400 border border-slate-800">Tahsin</span>
+                  <a href="#work-card-protection" class="text-amber-400 hover:text-white font-bold transition flex items-center gap-1">
+                    <span>Full Protocol</span> <span>→</span>
+                  </a>
+                </div>
+              </div>
+              <!-- OCCULT WORK CARD: WAR -->
+              <div id="hour-op-war" class="hour-occult-card p-3.5 rounded-2xl bg-slate-900/90 border border-slate-800/90 flex flex-col justify-between hover:border-slate-600 transition-all duration-200" data-cat="Tafriq">
+                <div>
+                  <div class="flex items-center justify-between mb-1.5">
+                    <span class="font-bold text-slate-200 flex items-center gap-1.5 text-xs">
+                      <span>⚔️</span> <span id="hour-op-title-war">War & Dismantling Oppressors</span>
+                    </span>
+                    <span id="hour-op-badge-war" class="px-2 py-0.5 rounded text-[10px] font-bold font-mono" style="background-color: #dc262622; color: #dc2626; border: 1px solid #dc262655;">
+                      Defensive (65%)
+                    </span>
+                  </div>
+
+                  <div class="space-y-1 mt-2 text-[11px] font-mono">
+                    <div class="text-slate-400">
+                      <span class="text-amber-400/90 font-semibold">Astrometric Anchor:</span> <span id="hour-op-mech-war" class="text-slate-300 font-sans">Mars at 03°16′ Leo in 1st house in exact 0°10′ opposition to Pluto; trine Neptune (0°29′).</span>
+                    </div>
+                    <div class="text-slate-400 mt-1">
+                      <span class="text-emerald-400/90 font-semibold">Occult Directive:</span> <span id="hour-op-adv-war" class="text-slate-200 font-sans">Declare righteous spiritual combat against systemic tyranny.</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mt-3 pt-2 border-t border-slate-800/70 text-[10px] text-slate-500 flex items-center justify-between font-mono">
+                  <span id="hour-op-cat-war" class="px-1.5 py-0.2 rounded bg-slate-950 text-slate-400 border border-slate-800">Tafriq</span>
+                  <a href="#work-card-war" class="text-amber-400 hover:text-white font-bold transition flex items-center gap-1">
+                    <span>Full Protocol</span> <span>→</span>
+                  </a>
+                </div>
+              </div>
+              <!-- OCCULT WORK CARD: PACIFICATION -->
+              <div id="hour-op-pacification" class="hour-occult-card p-3.5 rounded-2xl bg-slate-900/90 border border-slate-800/90 flex flex-col justify-between hover:border-slate-600 transition-all duration-200" data-cat="Aqd">
+                <div>
+                  <div class="flex items-center justify-between mb-1.5">
+                    <span class="font-bold text-slate-200 flex items-center gap-1.5 text-xs">
+                      <span>🕊️</span> <span id="hour-op-title-pacification">Pacification & Quelling Wrath</span>
+                    </span>
+                    <span id="hour-op-badge-pacification" class="px-2 py-0.5 rounded text-[10px] font-bold font-mono" style="background-color: #a7f3d022; color: #a7f3d0; border: 1px solid #a7f3d055;">
+                      Serene Pacification (60%)
+                    </span>
+                  </div>
+
+                  <div class="space-y-1 mt-2 text-[11px] font-mono">
+                    <div class="text-slate-400">
+                      <span class="text-amber-400/90 font-semibold">Astrometric Anchor:</span> <span id="hour-op-mech-pacification" class="text-slate-300 font-sans">Moon entering Lunar Mansion 9 (Al-Tarf / The Eye) applying trine to Venus in Scorpio.</span>
+                    </div>
+                    <div class="text-slate-400 mt-1">
+                      <span class="text-emerald-400/90 font-semibold">Occult Directive:</span> <span id="hour-op-adv-pacification" class="text-slate-200 font-sans">Appeals to judicial mercy and divine higher law.</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mt-3 pt-2 border-t border-slate-800/70 text-[10px] text-slate-500 flex items-center justify-between font-mono">
+                  <span id="hour-op-cat-pacification" class="px-1.5 py-0.2 rounded bg-slate-950 text-slate-400 border border-slate-800">Aqd</span>
+                  <a href="#work-card-pacification" class="text-amber-400 hover:text-white font-bold transition flex items-center gap-1">
+                    <span>Full Protocol</span> <span>→</span>
+                  </a>
+                </div>
+              </div>
+              <!-- OCCULT WORK CARD: KNOWLEDGE -->
+              <div id="hour-op-knowledge" class="hour-occult-card p-3.5 rounded-2xl bg-slate-900/90 border border-slate-800/90 flex flex-col justify-between hover:border-slate-600 transition-all duration-200" data-cat="Kashf">
+                <div>
+                  <div class="flex items-center justify-between mb-1.5">
+                    <span class="font-bold text-slate-200 flex items-center gap-1.5 text-xs">
+                      <span>👁️</span> <span id="hour-op-title-knowledge">Occult Knowledge & Prophecy</span>
+                    </span>
+                    <span id="hour-op-badge-knowledge" class="px-2 py-0.5 rounded text-[10px] font-bold font-mono" style="background-color: #2dd4bf22; color: #2dd4bf; border: 1px solid #2dd4bf55;">
+                      Supreme Clarity (0°01′) (99%)
+                    </span>
+                  </div>
+
+                  <div class="space-y-1 mt-2 text-[11px] font-mono">
+                    <div class="text-slate-400">
+                      <span class="text-amber-400/90 font-semibold">Astrometric Anchor:</span> <span id="hour-op-mech-knowledge" class="text-slate-300 font-sans">Mercury at 04°13′ Scorpio in EXACT Trine (0°01′ orb) to Royal Star Fomalhaut (04°15′ Pisces).</span>
+                    </div>
+                    <div class="text-slate-400 mt-1">
+                      <span class="text-emerald-400/90 font-semibold">Occult Directive:</span> <span id="hour-op-adv-knowledge" class="text-slate-200 font-sans">Direct transmission from Archangel Gabriel. Crystal scrying, deciphering esoteric ciphers, and Gnosis.</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mt-3 pt-2 border-t border-slate-800/70 text-[10px] text-slate-500 flex items-center justify-between font-mono">
+                  <span id="hour-op-cat-knowledge" class="px-1.5 py-0.2 rounded bg-slate-950 text-slate-400 border border-slate-800">Kashf</span>
+                  <a href="#work-card-knowledge" class="text-amber-400 hover:text-white font-bold transition flex items-center gap-1">
+                    <span>Full Protocol</span> <span>→</span>
+                  </a>
+                </div>
+              </div>
+              <!-- OCCULT WORK CARD: WEALTH -->
+              <div id="hour-op-wealth" class="hour-occult-card p-3.5 rounded-2xl bg-slate-900/90 border border-slate-800/90 flex flex-col justify-between hover:border-slate-600 transition-all duration-200" data-cat="Jalb">
+                <div>
+                  <div class="flex items-center justify-between mb-1.5">
+                    <span class="font-bold text-slate-200 flex items-center gap-1.5 text-xs">
+                      <span>💰</span> <span id="hour-op-title-wealth">Wealth & Material Abundance</span>
+                    </span>
+                    <span id="hour-op-badge-wealth" class="px-2 py-0.5 rounded text-[10px] font-bold font-mono" style="background-color: #eab30822; color: #eab308; border: 1px solid #eab30855;">
+                      Prudent Accounting (70%)
+                    </span>
+                  </div>
+
+                  <div class="space-y-1 mt-2 text-[11px] font-mono">
+                    <div class="text-slate-400">
+                      <span class="text-amber-400/90 font-semibold">Astrometric Anchor:</span> <span id="hour-op-mech-wealth" class="text-slate-300 font-sans">Jupiter in Leo trine Midheaven in Aries (25°40′); Venus Rx advises strict audit over speculation.</span>
+                    </div>
+                    <div class="text-slate-400 mt-1">
+                      <span class="text-emerald-400/90 font-semibold">Occult Directive:</span> <span id="hour-op-adv-wealth" class="text-slate-200 font-sans">Audit books, eliminate hidden financial waste, and negotiate contracts.</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mt-3 pt-2 border-t border-slate-800/70 text-[10px] text-slate-500 flex items-center justify-between font-mono">
+                  <span id="hour-op-cat-wealth" class="px-1.5 py-0.2 rounded bg-slate-950 text-slate-400 border border-slate-800">Jalb</span>
+                  <a href="#work-card-wealth" class="text-amber-400 hover:text-white font-bold transition flex items-center gap-1">
+                    <span>Full Protocol</span> <span>→</span>
+                  </a>
+                </div>
+              </div>
+              <!-- OCCULT WORK CARD: HEALING -->
+              <div id="hour-op-healing" class="hour-occult-card p-3.5 rounded-2xl bg-slate-900/90 border border-slate-800/90 flex flex-col justify-between hover:border-slate-600 transition-all duration-200" data-cat="Tahsin">
+                <div>
+                  <div class="flex items-center justify-between mb-1.5">
+                    <span class="font-bold text-slate-200 flex items-center gap-1.5 text-xs">
+                      <span>🩺</span> <span id="hour-op-title-healing">Healing & Somatic Renewal</span>
+                    </span>
+                    <span id="hour-op-badge-healing" class="px-2 py-0.5 rounded text-[10px] font-bold font-mono" style="background-color: #10b98122; color: #10b981; border: 1px solid #10b98155;">
+                      Vital Infusion (70%)
+                    </span>
+                  </div>
+
+                  <div class="space-y-1 mt-2 text-[11px] font-mono">
+                    <div class="text-slate-400">
+                      <span class="text-amber-400/90 font-semibold">Astrometric Anchor:</span> <span id="hour-op-mech-healing" class="text-slate-300 font-sans">Domicile Moon in Cancer conjunct Sirius; Sun in Libra trine Royal Star Aldebaran (0°21′).</span>
+                    </div>
+                    <div class="text-slate-400 mt-1">
+                      <span class="text-emerald-400/90 font-semibold">Occult Directive:</span> <span id="hour-op-adv-healing" class="text-slate-200 font-sans">Infuse healing teas with benevolent Jovian blessing.</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mt-3 pt-2 border-t border-slate-800/70 text-[10px] text-slate-500 flex items-center justify-between font-mono">
+                  <span id="hour-op-cat-healing" class="px-1.5 py-0.2 rounded bg-slate-950 text-slate-400 border border-slate-800">Tahsin</span>
+                  <a href="#work-card-healing" class="text-amber-400 hover:text-white font-bold transition flex items-center gap-1">
+                    <span>Full Protocol</span> <span>→</span>
+                  </a>
+                </div>
+              </div>
+              <!-- OCCULT WORK CARD: SOVEREIGNTY -->
+              <div id="hour-op-sovereignty" class="hour-occult-card p-3.5 rounded-2xl bg-slate-900/90 border border-slate-800/90 flex flex-col justify-between hover:border-slate-600 transition-all duration-200" data-cat="Jalb">
+                <div>
+                  <div class="flex items-center justify-between mb-1.5">
+                    <span class="font-bold text-slate-200 flex items-center gap-1.5 text-xs">
+                      <span>👑</span> <span id="hour-op-title-sovereignty">Sovereignty & Royal Authority</span>
+                    </span>
+                    <span id="hour-op-badge-sovereignty" class="px-2 py-0.5 rounded text-[10px] font-bold font-mono" style="background-color: #f9731622; color: #f97316; border: 1px solid #f9731655;">
+                      Martial Presence (72%)
+                    </span>
+                  </div>
+
+                  <div class="space-y-1 mt-2 text-[11px] font-mono">
+                    <div class="text-slate-400">
+                      <span class="text-amber-400/90 font-semibold">Astrometric Anchor:</span> <span id="hour-op-mech-sovereignty" class="text-slate-300 font-sans">Mars and Jupiter in regal Leo in 1st House; Sun trine Aldebaran (Royal Star of the East).</span>
+                    </div>
+                    <div class="text-slate-400 mt-1">
+                      <span class="text-emerald-400/90 font-semibold">Occult Directive:</span> <span id="hour-op-adv-sovereignty" class="text-slate-200 font-sans">Establish dignified personal authority without arrogance.</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mt-3 pt-2 border-t border-slate-800/70 text-[10px] text-slate-500 flex items-center justify-between font-mono">
+                  <span id="hour-op-cat-sovereignty" class="px-1.5 py-0.2 rounded bg-slate-950 text-slate-400 border border-slate-800">Jalb</span>
+                  <a href="#work-card-sovereignty" class="text-amber-400 hover:text-white font-bold transition flex items-center gap-1">
+                    <span>Full Protocol</span> <span>→</span>
+                  </a>
+                </div>
+              </div>
+              <!-- OCCULT WORK CARD: DISCORD -->
+              <div id="hour-op-discord" class="hour-occult-card p-3.5 rounded-2xl bg-slate-900/90 border border-slate-800/90 flex flex-col justify-between hover:border-slate-600 transition-all duration-200" data-cat="Tafriq">
+                <div>
+                  <div class="flex items-center justify-between mb-1.5">
+                    <span class="font-bold text-slate-200 flex items-center gap-1.5 text-xs">
+                      <span>🎭</span> <span id="hour-op-title-discord">Discord Among Conspirators</span>
+                    </span>
+                    <span id="hour-op-badge-discord" class="px-2 py-0.5 rounded text-[10px] font-bold font-mono" style="background-color: #7f1d1d22; color: #7f1d1d; border: 1px solid #7f1d1d55;">
+                      Destructively Potent (94%)
+                    </span>
+                  </div>
+
+                  <div class="space-y-1 mt-2 text-[11px] font-mono">
+                    <div class="text-slate-400">
+                      <span class="text-amber-400/90 font-semibold">Astrometric Anchor:</span> <span id="hour-op-mech-discord" class="text-slate-300 font-sans">Fixed T-Square: Mercury in Scorpio square Mars in Leo square Pluto in Aquarius.</span>
+                    </div>
+                    <div class="text-slate-400 mt-1">
+                      <span class="text-emerald-400/90 font-semibold">Occult Directive:</span> <span id="hour-op-adv-discord" class="text-slate-200 font-sans">Write conspirators' names on broken pottery with sulfur. Turn corrupt persecutors inward against each other.</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mt-3 pt-2 border-t border-slate-800/70 text-[10px] text-slate-500 flex items-center justify-between font-mono">
+                  <span id="hour-op-cat-discord" class="px-1.5 py-0.2 rounded bg-slate-950 text-slate-400 border border-slate-800">Tafriq</span>
+                  <a href="#work-card-discord" class="text-amber-400 hover:text-white font-bold transition flex items-center gap-1">
+                    <span>Full Protocol</span> <span>→</span>
+                  </a>
+                </div>
+              </div>
+              <!-- OCCULT WORK CARD: INVISIBILITY -->
+              <div id="hour-op-invisibility" class="hour-occult-card p-3.5 rounded-2xl bg-slate-900/90 border border-slate-800/90 flex flex-col justify-between hover:border-slate-600 transition-all duration-200" data-cat="Tahsin">
+                <div>
+                  <div class="flex items-center justify-between mb-1.5">
+                    <span class="font-bold text-slate-200 flex items-center gap-1.5 text-xs">
+                      <span>🌫️</span> <span id="hour-op-title-invisibility">Invisibility & Psychic Cloaking</span>
+                    </span>
+                    <span id="hour-op-badge-invisibility" class="px-2 py-0.5 rounded text-[10px] font-bold font-mono" style="background-color: #64748b22; color: #64748b; border: 1px solid #64748b55;">
+                      Covert Veiling (92%)
+                    </span>
+                  </div>
+
+                  <div class="space-y-1 mt-2 text-[11px] font-mono">
+                    <div class="text-slate-400">
+                      <span class="text-amber-400/90 font-semibold">Astrometric Anchor:</span> <span id="hour-op-mech-invisibility" class="text-slate-300 font-sans">Moon in 12th House (unseen realm); Neptune Rx trine Mars (0°29′); Mercury in deep Scorpio.</span>
+                    </div>
+                    <div class="text-slate-400 mt-1">
+                      <span class="text-emerald-400/90 font-semibold">Occult Directive:</span> <span id="hour-op-adv-invisibility" class="text-slate-200 font-sans">Shield trade secrets, passwords, and sensitive transmissions from espionage.</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mt-3 pt-2 border-t border-slate-800/70 text-[10px] text-slate-500 flex items-center justify-between font-mono">
+                  <span id="hour-op-cat-invisibility" class="px-1.5 py-0.2 rounded bg-slate-950 text-slate-400 border border-slate-800">Tahsin</span>
+                  <a href="#work-card-invisibility" class="text-amber-400 hover:text-white font-bold transition flex items-center gap-1">
+                    <span>Full Protocol</span> <span>→</span>
+                  </a>
+                </div>
+              </div>
+              <!-- OCCULT WORK CARD: DREAMS -->
+              <div id="hour-op-dreams" class="hour-occult-card p-3.5 rounded-2xl bg-slate-900/90 border border-slate-800/90 flex flex-col justify-between hover:border-slate-600 transition-all duration-200" data-cat="Kashf">
+                <div>
+                  <div class="flex items-center justify-between mb-1.5">
+                    <span class="font-bold text-slate-200 flex items-center gap-1.5 text-xs">
+                      <span>🌙</span> <span id="hour-op-title-dreams">Dream Incubation & Oneiromancy</span>
+                    </span>
+                    <span id="hour-op-badge-dreams" class="px-2 py-0.5 rounded text-[10px] font-bold font-mono" style="background-color: #818cf822; color: #818cf8; border: 1px solid #818cf855;">
+                      Lucid Guidance (94%)
+                    </span>
+                  </div>
+
+                  <div class="space-y-1 mt-2 text-[11px] font-mono">
+                    <div class="text-slate-400">
+                      <span class="text-amber-400/90 font-semibold">Astrometric Anchor:</span> <span id="hour-op-mech-dreams" class="text-slate-300 font-sans">Moon in 12th House conjunct Isis-Sirius; Mercury trine Fomalhaut (Watcher of Visions).</span>
+                    </div>
+                    <div class="text-slate-400 mt-1">
+                      <span class="text-emerald-400/90 font-semibold">Occult Directive:</span> <span id="hour-op-adv-dreams" class="text-slate-200 font-sans">Hermetic dream divination for solving complex mathematical and intellectual riddles.</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mt-3 pt-2 border-t border-slate-800/70 text-[10px] text-slate-500 flex items-center justify-between font-mono">
+                  <span id="hour-op-cat-dreams" class="px-1.5 py-0.2 rounded bg-slate-950 text-slate-400 border border-slate-800">Kashf</span>
+                  <a href="#work-card-dreams" class="text-amber-400 hover:text-white font-bold transition flex items-center gap-1">
+                    <span>Full Protocol</span> <span>→</span>
+                  </a>
+                </div>
+              </div>
             </div>
+
           </div>
 
         </div>
@@ -2870,6 +3245,256 @@
 
   <!-- ==================== INTERACTIVE JAVASCRIPT CONTROLLER ==================== -->
   <script>
+    // ==================== MASTER OCCULT PLANETARY METADATA & 14-WORK GENERATOR ====================
+    const occultPlanetarySpheres = {
+    "Mercury": {
+        "planet": "Mercury ('Utarid / Kokhav)",
+        "intelligence": "Tiriel",
+        "spirit": "Taphthartharath",
+        "archangel": "Michael (Mīkhā'īl)",
+        "ruhaniyya": "Sayyid Mīkhā'īl / Shammākhin",
+        "wafq": "8x8 Magic Square (Base 260, Total 2080)",
+        "metal": "Quicksilver / Yellow Brass / Electrum",
+        "incense": "Mastic, Pure Frankincense, Star Anise, Bay Laurel",
+        "chthonicMode": "Hermetic Intellectual Gnosis & Cryptography"
+    },
+    "Moon": {
+        "planet": "The Moon (Al-Qamar / Levanah)",
+        "intelligence": "Malkah be-Tarshishim ve-ad Ruachoth Shechalim",
+        "spirit": "Chasmodai",
+        "archangel": "Gabriel (Jibrā'īl)",
+        "ruhaniyya": "Sayyid Jibrā'īl / Layākhīm",
+        "wafq": "9x9 Magic Square (Base 369, Total 3321)",
+        "metal": "Pure Refined Silver",
+        "incense": "Camphor, White Sandalwood, Aloe Wood ('Ūd), Jasmine",
+        "chthonicMode": "Lunar Lustration, Uncrossing & Prophetic Oneiromancy"
+    },
+    "Saturn": {
+        "planet": "Saturn (Zuhal / Shabbathai)",
+        "intelligence": "Agiel",
+        "spirit": "Zazel",
+        "archangel": "Cassiel (Kafziel)",
+        "ruhaniyya": "Sayyid Kasfiyā'īl / Barhayūlā",
+        "wafq": "3x3 Magic Square (Base 15, Total 45)",
+        "metal": "Cold Forged Lead & Ancient Iron",
+        "incense": "Myrrh, Cypress Needles, Assafoetida (Hiltit), Black Poppy",
+        "chthonicMode": "Chthonic Fixation, Lead Defixio & Inviolable Sealing"
+    },
+    "Jupiter": {
+        "planet": "Jupiter (Al-Mushtari / Tzedek)",
+        "intelligence": "Jophiel",
+        "spirit": "Hismael",
+        "archangel": "Sachiel (Tzadkiel)",
+        "ruhaniyya": "Sayyid Sarfiyā'īl / Tūranin",
+        "wafq": "4x4 Magic Square (Base 34, Total 136)",
+        "metal": "Pure Tin / Electrum / Polished Brass",
+        "incense": "Cedarwood, Nutmeg, Cloves, Benzoin, Dried Mint",
+        "chthonicMode": "Celestial Elevation, Legal Mercy & Sovereign Expansion"
+    },
+    "Mars": {
+        "planet": "Mars (Al-Mirrikh / Madim)",
+        "intelligence": "Graphiel",
+        "spirit": "Bartzabel",
+        "archangel": "Camael (Samsamā'īl)",
+        "ruhaniyya": "Sayyid Samsamā'īl / Mazjalin",
+        "wafq": "5x5 Magic Square (Base 65, Total 325)",
+        "metal": "Forged Iron & Tempered Martial Steel",
+        "incense": "Dragon's Blood, Chili Pods, Black Pepper, Sulfur, Tobacco",
+        "chthonicMode": "Kinetic Counter-Strike, Shattering Obstacles & War Armor"
+    },
+    "Sun": {
+        "planet": "The Sun (Al-Shams / Shemesh)",
+        "intelligence": "Nachiel",
+        "spirit": "Sorath",
+        "archangel": "Raphael (Rūfā'īl)",
+        "ruhaniyya": "Sayyid Rūqiyā'īl / Bazjalin",
+        "wafq": "6x6 Magic Square (Base 111, Total 666)",
+        "metal": "Pure 24k Gold & Sun Brass",
+        "incense": "Frankincense Tears, Bay Laurel, Ambergris, Cinnamon Bark",
+        "chthonicMode": "Solar Sovereign Illumination, Royal Honors & Exorcism"
+    },
+    "Venus": {
+        "planet": "Venus (Al-Zuhrah / Nogah)",
+        "intelligence": "Hagiel",
+        "spirit": "Kedemel",
+        "archangel": "Anael ('Anyā'īl)",
+        "ruhaniyya": "Sayyid 'Anyā'īl / Qalnahūdin",
+        "wafq": "7x7 Magic Square (Base 175, Total 1225)",
+        "metal": "Refined Copper & Ancient Bronze",
+        "incense": "Red Rose Petals, Sandalwood, Storax, Coriander, Galbanum",
+        "chthonicMode": "Underworld Severance, Shadow Integration & Cord-Cutting"
+    }
+};
+
+    function generateHourOccultWorks(ruler, hourId) {
+  const impacts = {
+    love: {
+      id: "love", glyph: "❤️", name: "Love & Attraction", category: "Jalb",
+      rating: ruler === "Venus" ? "35%" : (ruler === "Mars" ? "02%" : (ruler === "Saturn" ? "01%" : "25%")),
+      badge: ruler === "Venus" ? "Shadow Alchemy" : (ruler === "Mars" ? "Hazardous Conflict" : (ruler === "Saturn" ? "Strictly Proscribed" : "Ineffectual")),
+      badgeColor: ruler === "Venus" ? "#ec4899" : (ruler === "Mars" || ruler === "Saturn" ? "#f43f5e" : "#94a3b8"),
+      mechanics: `Ruler ${ruler} interacts with Venus Stationary-Rx at 08°29′ Scorpio (Detriment).`,
+      advice: ruler === "Venus" 
+        ? "Do NOT cast sweet attraction spells. Inward shadow integration and erotic self-sovereignty only." 
+        : (ruler === "Saturn" ? "Proscribed: Love invocations curdle into cold malice and emotional distance." : "Avoid romantic petitioning; energy is distracted or discordant.")
+    },
+    severance: {
+      id: "severance", glyph: "✂️", name: "Cord-Cutting & Severance", category: "Tafriq",
+      rating: ruler === "Venus" ? "98%" : (ruler === "Saturn" ? "95%" : (ruler === "Mars" ? "92%" : "80%")),
+      badge: ruler === "Venus" || ruler === "Saturn" ? "Supreme Window" : "High Efficacy",
+      badgeColor: "#f43f5e",
+      mechanics: `Applying trine between Moon in Cancer and Venus Rx; Mars opposite Pluto (0°10′).`,
+      advice: ruler === "Venus"
+        ? "Premier hour for Seven-Knot Cord-Cutting (Tafriq al-Batil). Slice black cord with consecrated iron."
+        : (ruler === "Saturn" ? "Irrevocable terminal severance; bury severed cord under heavy stone." : "Sever aggressive ties and energetic leeches with dragon's blood smoke.")
+    },
+    binding: {
+      id: "binding", glyph: "🔒", name: "Binding & Tongue-Tying", category: "Aqd",
+      rating: ruler === "Saturn" ? "99%" : (ruler === "Mercury" ? "92%" : (ruler === "Mars" ? "86%" : "70%")),
+      badge: ruler === "Saturn" ? "Supreme Peak (99%)" : (ruler === "Mercury" ? "Optimal Silencing" : "Effective"),
+      badgeColor: "#94a3b8",
+      mechanics: `Saturn culminating near Zenith (+75.25° NW) in exact annual opposition to Sun.`,
+      advice: ruler === "Saturn"
+        ? "3x3 Magic Square of Saturn on lead sheet; fold around iron padlock and click shut to silence legal foes."
+        : (ruler === "Mercury" ? "Bind lying tongues, corporate fraud, and digital slanders under Hermes-Saturn." : "Chain hostile astral forces before they strike.")
+    },
+    cleansing: {
+      id: "cleansing", glyph: "🌊", name: "Cleansing & Uncrossing", category: "Tahsin",
+      rating: ruler === "Moon" ? "98%" : (ruler === "Mercury" ? "94%" : (ruler === "Sun" ? "90%" : "75%")),
+      badge: ruler === "Moon" ? "Supreme Catharsis" : "High Purgation",
+      badgeColor: "#38bdf8",
+      mechanics: `Moon in Home Domicile Cancer (12°50′) conjunct Royal Star Sirius (14°27′); waning 48.1%.`,
+      advice: ruler === "Moon"
+        ? "Peak window for 7-Herb Lustral Bath (Ghusl al-Ibtal). Dissolves Evil Eye (Al-'Ayn) and multi-generational hexes."
+        : (ruler === "Mercury" ? "Fomalhaut exact trine purges mental confusion, cognitive distortion, and paranoia." : "Solar lustration to burn off nocturnal psychic sludge.")
+    },
+    protection: {
+      id: "protection", glyph: "🛡️", name: "Protection & Boundary Armor", category: "Tahsin",
+      rating: ruler === "Mars" ? "99%" : (ruler === "Saturn" ? "98%" : (ruler === "Sun" ? "92%" : "85%")),
+      badge: ruler === "Mars" || ruler === "Saturn" ? "Invincible Armor" : "Fortified Ward",
+      badgeColor: "#f59e0b",
+      mechanics: `Mars in Leo opposite Pluto in Aquarius at 0°10′ exact orb; Saturnian 4-corner boundary anchors.`,
+      advice: ruler === "Mars"
+        ? "Kinetic mirror ward reflects psychic attacks tenfold back to senders. Consecrate pocket mirror."
+        : (ruler === "Saturn" ? "Drive 4 forged iron stakes with black tourmaline into the four cardinal corners." : "Solar golden aura armor invoked through Archangel Raphael.")
+    },
+    war: {
+      id: "war", glyph: "⚔️", name: "War & Dismantling Oppressors", category: "Tafriq",
+      rating: ruler === "Mars" ? "98%" : (ruler === "Saturn" ? "92%" : (ruler === "Sun" ? "82%" : "65%")),
+      badge: ruler === "Mars" ? "Supreme Combat Peak" : (ruler === "Saturn" ? "Crushing Siege" : "Defensive"),
+      badgeColor: "#dc2626",
+      mechanics: `Mars at 03°16′ Leo in 1st house in exact 0°10′ opposition to Pluto; trine Neptune (0°29′).`,
+      advice: ruler === "Mars"
+        ? "Engrave 5x5 Wafq of Mars on iron sheet. Strike blade into oak to shatter administrative blockades."
+        : (ruler === "Saturn" ? "Crush institutional predators under slow, crushing statutory weight." : "Declare righteous spiritual combat against systemic tyranny.")
+    },
+    pacification: {
+      id: "pacification", glyph: "🕊️", name: "Pacification & Quelling Wrath", category: "Aqd",
+      rating: ruler === "Moon" ? "94%" : (ruler === "Venus" ? "88%" : (ruler === "Jupiter" ? "86%" : "60%")),
+      badge: ruler === "Moon" ? "High Efficacy" : "Serene Pacification",
+      badgeColor: "#a7f3d0",
+      mechanics: `Moon entering Lunar Mansion 9 (Al-Tarf / The Eye) applying trine to Venus in Scorpio.`,
+      advice: ruler === "Moon"
+        ? "Drop silver coin into spring water with PGM Thymokatochon formula. Quells rage of judges and bosses."
+        : (ruler === "Venus" ? "Soothes domestic friction and cools hostile marital grievances." : "Appeals to judicial mercy and divine higher law.")
+    },
+    knowledge: {
+      id: "knowledge", glyph: "👁️", name: "Occult Knowledge & Prophecy", category: "Kashf",
+      rating: ruler === "Mercury" ? "99%" : (ruler === "Moon" ? "95%" : (ruler === "Sun" ? "88%" : "75%")),
+      badge: ruler === "Mercury" ? "Supreme Clarity (0°01′)" : "Lucid Revelation",
+      badgeColor: "#2dd4bf",
+      mechanics: `Mercury at 04°13′ Scorpio in EXACT Trine (0°01′ orb) to Royal Star Fomalhaut (04°15′ Pisces).`,
+      advice: ruler === "Mercury"
+        ? "Direct transmission from Archangel Gabriel. Crystal scrying, deciphering esoteric ciphers, and Gnosis."
+        : (ruler === "Moon" ? "Water scrying and deep subconscious diagnostic revelation." : "Illuminating concealed truths and unmasking hypocrites.")
+    },
+    wealth: {
+      id: "wealth", glyph: "💰", name: "Wealth & Material Abundance", category: "Jalb",
+      rating: ruler === "Jupiter" ? "85%" : (ruler === "Sun" ? "75%" : (ruler === "Mercury" ? "70%" : "60%")),
+      badge: ruler === "Jupiter" ? "Strategic Elevation" : "Prudent Accounting",
+      badgeColor: "#eab308",
+      mechanics: `Jupiter in Leo trine Midheaven in Aries (25°40′); Venus Rx advises strict audit over speculation.`,
+      advice: ruler === "Jupiter"
+        ? "4x4 Magic Square of Jupiter with saffron-musk ink for closing profitable commercial covenants."
+        : (ruler === "Sun" ? "Solar blessing on honest labor and executive remuneration." : "Audit books, eliminate hidden financial waste, and negotiate contracts.")
+    },
+    healing: {
+      id: "healing", glyph: "🩺", name: "Healing & Somatic Renewal", category: "Tahsin",
+      rating: ruler === "Moon" ? "96%" : (ruler === "Sun" ? "90%" : (ruler === "Jupiter" ? "88%" : "70%")),
+      badge: ruler === "Moon" ? "Cellular Rebirth" : "Vital Infusion",
+      badgeColor: "#10b981",
+      mechanics: `Domicile Moon in Cancer conjunct Sirius; Sun in Libra trine Royal Star Aldebaran (0°21′).`,
+      advice: ruler === "Moon"
+        ? "Carnelian stone in spring water charged under Sirius. Purges somatic trauma and resets nervous system."
+        : (ruler === "Sun" ? "Solar prana charging to revitalize depleted adrenals." : "Infuse healing teas with benevolent Jovian blessing.")
+    },
+    sovereignty: {
+      id: "sovereignty", glyph: "👑", name: "Sovereignty & Royal Authority", category: "Jalb",
+      rating: ruler === "Sun" ? "92%" : (ruler === "Jupiter" ? "90%" : (ruler === "Mars" ? "88%" : "72%")),
+      badge: ruler === "Sun" || ruler === "Jupiter" ? "Imperial Command" : "Martial Presence",
+      badgeColor: "#f97316",
+      mechanics: `Mars and Jupiter in regal Leo in 1st House; Sun trine Aldebaran (Royal Star of the East).`,
+      advice: ruler === "Sun" || ruler === "Jupiter"
+        ? "Anoint forehead with frankincense-cinnamon oil. Carry gold coin for commanding respect in high tribunals."
+        : (ruler === "Mars" ? "Commanding presence and sovereign martial courage in high-stakes negotiations." : "Establish dignified personal authority without arrogance.")
+    },
+    discord: {
+      id: "discord", glyph: "🎭", name: "Discord Among Conspirators", category: "Tafriq",
+      rating: ruler === "Mars" ? "96%" : (ruler === "Mercury" ? "94%" : (ruler === "Saturn" ? "90%" : "65%")),
+      badge: ruler === "Mars" || ruler === "Mercury" ? "Destructively Potent" : "Fracturing",
+      badgeColor: "#7f1d1d",
+      mechanics: `Fixed T-Square: Mercury in Scorpio square Mars in Leo square Pluto in Aquarius.`,
+      advice: ruler === "Mars" || ruler === "Mercury"
+        ? "Write conspirators' names on broken pottery with sulfur. Turn corrupt persecutors inward against each other."
+        : (ruler === "Saturn" ? "Sow immovable distrust between plotting corporate rivals." : "Only deploy against documented cabals of unjust persecutors.")
+    },
+    invisibility: {
+      id: "invisibility", glyph: "🌫️", name: "Invisibility & Psychic Cloaking", category: "Tahsin",
+      rating: ruler === "Moon" ? "95%" : (ruler === "Mercury" ? "92%" : (ruler === "Saturn" ? "88%" : "70%")),
+      badge: ruler === "Moon" ? "Total Shroud" : "Covert Veiling",
+      badgeColor: "#64748b",
+      mechanics: `Moon in 12th House (unseen realm); Neptune Rx trine Mars (0°29′); Mercury in deep Scorpio.`,
+      advice: ruler === "Moon"
+        ? "Wrap smoky quartz in dark silk over copal smoke with Surah Ya-Sin verse 9 (21 times). Veils assets."
+        : (ruler === "Mercury" ? "Shield trade secrets, passwords, and sensitive transmissions from espionage." : "Quiet retreat into obscurity away from hostile attention.")
+    },
+    dreams: {
+      id: "dreams", glyph: "🌙", name: "Dream Incubation & Oneiromancy", category: "Kashf",
+      rating: ruler === "Moon" ? "98%" : (ruler === "Mercury" ? "94%" : (ruler === "Jupiter" ? "88%" : "70%")),
+      badge: ruler === "Moon" ? "Supreme Oracle" : "Lucid Guidance",
+      badgeColor: "#818cf8",
+      mechanics: `Moon in 12th House conjunct Isis-Sirius; Mercury trine Fomalhaut (Watcher of Visions).`,
+      advice: ruler === "Moon"
+        ? "Slip saffron ink question with mugwort beneath pillowcase. Receive direct lucid guidance from Isis-Sirius."
+        : (ruler === "Mercury" ? "Hermetic dream divination for solving complex mathematical and intellectual riddles." : "Spiritual visions and communion with ancestral guides.")
+    }
+  };
+
+  return impacts;
+}
+
+    let currentHourOccultFilter = 'all';
+
+    function filterHourOccultCards(cat) {
+      currentHourOccultFilter = cat;
+      document.querySelectorAll('#hourOccultFilters .hour-occult-btn').forEach(btn => {
+        if (btn.dataset.cat === cat) {
+          btn.className = "hour-occult-btn active px-2.5 py-1 rounded-lg border border-sky-500 bg-sky-950 text-sky-200 font-bold";
+        } else {
+          btn.className = "hour-occult-btn px-2.5 py-1 rounded-lg border border-slate-700 bg-slate-800 text-slate-300 hover:text-white";
+        }
+      });
+
+      const cards = document.querySelectorAll('#hourOccultGrid .hour-occult-card');
+      cards.forEach(c => {
+        if (cat === 'all' || c.dataset.cat === cat) {
+          c.style.display = 'flex';
+        } else {
+          c.style.display = 'none';
+        }
+      });
+    }
+
     // Live Clock Engine
     function updateClock() {
       const now = new Date();
@@ -3340,20 +3965,36 @@
       document.getElementById('hourAvoid').textContent = data.avoid;
       document.getElementById('hourDomainPeak').textContent = data.domainPeak;
 
-      // Update Operative Works Row for this hour
-      if (data.operative) {
-        document.getElementById('hourLoveRating').textContent = data.operative.love.rating;
-        document.getElementById('hourLoveDesc').textContent = data.operative.love.desc;
-
-        document.getElementById('hourBindingRating').textContent = data.operative.binding.rating;
-        document.getElementById('hourBindingDesc').textContent = data.operative.binding.desc;
-
-        document.getElementById('hourCleansingRating').textContent = data.operative.cleansing.rating;
-        document.getElementById('hourCleansingDesc').textContent = data.operative.cleansing.desc;
-
-        document.getElementById('hourProtectionRating').textContent = data.operative.protection.rating;
-        document.getElementById('hourProtectionDesc').textContent = data.operative.protection.desc;
+      // Update Theurgy Banner for this hour
+      const occSphere = occultPlanetarySpheres[data.ruler] || occultPlanetarySpheres["Mercury"];
+      if (document.getElementById('hourOccultArchangel')) {
+        document.getElementById('hourOccultArchangel').textContent = occSphere.archangel;
+        document.getElementById('hourOccultSphere').textContent = occSphere.planet;
+        document.getElementById('hourOccultAgrippa').textContent = `${occSphere.intelligence} & ${occSphere.spirit}`;
+        document.getElementById('hourOccultWafq').textContent = occSphere.wafq;
+        document.getElementById('hourOccultRuhaniyya').textContent = occSphere.ruhaniyya;
+        document.getElementById('hourOccultMetal').textContent = `Metal: ${occSphere.metal}`;
+        document.getElementById('hourOccultIncense').textContent = occSphere.incense;
+        document.getElementById('hourOccultMode').textContent = occSphere.chthonicMode;
       }
+
+      // Update All 14 Occult Types for this hour
+      const hourImpacts = generateHourOccultWorks(data.ruler, data.id);
+      Object.keys(hourImpacts).forEach(k => {
+        const item = hourImpacts[k];
+        const badgeEl = document.getElementById(`hour-op-badge-${item.id}`);
+        const mechEl = document.getElementById(`hour-op-mech-${item.id}`);
+        const advEl = document.getElementById(`hour-op-adv-${item.id}`);
+        
+        if (badgeEl) {
+          badgeEl.textContent = `${item.badge} (${item.rating})`;
+          badgeEl.style.backgroundColor = `${item.badgeColor}22`;
+          badgeEl.style.color = item.badgeColor;
+          badgeEl.style.border = `1px solid ${item.badgeColor}55`;
+        }
+        if (mechEl) mechEl.textContent = item.mechanics;
+        if (advEl) advEl.textContent = item.advice;
+      });
 
       // Visual flash
       const card = document.getElementById('hourDetailDossier');
