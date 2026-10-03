@@ -123,32 +123,32 @@
     <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-3 text-xs font-mono">
       <div class="p-3 rounded-2xl bg-slate-900/80 border border-slate-800/80">
         <span class="text-slate-500 block text-[10px]">SOLAR DAY RULER</span>
-        <span class="text-amber-400 font-bold font-cinzel text-sm">Saturday (Saturn)</span>
+        <span id="heroDayRuler" class="text-amber-400 font-bold font-cinzel text-sm">Saturday (Saturn)</span>
         <span class="text-[10px] text-slate-400 block mt-0.5">Sunrise-to-Sunrise</span>
       </div>
       <div class="p-3 rounded-2xl bg-slate-900/80 border border-slate-800/80">
         <span class="text-slate-500 block text-[10px]">ASCENDANT (ASC)</span>
-        <span class="text-sky-400 font-bold text-sm">19°39′ Cancer</span>
+        <span id="heroAscendant" class="text-sky-400 font-bold text-sm">19°39′ Cancer</span>
         <span class="text-[10px] text-slate-400 block mt-0.5">Eastern Horizon</span>
       </div>
       <div class="p-3 rounded-2xl bg-slate-900/80 border border-slate-800/80">
         <span class="text-slate-500 block text-[10px]">MIDHEAVEN (MC)</span>
-        <span class="text-red-400 font-bold text-sm">25°40′ Aries</span>
+        <span id="heroMidheaven" class="text-red-400 font-bold text-sm">25°40′ Aries</span>
         <span class="text-[10px] text-slate-400 block mt-0.5">Upper Zenith Meridian</span>
       </div>
       <div class="p-3 rounded-2xl bg-slate-900/80 border border-slate-800/80">
         <span class="text-slate-500 block text-[10px]">LUNAR PHASE</span>
-        <span class="text-teal-400 font-bold text-sm">Last Qtr (48.1%)</span>
+        <span id="heroLunarPhase" class="text-teal-400 font-bold text-sm">Last Qtr (48.1%)</span>
         <span class="text-[10px] text-slate-400 block mt-0.5">Exact: 3 Oct 20:25 WIB</span>
       </div>
       <div class="p-3 rounded-2xl bg-slate-900/80 border border-slate-800/80">
         <span class="text-slate-500 block text-[10px]">PEAK OPPOSITION</span>
-        <span class="text-rose-400 font-bold text-sm">Mars ☍ Pluto (0°10′)</span>
+        <span id="heroPeakAspect" class="text-rose-400 font-bold text-sm">Mars ☍ Pluto (0°10′)</span>
         <span class="text-[10px] text-slate-400 block mt-0.5">Near-Exact Tension</span>
       </div>
       <div class="p-3 rounded-2xl bg-slate-900/80 border border-slate-800/80">
         <span class="text-slate-500 block text-[10px]">ROYAL STAR CONTACT</span>
-        <span class="text-emerald-400 font-bold text-sm">☿ △ Fomalhaut (0°01′)</span>
+        <span id="heroStarContact" class="text-emerald-400 font-bold text-sm">☿ △ Fomalhaut (0°01′)</span>
         <span class="text-[10px] text-slate-400 block mt-0.5">Supreme Intellect Gnosis</span>
       </div>
     </div>
@@ -4730,5 +4730,7 @@
       }
     }
   </script>
+  <!-- Real-Time Swiss Ephemeris Synchronization & WebSocket Engine -->
+  <script src="public/live_astroval.js"></script>
 </body>
 </html>

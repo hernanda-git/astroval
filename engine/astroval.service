@@ -1,0 +1,17 @@
+[Unit]
+Description=Astroval Astronomical & Grimoiric Engine
+After=network.target
+
+[Service]
+Type=simple
+User=valarion
+Group=valarion
+WorkingDirectory=/home/valarion/apps/astroval
+ExecStart=/home/valarion/apps/astroval/venv/bin/python -m uvicorn engine.main:app --host 127.0.0.1 --port 18090 --workers 2
+Restart=always
+RestartSec=3
+Environment=PYTHONPATH=/home/valarion/apps/astroval
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=multi-user.target

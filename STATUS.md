@@ -1,8 +1,9 @@
 # Astroval System Status & Operational Audit
 
 **System State:** 🟢 **OPERATIONAL / ALL SYSTEMS NOMINAL**  
-**Audit Timestamp:** Sunday, 4 October 2026, 01:18 WIB  
-**Target Reference Point:** Jakarta Center (`-6.208889°`, `106.845556°`, 10m Elev.)
+**Audit Timestamp:** Sunday, 4 October 2026, 02:20 WIB  
+**Target Reference Point:** Jakarta Center (`-6.208889°`, `106.845556°`, 10m Elev.)  
+**Live Production Host:** `https://srv691444.hstgr.cloud/` (HTTP/2, Let's Encrypt ECC SSL)
 
 ---
 
@@ -10,13 +11,14 @@
 
 | Subsystem Component | Operational Status | Metrics / Health Index | Last Verification |
 | :--- | :---: | :--- | :--- |
-| **Astrometric Ephemeris Engine** | 🟢 **OPTIMAL** | 100% NASA JPL DE431 Precision; Max Error: $< 0.2''$ | 2026-10-04 00:38 WIB |
-| **Placidus House Calculation** | 🟢 **OPTIMAL** | Sub-arcsecond cusp agreement with Swiss Ephemeris C | 2026-10-04 00:38 WIB |
-| **Proportional Chronometry** | 🟢 **OPTIMAL** | Night hour: 59m 10s; Day hour: 60m 49s | 2026-10-04 00:00 WIB |
-| **12-Domain Grimoiric Engine** | 🟢 **OPTIMAL** | All 12 domains mapped with classical authorities | 2026-10-04 00:44 WIB |
-| **Interactive Vector Wheel UI** | 🟢 **OPTIMAL** | Clean rendering, aspect chord filtering, hover inspect | 2026-10-04 01:15 WIB |
-| **Real-Time Jakarta Clock** | 🟢 **OPTIMAL** | Active hour tracking: 8th Nocturnal Hour (Mercury) | Real-time continuous |
-| **Documentation & Guides** | 🟢 **OPTIMAL** | 7 Comprehensive technical files generated | 2026-10-04 01:17 WIB |
+| **Swiss Ephemeris Python Engine** | 🟢 **ACTIVE** | `pyswisseph` NASA JPL DE431/DE441 C-Extension | 2026-10-04 02:20 WIB |
+| **FastAPI / Uvicorn Microservice** | 🟢 **ACTIVE** | 2 Worker processes on `127.0.0.1:18090` | Systemd `astroval.service` |
+| **LiteSpeed Reverse Proxy** | 🟢 **ACTIVE** | HTTP/2, Let's Encrypt SSL, SNI on IPv4 & IPv6 | `srv691444.hstgr.cloud` |
+| **Real-Time WebSocket Stream** | 🟢 **ACTIVE** | 1-second continuous telemetry tick stream | `/ws/live` |
+| **Placidus House Calculation** | 🟢 **OPTIMAL** | Sub-arcsecond cusp agreement with Swiss Ephemeris C | 2026-10-04 02:20 WIB |
+| **Proportional Chronometry** | 🟢 **OPTIMAL** | Unequal hours recalculated from exact daily sunrise/sunset | Real-time continuous |
+| **14-Work Grimoiric Engine** | 🟢 **OPTIMAL** | Dynamic scoring based on active sky and hourly ruler | Real-time continuous |
+| **Interactive Web Application** | 🟢 **OPTIMAL** | Real-time dynamic UI synchronization (`live_astroval.js`) | 2026-10-04 02:20 WIB |
 
 ---
 

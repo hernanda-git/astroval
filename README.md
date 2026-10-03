@@ -101,22 +101,71 @@ astroval/
 
 ---
 
+## 🌐 Live Production Server & Real-Time Ephemeris API
+
+The Astroval live calculation engine is fully deployed and continuously operational on `fspmi-hostinger`:
+
+* **Live Interactive Platform:** [https://srv691444.hstgr.cloud/](https://srv691444.hstgr.cloud/)
+* **Static Mirror:** [https://hernanda-git.github.io/astroval/](https://hernanda-git.github.io/astroval/)
+* **API Documentation & Health:** [https://srv691444.hstgr.cloud/api/health](https://srv691444.hstgr.cloud/api/health)
+
+### Real-Time REST & WebSocket API Endpoints
+
+| Endpoint | Method | Protocol | Description |
+| :--- | :---: | :---: | :--- |
+| `/api/live` | `GET` | HTTPS / JSON | Complete 100% topocentric astrometric snapshot for the exact current second in Jakarta (11 bodies, Placidus houses, aspects with velocity derivatives, 24 planetary hours, and 14 operative works rankings). |
+| `/api/chart` | `GET` | HTTPS / JSON | On-demand calculation for any historical or future date/time (`?iso_datetime=YYYY-MM-DDTHH:MM:SS` or `?date=YYYY-MM-DD&time=HH:MM:SS`). |
+| `/api/planetary-hours` | `GET` | HTTPS / JSON | 24 proportional diurnal and nocturnal planetary hours with true sunrise/sunset reckoning and exact countdowns. |
+| `/api/operative-works` | `GET` | HTTPS / JSON | Real-time viability scores, status badges, and verbatim grimoiric tactical dossiers for all 14 Operative Works. |
+| `/ws/live` | `WS` | WSS / WebSocket | 1-second continuous telemetry stream delivering live clock, active hour countdown, and real-time altitude/azimuth tracking. |
+
+### Production Architecture & Stack
+
+```
+[Web Browser Client] 
+        │ (HTTPS / WSS via HTTP/2)
+        ▼
+[LiteSpeed Web Server (lshttpd)] ── Port 443 with Let's Encrypt ECC SSL
+        │ (Reverse Proxy)
+        ▼
+[Uvicorn ASGI Server] ───────────── Port 18090 (2 Worker Processes)
+        │
+[FastAPI Web Framework] ────────── Python 3.11 High-Performance Async API
+        │
+[AstrovalEngine Python Module]
+        │
+[Swiss Ephemeris C-Extension] ──── pyswisseph (NASA JPL DE431/DE441 Standard)
+        │
+[Fixed Stars Catalog] ───────────── sefstars.txt (Astrodienst IAU Standard)
+```
+
+---
+
 ## 🚀 Quick Start
 
 ### 1. View the Interactive Dashboard Immediately
-No installation, compilation, or web server is required. Simply open `index.html` in any modern web browser:
+No installation, compilation, or web server is required. Simply open `index.html` in any modern web browser or visit the live server:
 ```bash
 # Windows PowerShell
+Start-Process https://srv691444.hstgr.cloud/
+# Or local file
 Start-Process index.html
 
 # Linux / macOS
-open index.html # or xdg-open index.html
+open https://srv691444.hstgr.cloud/
 ```
 
-### 2. Run Local Development Server
+### 2. Run the High-Performance Python Ephemeris Engine Locally
 ```bash
-npm install
-npm run dev
+# Setup Python 3.11 virtual environment
+python -m venv venv
+./venv/Scripts/activate # or source venv/bin/activate on Linux
+
+# Install Swiss Ephemeris and web framework
+pip install pyswisseph fastapi uvicorn websockets pydantic
+
+# Run Uvicorn server with live reloading
+uvicorn engine.main:app --host 127.0.0.1 --port 18090 --reload
 ```
 
 ---
