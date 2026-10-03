@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Astroval — Jakarta 100% Celestial & Grimoiric Intelligence Platform</title>
+  <link rel="icon" type="image/svg+xml" href="public/natal_chart.svg">
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap');
+    
+    :root {
+      --bg-space: #070a13;
+      --card-bg: rgba(15, 23, 42, 0.75);
+      --card-border: rgba(51, 65, 85, 0.6);
+      --glow-amber: rgba(245, 158, 11, 0.25);
+      --glow-sky: rgba(56, 189, 248, 0.25);
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-space);
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(30, 58, 138, 0.15) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(136, 19, 55, 0.15) 0px, transparent 50%),
+        radial-gradient(at 50% 100%, rgba(15, 23, 42, 0.8) 0px, transparent 70%);
+      background-attachment: fixed;
+    }
+
+    .font-cinzel { font-family: 'Cinzel', serif; }
+    .font-mono { font-family: 'JetBrains Mono', monospace; }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #0b0f19; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+    .glow-card {
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5), 0 0 20px -5px rgba(56, 189, 248, 0.05);
+    }
+    
+    .aspect-filter-btn.active {
+      background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+      color: #ffffff;
+      border-color: #38bdf8;
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
+    }
+
+    .tab-btn.active {
+      background: #1e293b;
+      color: #38bdf8;
+      border-bottom: 2px solid #38bdf8;
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 0.8; filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.6)); }
+      50% { opacity: 1; filter: drop-shadow(0 0 16px rgba(245, 158, 11, 0.9)); }
+    }
+    .pulse-glow { animation: pulseGlow 3s infinite ease-in-out; }
+  </style>
+</head>
+<body class="text-slate-100 min-h-screen antialiased selection:bg-sky-500 selection:text-white">
+
+  <!-- Top Announcement / Live Astral Clock Bar -->
+  <aside class="border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-xl sticky top-0 z-50 transition-all">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex flex-col md:flex-row md:items-center justify-between gap-3 text-xs">
+      
+      <!-- Live Clock & Active Hour Badge -->
+      <div class="flex items-center flex-wrap gap-3">
+        <div class="flex items-center gap-2 bg-slate-900 border border-slate-800 px-3 py-1.5 rounded-xl shadow-inner">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+          <span class="text-slate-400 font-mono">JAKARTA (WIB):</span>
+          <span id="liveClockText" class="font-mono font-bold text-amber-300 text-sm tracking-wider">--:--:-- WIB</span>
+        </div>
+
+        <div id="liveHourBadge" class="flex items-center gap-2 bg-gradient-to-r from-sky-950/60 to-indigo-950/60 border border-sky-800/60 px-3 py-1.5 rounded-xl">
+          <span class="text-sky-400 font-bold">⚡ ACTIVE HOUR:</span>
+          <span id="activeHourName" class="font-bold text-white tracking-wide">8th Night (Mercury / 'Utarid)</span>
+          <span class="text-slate-400">•</span>
+          <span id="activeHourTimer" class="font-mono text-emerald-400 font-semibold">28m 14s remaining</span>
+        </div>
+      </div>
+
+      <!-- Navigation & Quick Links -->
+      <div class="flex items-center gap-2.5">
+        <span class="hidden sm:inline-block px-2.5 py-1 rounded-md bg-amber-950/50 text-amber-300 border border-amber-800/40 font-cinzel font-semibold">
+          Saturday Night (Saturn Day)
+        </span>
+        <button onclick="toggleAudioChime()" id="audioBtn" class="px-2.5 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-slate-200 transition flex items-center gap-1.5" title="Toggle Hour Transition Chime">
+          <span>🔔</span> <span class="hidden sm:inline">Chime: Off</span>
+        </button>
+        <a href="docs/conditions.md" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition font-medium">
+          📄 Raw Data
+        </a>
+        <a href="public/natal_chart.svg" download="jakarta_natal_chart_2026.svg" class="px-3 py-1.5 rounded-lg bg-sky-600 hover:bg-sky-500 text-white transition font-medium shadow-sm flex items-center gap-1">
+          <span>⬇️</span> SVG Wheel
+        </a>
+      </div>
+
+    </div>
+  </aside>
+
+  <!-- Hero Header -->
+  <header class="max-w-7xl mx-auto px-4 sm:px-6 pt-8 pb-4">
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-slate-800 pb-6">
+      <div>
+        <div class="flex items-center gap-3">
+          <span class="text-3xl text-amber-400 pulse-glow">✦</span>
+          <div>
+            <span class="text-xs uppercase tracking-widest text-sky-400 font-semibold">100% NASA JPL / Swiss Ephemeris Precision</span>
+            <h1 class="text-2xl sm:text-4xl font-extrabold font-cinzel tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-white to-sky-200">
+              ASTROVAL JAKARTA
+            </h1>
+          </div>
+        </div>
+        <p class="text-xs sm:text-sm text-slate-400 mt-2 max-w-2xl leading-relaxed">
+          Daily high-precision astrometric ephemeris, Placidus celestial wheel, proportional 24-hour chronometry, and 12-dimensional Grimoiric intelligence for Jakarta (<span class="font-mono text-slate-300">6°12′32″ S, 106°50′44″ E</span>).
+        </p>
+      </div>
+
+      <!-- Quick Benchmark Specs -->
+      <div class="flex flex-wrap gap-2 text-xs font-mono">
+        <div class="px-3 py-2 rounded-xl bg-slate-900/90 border border-slate-800">
+          <span class="text-slate-500 block text-[10px]">ASCENDANT (ASC)</span>
+          <span class="text-amber-400 font-bold">19°39′ Cancer</span>
+        </div>
+        <div class="px-3 py-2 rounded-xl bg-slate-900/90 border border-slate-800">
+          <span class="text-slate-500 block text-[10px]">MIDHEAVEN (MC)</span>
+          <span class="text-red-400 font-bold">25°40′ Aries</span>
+        </div>
+        <div class="px-3 py-2 rounded-xl bg-slate-900/90 border border-slate-800">
+          <span class="text-slate-500 block text-[10px]">LUNAR PHASE</span>
+          <span class="text-sky-400 font-bold">Last Quarter (48.1%)</span>
+        </div>
+        <div class="px-3 py-2 rounded-xl bg-slate-900/90 border border-slate-800">
+          <span class="text-slate-500 block text-[10px]">ZENITH CULMINATION</span>
+          <span class="text-slate-200 font-bold">Saturn Rx (+75.2°)</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Workspace -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 py-6">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      
+      <!-- ==================== LEFT COLUMN: INTERACTIVE WHEEL & CONTROLS (7 Cols) ==================== -->
+      <div class="lg:col-span-7 flex flex-col gap-5">
+        
+        <!-- Aspect Filter Bar -->
+        <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 shadow-lg flex flex-col gap-2.5">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+              <span>🎯</span> Aspect Filter & Configuration Lens:
+            </span>
+            <span class="text-[11px] text-sky-400 font-mono" id="activeFilterDesc">Showing All 14 Celestial Aspects</span>
+          </div>
+
+          <div class="flex flex-wrap gap-2 text-xs" id="filterButtonGroup">
+            <button onclick="applyAspectFilter('all')" class="aspect-filter-btn active px-3 py-1.5 rounded-lg border border-slate-700 bg-slate-800 text-slate-200 font-medium transition" data-filter="all">All Aspects</button>
+            <button onclick="applyAspectFilter('hard')" class="aspect-filter-btn px-3 py-1.5 rounded-lg border border-slate-700 bg-slate-800 text-slate-200 font-medium transition" data-filter="hard">T-Squares & Oppositions</button>
+            <button onclick="applyAspectFilter('soft')" class="aspect-filter-btn px-3 py-1.5 rounded-lg border border-slate-700 bg-slate-800 text-slate-200 font-medium transition" data-filter="soft">Trines & Sextiles</button>
+            <button onclick="applyAspectFilter('mars-pluto')" class="aspect-filter-btn px-3 py-1.5 rounded-lg border border-slate-700 bg-slate-800 text-slate-200 font-medium transition" data-filter="mars-pluto">Mars ☍ Pluto (0°10′)</button>
+            <button onclick="applyAspectFilter('sun-saturn')" class="aspect-filter-btn px-3 py-1.5 rounded-lg border border-slate-700 bg-slate-800 text-slate-200 font-medium transition" data-filter="sun-saturn">Sun ☍ Saturn (0°50′)</button>
+            <button onclick="applyAspectFilter('fomalhaut')" class="aspect-filter-btn px-3 py-1.5 rounded-lg border border-slate-700 bg-slate-800 text-slate-200 font-medium transition" data-filter="fomalhaut">☿ △ Fomalhaut (0°01′)</button>
+          </div>
+        </div>
+
+        <!-- The Interactive Vector Wheel Container -->
+        <div class="bg-slate-900/90 border border-slate-800 rounded-3xl p-4 sm:p-6 shadow-2xl relative glow-card flex flex-col items-center">
+          
+          <div class="w-full flex justify-between items-center mb-2 px-2 text-xs">
+            <span class="text-slate-400 flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+              <span>Interactive Astrometric Wheel</span>
+            </span>
+            <span class="text-amber-400 font-cinzel font-semibold">Tropical Placidus • Geocentric Topocentric</span>
+          </div>
+
+          <!-- SVG Graphic Canvas -->
+          <div class="w-full max-w-[620px] aspect-square flex items-center justify-center relative select-none">
+            <svg id="masterWheelSvg" viewBox="0 0 1000 1000" class="w-full h-full drop-shadow-2xl">
+              <defs>
+                <radialGradient id="spaceWheelBg" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#141c2e"/>
+                  <stop offset="65%" stop-color="#0d1424"/>
+                  <stop offset="100%" stop-color="#060913"/>
+                </radialGradient>
+                <radialGradient id="innerArenaGrad" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#1e293b" stop-opacity="0.8"/>
+                  <stop offset="100%" stop-color="#0f172a" stop-opacity="0.95"/>
+                </radialGradient>
+                <filter id="neonBlur" x="-20%" y="-20%" width="140%" height="140%">
+                  <feGaussianBlur stdDeviation="3.5" result="blur"/>
+                  <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+                </filter>
+                <marker id="markerAmber" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M 0 1 L 10 5 L 0 9 z" fill="#f59e0b"/>
+                </marker>
+                <marker id="markerCrimson" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M 0 1 L 10 5 L 0 9 z" fill="#ef4444"/>
+                </marker>
+              </defs>
+
+              <rect width="1000" height="1000" fill="url(#spaceWheelBg)" rx="32"/>
+
+              <!-- Concentric Wheel Group centered at (500, 500) -->
+              <g transform="translate(500, 500)">
+                <!-- Concentric Rings -->
+                <circle r="430" fill="none" stroke="#334155" stroke-width="2"/>
+                <circle r="370" fill="none" stroke="#475569" stroke-width="1.5"/>
+                <circle r="260" fill="none" stroke="#334155" stroke-width="1.5"/>
+                <circle r="215" fill="url(#innerArenaGrad)" stroke="#1e293b" stroke-width="2"/>
+                <circle r="60" fill="#070a13" stroke="#334155" stroke-width="1.5"/>
+
+                <!-- Zodiac Sign Segments (Band: 370 to 430) -->
+                <!-- Cancer (Water) -->
+                <path d="M -368.8 30.1 A 370 370 0 0 1 -351.8 -114.5 L -408.8 -133.1 A 430 430 0 0 0 -428.6 35.0 Z" fill="#1e3a8a" fill-opacity="0.38" stroke="#2563eb" stroke-width="0.8"/>
+                <!-- Leo (Fire) -->
+                <path d="M -351.8 -114.5 A 370 370 0 0 1 -255.7 -267.3 L -297.2 -310.6 A 430 430 0 0 0 -408.8 -133.1 Z" fill="#991b1b" fill-opacity="0.38" stroke="#dc2626" stroke-width="0.8"/>
+                <!-- Virgo (Earth) -->
+                <path d="M -255.7 -267.3 A 370 370 0 0 1 -100.0 -356.2 L -116.3 -413.9 A 430 430 0 0 0 -297.2 -310.6 Z" fill="#065f46" fill-opacity="0.38" stroke="#059669" stroke-width="0.8"/>
+                <!-- Libra (Air) -->
+                <path d="M -100.0 -356.2 A 370 370 0 0 1 84.8 -360.1 L 98.6 -418.5 A 430 430 0 0 0 -116.3 -413.9 Z" fill="#854d0e" fill-opacity="0.38" stroke="#d97706" stroke-width="0.8"/>
+                <!-- Scorpio (Water) -->
+                <path d="M 84.8 -360.1 A 370 370 0 0 1 245.6 -276.6 L 285.4 -321.4 A 430 430 0 0 0 98.6 -418.5 Z" fill="#1e3a8a" fill-opacity="0.38" stroke="#2563eb" stroke-width="0.8"/>
+                <!-- Sagittarius (Fire) -->
+                <path d="M 245.6 -276.6 A 370 370 0 0 1 348.3 -124.9 L 404.8 -145.2 A 430 430 0 0 0 285.4 -321.4 Z" fill="#991b1b" fill-opacity="0.38" stroke="#dc2626" stroke-width="0.8"/>
+                <!-- Capricorn (Earth) -->
+                <path d="M 348.3 -124.9 A 370 370 0 0 1 370.0 19.8 L 430.0 23.0 A 430 430 0 0 0 404.8 -145.2 Z" fill="#065f46" fill-opacity="0.38" stroke="#059669" stroke-width="0.8"/>
+                <!-- Aquarius (Air) -->
+                <path d="M 370.0 19.8 A 370 370 0 0 1 305.5 209.0 L 355.0 242.9 A 430 430 0 0 0 430.0 23.0 Z" fill="#854d0e" fill-opacity="0.38" stroke="#d97706" stroke-width="0.8"/>
+                <!-- Pisces (Water) -->
+                <path d="M 305.5 209.0 A 370 370 0 0 1 166.2 330.6 L 193.1 384.2 A 430 430 0 0 0 355.0 242.9 Z" fill="#1e3a8a" fill-opacity="0.38" stroke="#2563eb" stroke-width="0.8"/>
+                <!-- Aries (Fire) -->
+                <path d="M 166.2 330.6 A 370 370 0 0 1 -18.3 369.5 L -21.3 429.5 A 430 430 0 0 0 193.1 384.2 Z" fill="#991b1b" fill-opacity="0.38" stroke="#dc2626" stroke-width="0.8"/>
+                <!-- Taurus (Earth) -->
+                <path d="M -18.3 369.5 A 370 370 0 0 1 -196.3 313.7 L -228.1 364.5 A 430 430 0 0 0 -21.3 429.5 Z" fill="#065f46" fill-opacity="0.38" stroke="#059669" stroke-width="0.8"/>
+                <!-- Gemini (Air) -->
+                <path d="M -196.3 313.7 A 370 370 0 0 1 -325.9 175.5 L -378.7 204.0 A 430 430 0 0 0 -228.1 364.5 Z" fill="#854d0e" fill-opacity="0.38" stroke="#d97706" stroke-width="0.8"/>
+
+                <!-- Zodiac Sign Symbols (R=400) -->
+                <text x="-398" y="32" fill="#60a5fa" font-size="20" font-weight="bold" text-anchor="middle" dominant-baseline="central">♋</text>
+                <text x="-360" y="-171" fill="#f87171" font-size="20" font-weight="bold" text-anchor="middle" dominant-baseline="central">♌</text>
+                <text x="-227" y="-329" fill="#34d399" font-size="20" font-weight="bold" text-anchor="middle" dominant-baseline="central">♍</text>
+                <text x="-32" y="-398" fill="#fbbf24" font-size="20" font-weight="bold" text-anchor="middle" dominant-baseline="central">♎</text>
+                <text x="171" y="-361" fill="#60a5fa" font-size="20" font-weight="bold" text-anchor="middle" dominant-baseline="central">♏</text>
+                <text x="329" y="-227" fill="#f87171" font-size="20" font-weight="bold" text-anchor="middle" dominant-baseline="central">♐</text>
+                <text x="398" y="-32" fill="#34d399" font-size="20" font-weight="bold" text-anchor="middle" dominant-baseline="central">♑</text>
+                <text x="361" y="170" fill="#fbbf24" font-size="20" font-weight="bold" text-anchor="middle" dominant-baseline="central">♒</text>
+                <text x="227" y="328" fill="#60a5fa" font-size="20" font-weight="bold" text-anchor="middle" dominant-baseline="central">♓</text>
+                <text x="32" y="398" fill="#f87171" font-size="20" font-weight="bold" text-anchor="middle" dominant-baseline="central">♈</text>
+                <text x="-171" y="360" fill="#34d399" font-size="20" font-weight="bold" text-anchor="middle" dominant-baseline="central">♉</text>
+                <text x="-328" y="227" fill="#fbbf24" font-size="20" font-weight="bold" text-anchor="middle" dominant-baseline="central">♊</text>
+
+                <!-- Placidus House Cusps -->
+                <!-- I (ASC) -->
+                <line x1="-215" y1="0" x2="-370" y2="0" stroke="#f59e0b" stroke-width="2.5"/>
+                <text x="-235" y="-12" fill="#94a3b8" font-size="12" font-weight="bold">I</text>
+                <!-- II -->
+                <line x1="-185" y1="-109" x2="-318" y2="-188" stroke="#475569" stroke-width="1.2" stroke-dasharray="3,3"/>
+                <text x="-200" y="-128" fill="#64748b" font-size="11">II</text>
+                <!-- III -->
+                <line x1="-96" y1="-192" x2="-165" y2="-331" stroke="#475569" stroke-width="1.2" stroke-dasharray="3,3"/>
+                <text x="-112" y="-208" fill="#64748b" font-size="11">III</text>
+                <!-- IV (IC) -->
+                <line x1="22" y1="-213" x2="39" y2="-368" stroke="#ef4444" stroke-width="2.5"/>
+                <text x="38" y="-228" fill="#ef4444" font-size="12" font-weight="bold">IV</text>
+                <!-- V -->
+                <line x1="125" y1="-174" x2="216" y2="-300" stroke="#475569" stroke-width="1.2" stroke-dasharray="3,3"/>
+                <text x="140" y="-188" fill="#64748b" font-size="11">V</text>
+                <!-- VI -->
+                <line x1="191" y1="-97" x2="329" y2="-168" stroke="#475569" stroke-width="1.2" stroke-dasharray="3,3"/>
+                <text x="208" y="-110" fill="#64748b" font-size="11">VI</text>
+                <!-- VII (DSC) -->
+                <line x1="215" y1="0" x2="370" y2="0" stroke="#f59e0b" stroke-width="2.5"/>
+                <text x="235" y="16" fill="#94a3b8" font-size="12" font-weight="bold">VII</text>
+                <!-- VIII -->
+                <line x1="185" y1="109" x2="318" y2="188" stroke="#475569" stroke-width="1.2" stroke-dasharray="3,3"/>
+                <text x="200" y="128" fill="#64748b" font-size="11">VIII</text>
+                <!-- IX -->
+                <line x1="96" y1="192" x2="165" y2="331" stroke="#475569" stroke-width="1.2" stroke-dasharray="3,3"/>
+                <text x="112" y="208" fill="#64748b" font-size="11">IX</text>
+                <!-- X (MC) -->
+                <line x1="-22" y1="213" x2="-39" y2="368" stroke="#ef4444" stroke-width="2.5"/>
+                <text x="-40" y="228" fill="#ef4444" font-size="12" font-weight="bold">X</text>
+                <!-- XI -->
+                <line x1="-125" y1="174" x2="-216" y2="300" stroke="#475569" stroke-width="1.2" stroke-dasharray="3,3"/>
+                <text x="-140" y="188" fill="#64748b" font-size="11">XI</text>
+                <!-- XII -->
+                <line x1="-191" y1="97" x2="-329" y2="168" stroke="#475569" stroke-width="1.2" stroke-dasharray="3,3"/>
+                <text x="-208" y="110" fill="#64748b" font-size="11">XII</text>
+
+                <!-- Cardinal Axes Markers -->
+                <line x1="-445" y1="0" x2="445" y2="0" stroke="#f59e0b" stroke-width="2" marker-start="url(#markerAmber)" marker-end="url(#markerAmber)"/>
+                <line x1="43" y1="-442" x2="-43" y2="442" stroke="#ef4444" stroke-width="2" marker-start="url(#markerCrimson)" marker-end="url(#markerCrimson)"/>
+
+                <!-- Aspect Chords Group (R <= 215) -->
+                <g id="wheelAspectChords">
+                  <!-- Oppositions (Solid Red) -->
+                  <line id="chord-mars-pluto" x1="-208.9" y1="-50.6" x2="209.0" y2="50.0" stroke="#ef4444" stroke-width="2" class="chord hard mars-pluto" filter="url(#neonBlur)"/>
+                  <line id="chord-sun-saturn" x1="34.0" y1="-212.3" x2="31.0" y2="212.8" stroke="#ef4444" stroke-width="2" class="chord hard sun-saturn" filter="url(#neonBlur)"/>
+                  
+                  <!-- Squares (Orange Dashed) -->
+                  <line id="chord-sun-moon" x1="34.0" y1="-212.3" x2="-213.4" y2="25.5" stroke="#f97316" stroke-width="1.5" stroke-dasharray="4,3" class="chord hard"/>
+                  <line id="chord-moon-saturn" x1="-213.4" y1="25.5" x2="31.0" y2="212.8" stroke="#f97316" stroke-width="1.5" stroke-dasharray="4,3" class="chord hard"/>
+                  <line id="chord-mercury-mars" x1="54.0" y1="-208.1" x2="-208.9" y2="-50.6" stroke="#f97316" stroke-width="1.5" stroke-dasharray="4,3" class="chord hard"/>
+                  <line id="chord-mercury-pluto" x1="54.0" y1="-208.1" x2="209.0" y2="50.0" stroke="#f97316" stroke-width="1.5" stroke-dasharray="4,3" class="chord hard"/>
+                  <line id="chord-venus-mars" x1="69.4" y1="-203.5" x2="-208.9" y2="-50.6" stroke="#f97316" stroke-width="1.5" stroke-dasharray="4,3" class="chord hard"/>
+
+                  <!-- Trines (Blue Solid) -->
+                  <line id="chord-mars-neptune" x1="-208.9" y1="-50.6" x2="62.3" y2="205.7" stroke="#3b82f6" stroke-width="1.5" class="chord soft"/>
+                  <line id="chord-uranus-pluto" x1="-154.2" y1="149.8" x2="209.0" y2="50.0" stroke="#3b82f6" stroke-width="1.5" class="chord soft"/>
+                  <line id="chord-moon-venus" x1="-213.4" y1="25.5" x2="69.4" y2="-203.5" stroke="#3b82f6" stroke-width="1.5" class="chord soft"/>
+
+                  <!-- Sextiles (Emerald Dotted) -->
+                  <line id="chord-neptune-pluto" x1="62.3" y1="205.7" x2="209.0" y2="50.0" stroke="#10b981" stroke-width="1.5" stroke-dasharray="2,2" class="chord soft"/>
+                  <line id="chord-mars-uranus" x1="-208.9" y1="-50.6" x2="-154.2" y2="149.8" stroke="#10b981" stroke-width="1.5" stroke-dasharray="2,2" class="chord soft"/>
+                  <line id="chord-uranus-neptune" x1="-154.2" y1="149.8" x2="62.3" y2="205.7" stroke="#10b981" stroke-width="1.5" stroke-dasharray="2,2" class="chord soft"/>
+
+                  <!-- Conjunction (Purple) -->
+                  <line id="chord-mercury-venus" x1="54.0" y1="-208.1" x2="69.4" y2="-203.5" stroke="#a855f7" stroke-width="2" class="chord"/>
+                </g>
+
+                <!-- Center Core Badge -->
+                <circle r="42" fill="#070a13" stroke="#334155" stroke-width="1.5"/>
+                <text x="0" y="-8" fill="#94a3b8" font-size="9" font-weight="bold" text-anchor="middle">JAKARTA</text>
+                <text x="0" y="8" fill="#38bdf8" font-size="10" font-weight="bold" text-anchor="middle">00:38 WIB</text>
+                <text x="0" y="21" fill="#f59e0b" font-size="8" text-anchor="middle">4 OCT 2026</text>
+
+                <!-- ==================== INTERACTIVE PLANETARY MARKERS ==================== -->
+                
+                <!-- MOON (12°50' Cancer) -->
+                <g id="marker-moon" class="cursor-pointer group" transform="translate(-307.7, 36.7)" onclick="inspectPlanet('moon')">
+                  <circle r="17" class="fill-slate-900 stroke-sky-400 group-hover:stroke-sky-200 transition" stroke-width="2"/>
+                  <text x="0" y="2" fill="#38bdf8" font-size="18" font-weight="bold" text-anchor="middle" dominant-baseline="central">☽</text>
+                  <text x="0" y="-22" fill="#e2e8f0" font-size="10" font-weight="600" text-anchor="middle">12°50′ ♋</text>
+                </g>
+
+                <!-- MARS (3°16' Leo) -->
+                <g id="marker-mars" class="cursor-pointer group" transform="translate(-301.2, -73.0)" onclick="inspectPlanet('mars')">
+                  <circle r="17" class="fill-slate-900 stroke-red-400 group-hover:stroke-red-200 transition" stroke-width="2"/>
+                  <text x="0" y="2" fill="#f87171" font-size="18" font-weight="bold" text-anchor="middle" dominant-baseline="central">♂</text>
+                  <text x="0" y="-22" fill="#e2e8f0" font-size="10" font-weight="600" text-anchor="middle">3°16′ ♌</text>
+                </g>
+
+                <!-- JUPITER (20°05' Leo) -->
+                <g id="marker-jupiter" class="cursor-pointer group" transform="translate(-267.2, -156.8)" onclick="inspectPlanet('jupiter')">
+                  <circle r="17" class="fill-slate-900 stroke-amber-400 group-hover:stroke-amber-200 transition" stroke-width="2"/>
+                  <text x="0" y="2" fill="#fbbf24" font-size="18" font-weight="bold" text-anchor="middle" dominant-baseline="central">♃</text>
+                  <text x="0" y="-22" fill="#e2e8f0" font-size="10" font-weight="600" text-anchor="middle">20°05′ ♌</text>
+                </g>
+
+                <!-- SUN (10°32' Libra) -->
+                <g id="marker-sun" class="cursor-pointer group" transform="translate(49.0, -306.1)" onclick="inspectPlanet('sun')">
+                  <circle r="18" class="fill-slate-900 stroke-amber-500 group-hover:stroke-amber-300 transition" stroke-width="2.5"/>
+                  <text x="0" y="2" fill="#f59e0b" font-size="20" font-weight="bold" text-anchor="middle" dominant-baseline="central">☉</text>
+                  <text x="0" y="-23" fill="#fbbf24" font-size="10" font-weight="700" text-anchor="middle">10°32′ ♎</text>
+                </g>
+
+                <!-- MERCURY (4°13' Scorpio) -->
+                <g id="marker-mercury" class="cursor-pointer group" transform="translate(77.9, -299.9)" onclick="inspectPlanet('mercury')">
+                  <circle r="16" class="fill-slate-900 stroke-teal-400 group-hover:stroke-teal-200 transition" stroke-width="1.8"/>
+                  <text x="0" y="2" fill="#2dd4bf" font-size="17" font-weight="bold" text-anchor="middle" dominant-baseline="central">☿</text>
+                  <text x="26" y="-12" fill="#e2e8f0" font-size="10" font-weight="600">4°13′ ♏</text>
+                </g>
+
+                <!-- VENUS Rx (8°29' Scorpio) -->
+                <g id="marker-venus" class="cursor-pointer group" transform="translate(119.9, -285.8)" onclick="inspectPlanet('venus')">
+                  <circle r="17" class="fill-slate-900 stroke-pink-500 group-hover:stroke-pink-300 transition" stroke-width="2"/>
+                  <text x="-3" y="2" fill="#ec4899" font-size="18" font-weight="bold" text-anchor="middle" dominant-baseline="central">♀</text>
+                  <text x="8" y="-5" fill="#f43f5e" font-size="10" font-weight="800">℞</text>
+                  <text x="26" y="14" fill="#f472b6" font-size="10" font-weight="600">8°29′ ♏</text>
+                </g>
+
+                <!-- PLUTO Rx (3°06' Aquarius) -->
+                <g id="marker-pluto" class="cursor-pointer group" transform="translate(301.3, 72.1)" onclick="inspectPlanet('pluto')">
+                  <circle r="16" class="fill-slate-900 stroke-purple-400 group-hover:stroke-purple-200 transition" stroke-width="1.8"/>
+                  <text x="-3" y="2" fill="#c084fc" font-size="17" font-weight="bold" text-anchor="middle" dominant-baseline="central">♇</text>
+                  <text x="7" y="-5" fill="#f43f5e" font-size="10" font-weight="800">℞</text>
+                  <text x="0" y="-22" fill="#e2e8f0" font-size="10" font-weight="600" text-anchor="middle">3°06′ ♒</text>
+                </g>
+
+                <!-- NEPTUNE Rx (2°47' Aries) -->
+                <g id="marker-neptune" class="cursor-pointer group" transform="translate(89.9, 296.6)" onclick="inspectPlanet('neptune')">
+                  <circle r="16" class="fill-slate-900 stroke-indigo-400 group-hover:stroke-indigo-200 transition" stroke-width="1.8"/>
+                  <text x="-3" y="2" fill="#818cf8" font-size="17" font-weight="bold" text-anchor="middle" dominant-baseline="central">♆</text>
+                  <text x="7" y="-5" fill="#f43f5e" font-size="10" font-weight="800">℞</text>
+                  <text x="0" y="26" fill="#e2e8f0" font-size="10" font-weight="600" text-anchor="middle">2°47′ ♈</text>
+                </g>
+
+                <!-- SATURN Rx (11°22' Aries) -->
+                <g id="marker-saturn" class="cursor-pointer group" transform="translate(44.6, 306.8)" onclick="inspectPlanet('saturn')">
+                  <circle r="18" class="fill-slate-900 stroke-slate-200 group-hover:stroke-white transition" stroke-width="2"/>
+                  <text x="-3" y="2" fill="#e2e8f0" font-size="19" font-weight="bold" text-anchor="middle" dominant-baseline="central">♄</text>
+                  <text x="8" y="-5" fill="#f43f5e" font-size="10" font-weight="800">℞</text>
+                  <text x="0" y="27" fill="#e2e8f0" font-size="10" font-weight="700" text-anchor="middle">11°22′ ♈</text>
+                </g>
+
+                <!-- URANUS Rx (5°29' Gemini) -->
+                <g id="marker-uranus" class="cursor-pointer group" transform="translate(-222.4, 215.9)" onclick="inspectPlanet('uranus')">
+                  <circle r="16" class="fill-slate-900 stroke-cyan-400 group-hover:stroke-cyan-200 transition" stroke-width="1.8"/>
+                  <text x="-3" y="2" fill="#38bdf8" font-size="17" font-weight="bold" text-anchor="middle" dominant-baseline="central">♅</text>
+                  <text x="7" y="-5" fill="#f43f5e" font-size="10" font-weight="800">℞</text>
+                  <text x="0" y="26" fill="#e2e8f0" font-size="10" font-weight="600" text-anchor="middle">5°29′ ♊</text>
+                </g>
+
+              </g>
+            </svg>
+          </div>
+
+          <!-- Bottom Legend -->
+          <div class="mt-4 flex flex-wrap justify-center items-center gap-4 text-xs text-slate-400 border-t border-slate-800 pt-3 w-full">
+            <span class="flex items-center gap-1.5"><span class="w-3 h-0.5 bg-red-500 inline-block"></span> Opposition (180°)</span>
+            <span class="flex items-center gap-1.5"><span class="w-3 h-0.5 border-t border-dashed border-orange-500 inline-block"></span> Square (90°)</span>
+            <span class="flex items-center gap-1.5"><span class="w-3 h-0.5 bg-blue-500 inline-block"></span> Trine (120°)</span>
+            <span class="flex items-center gap-1.5"><span class="w-3 h-0.5 border-t border-dotted border-emerald-500 inline-block"></span> Sextile (60°)</span>
+            <span class="flex items-center gap-1.5"><span class="w-3 h-0.5 bg-purple-500 inline-block"></span> Conjunction (0°)</span>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- ==================== RIGHT COLUMN: DEEP DOSSIERS & TABS (5 Cols) ==================== -->
+      <div class="lg:col-span-5 flex flex-col gap-6">
+        
+        <!-- Interactive Planet Inspector Card -->
+        <div id="inspectorBox" class="bg-slate-900/90 border border-slate-800 rounded-3xl p-5 shadow-xl transition-all glow-card">
+          <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+            <div class="flex items-center gap-3">
+              <span id="inspectGlyph" class="text-3xl text-sky-400 font-bold">☽</span>
+              <div>
+                <h3 id="inspectName" class="text-lg font-bold text-white font-cinzel">The Moon</h3>
+                <p id="inspectSign" class="text-xs text-sky-300 font-semibold">12°50′25″ Cancer • 12th House</p>
+              </div>
+            </div>
+            <div id="inspectBadge" class="px-2.5 py-1 rounded-md text-xs font-bold bg-blue-950 text-blue-300 border border-blue-800">
+              Domicile / Dignified
+            </div>
+          </div>
+
+          <div class="mt-4 grid grid-cols-2 gap-2.5 text-xs font-mono">
+            <div class="p-2.5 rounded-xl bg-slate-950/60 border border-slate-800">
+              <span class="text-slate-500 block text-[10px]">SIDEREAL LAHIRI</span>
+              <span id="inspectSidereal" class="font-semibold text-slate-200">18°36′ Gemini</span>
+            </div>
+            <div class="p-2.5 rounded-xl bg-slate-950/60 border border-slate-800">
+              <span class="text-slate-500 block text-[10px]">NAKSHATRA & PADA</span>
+              <span id="inspectNakshatra" class="font-semibold text-amber-300">Ardra (Pada 4)</span>
+            </div>
+            <div class="p-2.5 rounded-xl bg-slate-950/60 border border-slate-800">
+              <span class="text-slate-500 block text-[10px]">JAKARTA ALTITUDE</span>
+              <span id="inspectAlt" class="font-semibold text-emerald-400">+4.61° (ENE)</span>
+            </div>
+            <div class="p-2.5 rounded-xl bg-slate-950/60 border border-slate-800">
+              <span class="text-slate-500 block text-[10px]">MOTION STATUS</span>
+              <span id="inspectMotion" class="font-semibold text-slate-200">48.1% Waning (Last Qtr)</span>
+            </div>
+          </div>
+
+          <div class="mt-4">
+            <span class="text-[11px] font-bold text-slate-400 block mb-1.5 uppercase tracking-wider">Active Aspect Contacts:</span>
+            <div id="inspectAspectList" class="space-y-1.5 text-xs">
+              <div class="p-2 rounded-lg bg-slate-950/80 border border-slate-800 flex justify-between">
+                <span class="text-orange-400 font-medium">□ Square Saturn Rx</span>
+                <span class="text-slate-400 font-mono">1°29′ Separating</span>
+              </div>
+              <div class="p-2 rounded-lg bg-slate-950/80 border border-slate-800 flex justify-between">
+                <span class="text-orange-400 font-medium">□ Square Sun</span>
+                <span class="text-slate-400 font-mono">2°19′ (Last Qtr Phase)</span>
+              </div>
+              <div class="p-2 rounded-lg bg-slate-950/80 border border-slate-800 flex justify-between">
+                <span class="text-blue-400 font-medium">△ Trine Venus Rx</span>
+                <span class="text-slate-400 font-mono">4°21′ Applying</span>
+              </div>
+              <div class="p-2 rounded-lg bg-slate-950/80 border border-slate-800 flex justify-between">
+                <span class="text-purple-400 font-medium">☌ Ecliptic Conj. Sirius</span>
+                <span class="text-slate-400 font-mono">1°37′ Longitudinal</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Master Tabs Container -->
+        <div class="bg-slate-900 border border-slate-800 rounded-3xl p-5 shadow-xl glow-card">
+          <div class="flex border-b border-slate-800 pb-3 gap-1.5 overflow-x-auto text-xs font-semibold" id="tabNav">
+            <button onclick="changeTab('ephemeris')" class="tab-btn active px-3 py-1.5 rounded-lg transition" data-tab="ephemeris">Ephemeris</button>
+            <button onclick="changeTab('hours')" class="tab-btn px-3 py-1.5 rounded-lg transition text-slate-400 hover:text-slate-200" data-tab="hours">24h Hours</button>
+            <button onclick="changeTab('domains')" class="tab-btn px-3 py-1.5 rounded-lg transition text-slate-400 hover:text-slate-200" data-tab="domains">12 Domains</button>
+            <button onclick="changeTab('aspects')" class="tab-btn px-3 py-1.5 rounded-lg transition text-slate-400 hover:text-slate-200" data-tab="aspects">Aspect Matrix</button>
+            <button onclick="changeTab('stars')" class="tab-btn px-3 py-1.5 rounded-lg transition text-slate-400 hover:text-slate-200" data-tab="stars">Fixed Stars</button>
+          </div>
+
+          <!-- TAB 1: Complete Ephemeris Table -->
+          <div id="tab-ephemeris" class="tab-content mt-4 overflow-x-auto">
+            <table class="w-full text-left text-xs font-mono">
+              <thead class="text-slate-400 border-b border-slate-800 uppercase tracking-wider text-[10px]">
+                <tr>
+                  <th class="py-2">Body</th>
+                  <th class="py-2">Tropical</th>
+                  <th class="py-2">Alt / Az</th>
+                  <th class="py-2">Mag</th>
+                  <th class="py-2">Motion</th>
+                  <th class="py-2">Dignity</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-800/60 font-medium text-[11px]">
+                <tr class="hover:bg-slate-800/50 cursor-pointer" onclick="inspectPlanet('sun')">
+                  <td class="py-2 font-bold text-amber-400">☉ Sun</td>
+                  <td class="py-2">10°31′ ♎</td>
+                  <td class="py-2 text-slate-400">−72.5° / 126°</td>
+                  <td class="py-2">−26.7</td>
+                  <td class="py-2 text-emerald-400">Direct</td>
+                  <td class="py-2 text-red-400 font-bold">Fall</td>
+                </tr>
+                <tr class="hover:bg-slate-800/50 cursor-pointer bg-sky-950/20" onclick="inspectPlanet('moon')">
+                  <td class="py-2 font-bold text-sky-400">☽ Moon</td>
+                  <td class="py-2">12°50′ ♋</td>
+                  <td class="py-2 text-emerald-400">+4.6° / 062°</td>
+                  <td class="py-2">−11.5</td>
+                  <td class="py-2 text-emerald-400">Direct</td>
+                  <td class="py-2 text-blue-400 font-bold">Domicile</td>
+                </tr>
+                <tr class="hover:bg-slate-800/50 cursor-pointer" onclick="inspectPlanet('mercury')">
+                  <td class="py-2 font-bold text-teal-400">☿ Mercury</td>
+                  <td class="py-2">04°13′ ♏</td>
+                  <td class="py-2 text-slate-400">−67.7° / 199°</td>
+                  <td class="py-2">−0.1</td>
+                  <td class="py-2 text-emerald-400">Direct</td>
+                  <td class="py-2 text-slate-400">—</td>
+                </tr>
+                <tr class="hover:bg-slate-800/50 cursor-pointer" onclick="inspectPlanet('venus')">
+                  <td class="py-2 font-bold text-pink-400">♀ Venus</td>
+                  <td class="py-2">08°29′ ♏</td>
+                  <td class="py-2 text-slate-400">−60.9° / 199°</td>
+                  <td class="py-2">−4.7</td>
+                  <td class="py-2 text-rose-400 font-bold">Stat. Rx</td>
+                  <td class="py-2 text-red-400 font-bold">Detriment</td>
+                </tr>
+                <tr class="hover:bg-slate-800/50 cursor-pointer" onclick="inspectPlanet('mars')">
+                  <td class="py-2 font-bold text-red-400">♂ Mars</td>
+                  <td class="py-2">03°16′ ♌</td>
+                  <td class="py-2 text-slate-400">−13.4° (01:33)</td>
+                  <td class="py-2">+1.1</td>
+                  <td class="py-2 text-emerald-400">Direct</td>
+                  <td class="py-2 text-slate-400">—</td>
+                </tr>
+                <tr class="hover:bg-slate-800/50 cursor-pointer" onclick="inspectPlanet('jupiter')">
+                  <td class="py-2 font-bold text-amber-400">♃ Jupiter</td>
+                  <td class="py-2">20°04′ ♌</td>
+                  <td class="py-2 text-slate-400">−29.5° (02:37)</td>
+                  <td class="py-2">−1.9</td>
+                  <td class="py-2 text-emerald-400">Direct</td>
+                  <td class="py-2 text-slate-400">—</td>
+                </tr>
+                <tr class="hover:bg-slate-800/50 cursor-pointer" onclick="inspectPlanet('saturn')">
+                  <td class="py-2 font-bold text-slate-200">♄ Saturn</td>
+                  <td class="py-2">11°21′ ♈</td>
+                  <td class="py-2 text-emerald-400 font-bold">+75.3° / 303°</td>
+                  <td class="py-2">+0.2</td>
+                  <td class="py-2 text-rose-400">Rx</td>
+                  <td class="py-2 text-red-400 font-bold">Fall</td>
+                </tr>
+                <tr class="hover:bg-slate-800/50 cursor-pointer" onclick="inspectPlanet('uranus')">
+                  <td class="py-2 font-bold text-cyan-400">♅ Uranus</td>
+                  <td class="py-2">05°28′ ♊</td>
+                  <td class="py-2 text-emerald-400">+42.4° / 054°</td>
+                  <td class="py-2">+5.6</td>
+                  <td class="py-2 text-rose-400">Rx</td>
+                  <td class="py-2 text-slate-400">—</td>
+                </tr>
+                <tr class="hover:bg-slate-800/50 cursor-pointer" onclick="inspectPlanet('neptune')">
+                  <td class="py-2 font-bold text-indigo-400">♆ Neptune</td>
+                  <td class="py-2">02°47′ ♈</td>
+                  <td class="py-2 text-emerald-400">+68.5° / 285°</td>
+                  <td class="py-2">+7.8</td>
+                  <td class="py-2 text-rose-400">Rx</td>
+                  <td class="py-2 text-slate-400">—</td>
+                </tr>
+                <tr class="hover:bg-slate-800/50 cursor-pointer" onclick="inspectPlanet('pluto')">
+                  <td class="py-2 font-bold text-purple-400">♇ Pluto</td>
+                  <td class="py-2">03°06′ ♒</td>
+                  <td class="py-2 text-emerald-400">+14.1° / 247°</td>
+                  <td class="py-2">+14.6</td>
+                  <td class="py-2 text-rose-400">Rx</td>
+                  <td class="py-2 text-slate-400">—</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- TAB 2: 24-Hour Proportional Chronometry Grid -->
+          <div id="tab-hours" class="tab-content mt-4 hidden space-y-2 text-xs">
+            <div class="p-2.5 rounded-xl bg-slate-950/70 border border-slate-800 flex justify-between items-center">
+              <span class="font-bold text-sky-400">Saturday Night (Saturn Day)</span>
+              <span class="text-slate-400 font-mono text-[11px]">Nocturnal Hour: ~59m 10s</span>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-2 text-[11px] font-mono">
+              <div class="p-2 rounded-lg bg-slate-950 border border-slate-800/80 flex justify-between">
+                <span>1. 17:46 – 18:45</span> <span class="text-teal-400 font-bold">☿ Mercury</span>
+              </div>
+              <div class="p-2 rounded-lg bg-slate-950 border border-slate-800/80 flex justify-between">
+                <span>2. 18:45 – 19:44</span> <span class="text-sky-400 font-bold">☽ Moon</span>
+              </div>
+              <div class="p-2 rounded-lg bg-slate-950 border border-slate-800/80 flex justify-between">
+                <span>3. 19:44 – 20:43</span> <span class="text-slate-300 font-bold">♄ Saturn</span>
+              </div>
+              <div class="p-2 rounded-lg bg-slate-950 border border-slate-800/80 flex justify-between">
+                <span>4. 20:43 – 21:43</span> <span class="text-amber-400 font-bold">♃ Jupiter</span>
+              </div>
+              <div class="p-2 rounded-lg bg-slate-950 border border-slate-800/80 flex justify-between">
+                <span>5. 21:43 – 22:42</span> <span class="text-red-400 font-bold">♂ Mars</span>
+              </div>
+              <div class="p-2 rounded-lg bg-slate-950 border border-slate-800/80 flex justify-between">
+                <span>6. 22:42 – 23:41</span> <span class="text-amber-400 font-bold">☉ Sun</span>
+              </div>
+              <div class="p-2 rounded-lg bg-slate-950 border border-slate-800/80 flex justify-between">
+                <span>7. 23:41 – 00:40</span> <span class="text-pink-400 font-bold">♀ Venus</span>
+              </div>
+              <div class="p-2 rounded-lg bg-sky-950/60 border border-sky-600 flex justify-between text-white font-bold animate-pulse">
+                <span>8. 00:40 – 01:39</span> <span class="text-teal-300">☿ Mercury ★</span>
+              </div>
+              <div class="p-2 rounded-lg bg-slate-950 border border-slate-800/80 flex justify-between">
+                <span>9. 01:39 – 02:38</span> <span class="text-sky-400 font-bold">☽ Moon</span>
+              </div>
+              <div class="p-2 rounded-lg bg-slate-950 border border-slate-800/80 flex justify-between">
+                <span>10. 02:38 – 03:38</span> <span class="text-slate-300 font-bold">♄ Saturn</span>
+              </div>
+              <div class="p-2 rounded-lg bg-slate-950 border border-slate-800/80 flex justify-between">
+                <span>11. 03:38 – 04:37</span> <span class="text-amber-400 font-bold">♃ Jupiter</span>
+              </div>
+              <div class="p-2 rounded-lg bg-slate-950 border border-slate-800/80 flex justify-between">
+                <span>12. 04:37 – 05:36</span> <span class="text-red-400 font-bold">♂ Mars</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 3: 12-Dimensional Life & Grimoiric Dossiers -->
+          <div id="tab-domains" class="tab-content mt-4 hidden space-y-2.5 text-xs max-h-[460px] overflow-y-auto pr-1">
+            
+            <!-- DOM-01 -->
+            <div class="p-3 rounded-xl bg-slate-950/80 border border-slate-800">
+              <div class="flex items-center justify-between mb-1">
+                <span class="font-bold text-red-400 font-cinzel">DOM-01: Vitality & Persona</span>
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-950 text-amber-300 border border-amber-800">DEFENSE (Tahsin)</span>
+              </div>
+              <p class="text-slate-300 leading-relaxed text-[11px]">
+                Mars rising in Leo opposite Pluto ($0^\circ 10'$). Sovereign vital force is exceptionally high, but prone to physical burnout and inflammation. Ground martial heat with camphor.
+              </p>
+            </div>
+
+            <!-- DOM-02 -->
+            <div class="p-3 rounded-xl bg-slate-950/80 border border-slate-800">
+              <div class="flex items-center justify-between mb-1">
+                <span class="font-bold text-amber-300 font-cinzel">DOM-02: Wealth & Sustenance</span>
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-900 text-slate-300 border border-slate-700">LOCK ( 'Aqd)</span>
+              </div>
+              <p class="text-slate-300 leading-relaxed text-[11px]">
+                Mercury conjunct stationary Venus in Scorpio. Excellent for forensic auditing, closing financial leaks, and debt settlement. Avoid speculative gambling.
+              </p>
+            </div>
+
+            <!-- DOM-03 -->
+            <div class="p-3 rounded-xl bg-slate-950/80 border border-sky-900/60 bg-sky-950/20">
+              <div class="flex items-center justify-between mb-1">
+                <span class="font-bold text-teal-300 font-cinzel">DOM-03: Intellect & Gnosis</span>
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-950 text-emerald-300 border border-emerald-800">ATTRACT (Jalb)</span>
+              </div>
+              <p class="text-slate-200 leading-relaxed text-[11px]">
+                <strong class="text-white">Supreme Peak:</strong> Mercury exact trine Royal Star Fomalhaut ($0^\circ 01'$). Premier window for <em>Kashf al-Asrar</em>, crystal scrying, and deciphering cryptic books.
+              </p>
+            </div>
+
+            <!-- DOM-07 -->
+            <div class="p-3 rounded-xl bg-slate-950/80 border border-slate-800">
+              <div class="flex items-center justify-between mb-1">
+                <span class="font-bold text-rose-400 font-cinzel">DOM-07: Contracts & Opponents</span>
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-950 text-rose-300 border border-rose-800">DEFENSE (Tahsin)</span>
+              </div>
+              <p class="text-slate-300 leading-relaxed text-[11px]">
+                Pluto in 7th opposite Mars. Power dynamics in partnerships reach peak tension. Enforce uncompromising contract terms; reject manipulative pressure.
+              </p>
+            </div>
+
+            <!-- DOM-08 -->
+            <div class="p-3 rounded-xl bg-slate-950/80 border border-slate-800">
+              <div class="flex items-center justify-between mb-1">
+                <span class="font-bold text-purple-400 font-cinzel">DOM-08: Crisis & Rebirth</span>
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-purple-950 text-purple-300 border border-purple-800">SEVER (Tafriq)</span>
+              </div>
+              <p class="text-slate-300 leading-relaxed text-[11px]">
+                Saturn culminating near zenith opposite Sun. Premier astrological timing for cord-cutting (*Tafriq*), burning 7-knot black cords to sever toxic trauma bonds.
+              </p>
+            </div>
+
+            <!-- DOM-12 -->
+            <div class="p-3 rounded-xl bg-slate-950/80 border border-slate-800">
+              <div class="flex items-center justify-between mb-1">
+                <span class="font-bold text-sky-400 font-cinzel">DOM-12: Sanctuary & Karma</span>
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-900 text-slate-300 border border-slate-700">LOCK ( 'Aqd)</span>
+              </div>
+              <p class="text-slate-300 leading-relaxed text-[11px]">
+                Moon, Saturn, and Neptune in 12th house. Supreme window for *'Aqd al-Lisan* (padlock defixio) to silence covert slanderers and secure spiritual boundaries.
+              </p>
+            </div>
+
+          </div>
+
+          <!-- TAB 4: Aspect Matrix -->
+          <div id="tab-aspects" class="tab-content mt-4 hidden overflow-x-auto">
+            <table class="w-full text-left text-xs font-mono text-[11px]">
+              <thead class="text-slate-400 border-b border-slate-800 uppercase text-[10px]">
+                <tr>
+                  <th class="py-2">Aspect</th>
+                  <th class="py-2">Bodies</th>
+                  <th class="py-2">Orb</th>
+                  <th class="py-2">Status</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-800/60">
+                <tr class="bg-red-950/20 font-bold"><td class="py-2 text-red-400">Opposition (☍)</td><td class="py-2">Mars ☍ Pluto</td><td class="py-2 text-white">0°10′</td><td class="py-2 text-slate-400">Separating</td></tr>
+                <tr><td class="py-2 text-emerald-400 font-bold">Sextile (✶)</td><td class="py-2">Neptune ✶ Pluto</td><td class="py-2">0°19′</td><td class="py-2 text-slate-400">Separating</td></tr>
+                <tr><td class="py-2 text-blue-400 font-bold">Trine (△)</td><td class="py-2">Mars △ Neptune</td><td class="py-2">0°29′</td><td class="py-2 text-slate-400">Separating</td></tr>
+                <tr class="bg-red-950/20 font-bold"><td class="py-2 text-red-400">Opposition (☍)</td><td class="py-2">Sun ☍ Saturn</td><td class="py-2 text-amber-300">0°50′</td><td class="py-2 text-amber-400">Applying</td></tr>
+                <tr><td class="py-2 text-orange-400 font-bold">Square (□)</td><td class="py-2">Mercury □ Mars</td><td class="py-2">0°57′</td><td class="py-2 text-slate-400">Separating</td></tr>
+                <tr><td class="py-2 text-orange-400 font-bold">Square (□)</td><td class="py-2">Mercury □ Pluto</td><td class="py-2">1°07′</td><td class="py-2 text-slate-400">Separating</td></tr>
+                <tr><td class="py-2 text-orange-400 font-bold">Square (□)</td><td class="py-2">Moon □ Saturn</td><td class="py-2">1°29′</td><td class="py-2 text-slate-400">Separating</td></tr>
+                <tr><td class="py-2 text-orange-400 font-bold">Square (□)</td><td class="py-2">Sun □ Moon</td><td class="py-2">2°19′</td><td class="py-2 text-slate-400">Separating</td></tr>
+                <tr><td class="py-2 text-purple-400 font-bold">Conjunction (☌)</td><td class="py-2">Mercury ☌ Venus</td><td class="py-2">4°16′</td><td class="py-2 text-amber-400">Applying</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- TAB 5: Fixed Stars -->
+          <div id="tab-stars" class="tab-content mt-4 hidden overflow-x-auto">
+            <table class="w-full text-left text-xs font-mono text-[11px]">
+              <thead class="text-slate-400 border-b border-slate-800 uppercase text-[10px]">
+                <tr>
+                  <th class="py-2">Star Name</th>
+                  <th class="py-2">Tropical Long.</th>
+                  <th class="py-2">Alt / Az</th>
+                  <th class="py-2">Mag</th>
+                  <th class="py-2">Alignment Contact</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-800/60">
+                <tr class="bg-teal-950/20 font-bold"><td class="py-2 text-teal-300">Fomalhaut (Royal S)</td><td class="py-2">4°15′ ♓</td><td class="py-2 text-emerald-400">+46.5° / 233°</td><td class="py-2">+1.16</td><td class="py-2 text-teal-300">☿ △ 0°01′ (Exact)</td></tr>
+                <tr><td class="py-2 text-amber-300 font-bold">Aldebaran (Royal E)</td><td class="py-2">10°10′ ♊</td><td class="py-2 text-emerald-400">+39.5° / 063°</td><td class="py-2">+0.85</td><td class="py-2 text-amber-400">☉ △ 0°21′</td></tr>
+                <tr><td class="py-2 text-sky-300 font-bold">Sirius (Behenian)</td><td class="py-2">14°27′ ♋</td><td class="py-2 text-emerald-400">+13.4° / 106°</td><td class="py-2">−1.46</td><td class="py-2 text-sky-400">☽ ☌ 1°37′</td></tr>
+                <tr><td class="py-2 text-slate-300 font-bold">Rigel (Orion)</td><td class="py-2">17°12′ ♊</td><td class="py-2 text-emerald-400">+35.3° / 096°</td><td class="py-2">+0.13</td><td class="py-2 text-slate-400">—</td></tr>
+                <tr><td class="py-2 text-slate-300 font-bold">Capella (Auriga)</td><td class="py-2">22°14′ ♊</td><td class="py-2 text-emerald-400">+18.0° / 037°</td><td class="py-2">+0.08</td><td class="py-2 text-slate-400">—</td></tr>
+                <tr><td class="py-2 text-slate-300 font-bold">Deneb (Cygnus)</td><td class="py-2">5°43′ ♓</td><td class="py-2 text-emerald-400">+7.2° / 317°</td><td class="py-2">+1.25</td><td class="py-2 text-orange-400">♅ □ 0°14′</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="mt-16 border-t border-slate-800/80 bg-slate-950 py-8 text-center text-xs text-slate-500 font-mono">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+      <div>
+        Astroval Engine v1.0 • Geocentric & Topocentric Jakarta Model • NASA JPL DE431
+      </div>
+      <div class="flex items-center gap-4">
+        <a href="PLAN.md" class="hover:text-slate-300 transition">Plan</a>
+        <a href="PROGRESS.md" class="hover:text-slate-300 transition">Progress</a>
+        <a href="VERIFICATION.md" class="hover:text-slate-300 transition">Verification</a>
+        <a href="SKILL.md" class="hover:text-slate-300 transition">Skill Specs</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Interactive JavaScript Controller -->
+  <script>
+    // Live Clock Simulation
+    function updateClock() {
+      const now = new Date();
+      const options = { timeZone: 'Asia/Jakarta', hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' };
+      const timeStr = now.toLocaleTimeString('en-GB', options);
+      document.getElementById('liveClockText').textContent = timeStr + ' WIB';
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Planet Data Inspector
+    const planetCatalog = {
+      moon: {
+        glyph: "☽", color: "#38bdf8", name: "The Moon",
+        sign: "12°50′25″ Cancer • 12th House",
+        badge: "Domicile / Dignified",
+        badgeClass: "bg-blue-950 text-blue-300 border-blue-800",
+        sidereal: "18°36′ Gemini", nakshatra: "Ardra (Pada 4)",
+        alt: "+4.61° (Az 062° ENE)", motion: "48.1% Waning (Last Qtr)",
+        aspects: [
+          { name: "□ Square Saturn Rx", orb: "1°29′ Separating", color: "text-orange-400" },
+          { name: "□ Square Sun", orb: "2°19′ (Last Qtr Phase)", color: "text-orange-400" },
+          { name: "△ Trine Venus Rx", orb: "4°21′ Applying", color: "text-blue-400" },
+          { name: "☌ Conjunct Sirius", orb: "1°37′ Longitudinal", color: "text-purple-400" }
+        ]
+      },
+      sun: {
+        glyph: "☉", color: "#f59e0b", name: "The Sun",
+        sign: "10°31′43″ Libra • 3rd House",
+        badge: "Fall (Debilitated)",
+        badgeClass: "bg-red-950 text-red-300 border-red-800",
+        sidereal: "16°17′43″ Virgo", nakshatra: "Hasta (Pada 3)",
+        alt: "−72.50° (Deep Night)", motion: "Direct (1.0006 AU)",
+        aspects: [
+          { name: "☍ Opposite Saturn Rx", orb: "0°50′ Applying (Peak ~19:29 WIB)", color: "text-red-400" },
+          { name: "□ Square Moon", orb: "2°19′ Separating", color: "text-orange-400" },
+          { name: "△ Trine Aldebaran", orb: "0°21′ Royal Star", color: "text-blue-400" }
+        ]
+      },
+      mars: {
+        glyph: "♂", color: "#f87171", name: "Mars",
+        sign: "03°16′29″ Leo • 1st House",
+        badge: "Direct / Sovereign Fire",
+        badgeClass: "bg-amber-950 text-amber-300 border-amber-800",
+        sidereal: "09°02′29″ Cancer", nakshatra: "Pushya",
+        alt: "−13.43° (Rises ~01:33 WIB)", motion: "Direct (+1.1 Mag)",
+        aspects: [
+          { name: "☍ Opposite Pluto Rx", orb: "0°10′ Separating (Near Exact!)", color: "text-red-400" },
+          { name: "△ Trine Neptune Rx", orb: "0°29′ Separating", color: "text-blue-400" },
+          { name: "□ Square Mercury", orb: "0°57′ Separating", color: "text-orange-400" },
+          { name: "✶ Sextile Uranus Rx", orb: "2°12′ Applying", color: "text-emerald-400" }
+        ]
+      },
+      saturn: {
+        glyph: "♄", color: "#e2e8f0", name: "Saturn",
+        sign: "11°21′50″ Aries • 12th House",
+        badge: "Fall & Retrograde (Near Zenith)",
+        badgeClass: "bg-red-950 text-red-300 border-red-800",
+        sidereal: "17°07′50″ Pisces", nakshatra: "Revati",
+        alt: "+75.25° (Dominant Overhead NW)", motion: "Retrograde (+0.2 Mag)",
+        aspects: [
+          { name: "☍ Opposite Sun", orb: "0°50′ Applying (Peak Opposition)", color: "text-red-400" },
+          { name: "□ Square Moon", orb: "1°29′ Separating", color: "text-orange-400" }
+        ]
+      },
+      mercury: {
+        glyph: "☿", color: "#2dd4bf", name: "Mercury",
+        sign: "04°13′15″ Scorpio • 4th House",
+        badge: "Direct (Fomalhaut Trine)",
+        badgeClass: "bg-teal-950 text-teal-300 border-teal-800",
+        sidereal: "09°59′16″ Libra", nakshatra: "Chitra",
+        alt: "−67.66° (SSW)", motion: "Direct (−0.1 Mag)",
+        aspects: [
+          { name: "△ Trine Fomalhaut", orb: "0°01′ Exact Royal Star!", color: "text-blue-400" },
+          { name: "□ Square Mars", orb: "0°57′ Separating", color: "text-orange-400" },
+          { name: "□ Square Pluto Rx", orb: "1°07′ Separating", color: "text-orange-400" },
+          { name: "☌ Conjunct Venus Rx", orb: "4°16′ Applying", color: "text-purple-400" }
+        ]
+      },
+      venus: {
+        glyph: "♀", color: "#ec4899", name: "Venus",
+        sign: "08°29′15″ Scorpio • 4th House",
+        badge: "Stationary Rx (Detriment)",
+        badgeClass: "bg-rose-950 text-rose-300 border-rose-800",
+        sidereal: "14°15′15″ Libra", nakshatra: "Swati",
+        alt: "−60.94° (SSW)", motion: "Stationary Rx (−0.017°/day)",
+        aspects: [
+          { name: "☌ Conjunct Mercury", orb: "4°16′ Applying", color: "text-purple-400" },
+          { name: "△ Trine Moon", orb: "4°21′ Applying", color: "text-blue-400" },
+          { name: "□ Square Mars", orb: "5°13′ Applying", color: "text-orange-400" }
+        ]
+      },
+      pluto: {
+        glyph: "♇", color: "#c084fc", name: "Pluto",
+        sign: "03°06′18″ Aquarius • 7th House",
+        badge: "Retrograde",
+        badgeClass: "bg-purple-950 text-purple-300 border-purple-800",
+        sidereal: "08°52′ Capricorn", nakshatra: "Uttara Ashadha",
+        alt: "+14.09° (Az 247° WSW)", motion: "Retrograde (+14.6 Mag)",
+        aspects: [
+          { name: "☍ Opposite Mars", orb: "0°10′ Separating (Near Exact!)", color: "text-red-400" },
+          { name: "✶ Sextile Neptune Rx", orb: "0°19′ Separating", color: "text-emerald-400" },
+          { name: "□ Square Mercury", orb: "1°07′ Separating", color: "text-orange-400" }
+        ]
+      },
+      jupiter: {
+        glyph: "♃", color: "#fbbf24", name: "Jupiter",
+        sign: "20°04′33″ Leo • 1st House",
+        badge: "Direct",
+        badgeClass: "bg-amber-950 text-amber-300 border-amber-800",
+        sidereal: "25°50′33″ Cancer", nakshatra: "Ashlesha",
+        alt: "−29.46° (Rises ~02:37 WIB)", motion: "Direct (−1.9 Mag)",
+        aspects: [{ name: "Co-present with Mars in 1st", orb: "Sign Co-presence", color: "text-amber-400" }]
+      },
+      uranus: {
+        glyph: "♅", color: "#38bdf8", name: "Uranus",
+        sign: "05°28′39″ Gemini • 11th House",
+        badge: "Retrograde",
+        badgeClass: "bg-cyan-950 text-cyan-300 border-cyan-800",
+        sidereal: "11°14′ Taurus", nakshatra: "Rohini",
+        alt: "+42.36° (Az 054° NE)", motion: "Retrograde (+5.6 Mag)",
+        aspects: [
+          { name: "△ Trine Pluto Rx", orb: "2°22′ Applying", color: "text-blue-400" },
+          { name: "✶ Sextile Mars", orb: "2°12′ Applying", color: "text-emerald-400" }
+        ]
+      },
+      neptune: {
+        glyph: "♆", color: "#818cf8", name: "Neptune",
+        sign: "02°47′12″ Aries • 12th House",
+        badge: "Retrograde",
+        badgeClass: "bg-indigo-950 text-indigo-300 border-indigo-800",
+        sidereal: "08°33′ Pisces", nakshatra: "Uttara Bhadrapada",
+        alt: "+68.52° (Az 285° WNW)", motion: "Retrograde (+7.8 Mag)",
+        aspects: [
+          { name: "✶ Sextile Pluto Rx", orb: "0°19′ Separating", color: "text-emerald-400" },
+          { name: "△ Trine Mars", orb: "0°29′ Separating", color: "text-blue-400" }
+        ]
+      }
+    };
+
+    function inspectPlanet(id) {
+      const data = planetCatalog[id];
+      if (!data) return;
+
+      document.getElementById('inspectGlyph').textContent = data.glyph;
+      document.getElementById('inspectGlyph').style.color = data.color;
+      document.getElementById('inspectName').textContent = data.name;
+      document.getElementById('inspectSign').textContent = data.sign;
+
+      const badge = document.getElementById('inspectBadge');
+      badge.textContent = data.badge;
+      badge.className = `px-2.5 py-1 rounded-md text-xs font-bold border ${data.badgeClass}`;
+
+      document.getElementById('inspectSidereal').textContent = data.sidereal;
+      document.getElementById('inspectNakshatra').textContent = data.nakshatra;
+      document.getElementById('inspectAlt').textContent = data.alt;
+      document.getElementById('inspectMotion').textContent = data.motion;
+
+      const list = document.getElementById('inspectAspectList');
+      list.innerHTML = data.aspects.map(asp => `
+        <div class="p-2 rounded-lg bg-slate-950/80 border border-slate-800 flex justify-between">
+          <span class="${asp.color} font-medium">${asp.name}</span>
+          <span class="text-slate-400 font-mono">${asp.orb}</span>
+        </div>
+      `).join('');
+
+      const box = document.getElementById('inspectorBox');
+      box.classList.add('ring-2', 'ring-sky-500');
+      setTimeout(() => box.classList.remove('ring-2', 'ring-sky-500'), 350);
+    }
+
+    function changeTab(tabId) {
+      document.querySelectorAll('#tabNav .tab-btn').forEach(btn => {
+        btn.classList.remove('active', 'text-sky-400');
+        btn.classList.add('text-slate-400');
+      });
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+
+      event.target.classList.add('active', 'text-sky-400');
+      event.target.classList.remove('text-slate-400');
+      document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+    }
+
+    function applyAspectFilter(mode) {
+      document.querySelectorAll('#filterButtonGroup .aspect-filter-btn').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+
+      const chords = document.querySelectorAll('#wheelAspectChords .chord');
+      const desc = document.getElementById('activeFilterDesc');
+
+      if (mode === 'all') {
+        chords.forEach(c => c.style.display = 'block');
+        desc.textContent = "Showing All 14 Celestial Aspects";
+      } else if (mode === 'hard') {
+        chords.forEach(c => c.style.display = c.classList.contains('hard') ? 'block' : 'none');
+        desc.textContent = "Showing T-Squares, Oppositions & Squares";
+      } else if (mode === 'soft') {
+        chords.forEach(c => c.style.display = c.classList.contains('soft') ? 'block' : 'none');
+        desc.textContent = "Showing Harmonious Trines & Sextiles";
+      } else if (mode === 'mars-pluto') {
+        chords.forEach(c => c.style.display = c.classList.contains('mars-pluto') ? 'block' : 'none');
+        desc.textContent = "Mars ☍ Pluto Axis (0°10′ Separating)";
+      } else if (mode === 'sun-saturn') {
+        chords.forEach(c => c.style.display = c.classList.contains('sun-saturn') ? 'block' : 'none');
+        desc.textContent = "Sun ☍ Saturn Axis (0°50′ Applying)";
+      } else if (mode === 'fomalhaut') {
+        chords.forEach(c => c.style.display = 'none');
+        desc.textContent = "Mercury △ Royal Star Fomalhaut (0°01′ Exact)";
+      }
+    }
+
+    let chimeEnabled = false;
+    function toggleAudioChime() {
+      chimeEnabled = !chimeEnabled;
+      const btn = document.getElementById('audioBtn');
+      btn.innerHTML = chimeEnabled ? "<span>🔔</span> <span class='hidden sm:inline'>Chime: On</span>" : "<span>🔕</span> <span class='hidden sm:inline'>Chime: Off</span>";
+      if (chimeEnabled) {
+        btn.classList.add('text-amber-400', 'border-amber-700');
+      } else {
+        btn.classList.remove('text-amber-400', 'border-amber-700');
+      }
+    }
+  </script>
+</body>
+</html>

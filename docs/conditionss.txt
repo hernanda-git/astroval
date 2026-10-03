@@ -1,0 +1,995 @@
+Astronomical & Astrological Sky Configuration
+
+Observer Location: Jakarta, Indonesia (
+6
+∘
+12
+′
+32
+′
+′
+ S
+,
+106
+∘
+50
+′
+44
+′
+′
+ E
+6
+∘
+12
+′
+32
+′′
+ S,106
+∘
+50
+′
+44
+′′
+ E, Elevation: 
+10
+ m
+10 m)
+Local Time: Sunday, 4 October 2026, 00:44:09 WIB (UTC+7)
+Universal Time (UTC): Saturday, 3 October 2026, 17:44:09 UTC
+Local Sidereal Time (LST): 
+01
+h 
+41
+m 
+19
+s
+01h 41m 19s
+
+1. Astrological Angles & Horizon Axis (Jakarta)
+Angle	Degree & Sign (Tropical)	Degree & Sign (Sidereal / Vedic)	House Axis
+Ascendant (AC / Rising)	
+21
+∘
+07
+′
+ Capricorn
+21
+∘
+07
+′
+ Capricorn	
+26
+∘
+48
+′
+ Sagittarius
+26
+∘
+48
+′
+ Sagittarius (Uttara Ashadha)	Eastern Horizon
+Descendant (DC / Setting)	
+21
+∘
+07
+′
+ Cancer
+21
+∘
+07
+′
+ Cancer	
+26
+∘
+48
+′
+ Gemini
+26
+∘
+48
+′
+ Gemini (Punarvasu)	Western Horizon
+Midheaven (MC)	
+27
+∘
+17
+′
+ Aries
+27
+∘
+17
+′
+ Aries	
+03
+∘
+04
+′
+ Aries
+03
+∘
+04
+′
+ Aries (Ashwini)	Zenith / Culmination
+Imum Coeli (IC / Nadir)	
+27
+∘
+17
+′
+ Libra
+27
+∘
+17
+′
+ Libra	
+03
+∘
+04
+′
+ Libra
+03
+∘
+04
+′
+ Libra (Chitra)	Lower Meridian
+2. Condition of the Sun & Moon
+The Sun
+Altitude & Azimuth: Alt: 
+−
+71.11
+∘
+−71.11
+∘
+ (Deep night, near nadir), Az: 
+123.22
+∘
+123.22
+∘
+ (ESE)
+Equatorial Coordinates: 
+RA 
+12
+h 
+38
+m 
+44
+s
+,
+Dec 
+−
+05
+∘
+49
+′
+52
+′
+′
+RA 12h 38m 44s,Dec −05
+∘
+49
+′
+52
+′′
+Tropical Zodiac: 
+10
+∘
+54
+′
+01
+′
+′
+ Libra
+10
+∘
+54
+′
+01
+′′
+ Libra (in 9th/10th quadrant house below horizon; Sun in Fall)
+Vedic / Sidereal Zodiac: 
+16
+∘
+40
+′
+ Virgo
+16
+∘
+40
+′
+ Virgo, Nakshatra: Hasta (Pada 3)
+Earth Distance: 
+1.00061
+ AU
+1.00061 AU (
+∼
+149.69
+ million km
+∼149.69 million km)
+Key Aspect: Almost exact Opposition to Saturn Retrograde (
+179.17
+∘
+179.17
+∘
+, orb 
+0
+∘
+50
+′
+0
+∘
+50
+′
+).
+The Moon
+Altitude & Azimuth: Alt: 
++
+6.05
+∘
++6.05
+∘
+ (Freshly risen above Jakarta's eastern horizon), Az: 
+62.25
+∘
+62.25
+∘
+ (ENE)
+Equatorial Coordinates: 
+RA 
+07
+h 
+02
+m 
+00
+s
+,
+Dec 
++
+26
+∘
+42
+′
+08
+′
+′
+RA 07h 02m 00s,Dec +26
+∘
+42
+′
+08
+′′
+Tropical Zodiac: 
+14
+∘
+13
+′
+00
+′
+′
+ Cancer
+14
+∘
+13
+′
+00
+′′
+ Cancer (Domicile / Dignified; located on the Descendant in the 7th House)
+Vedic / Sidereal Zodiac: 
+19
+∘
+59
+′
+ Gemini
+19
+∘
+59
+′
+ Gemini, Nakshatra: Ardra (Pada 4)
+Phase & Illumination: Waning Half-Moon / Last Quarter (
+48.1
+%
+48.1% illuminated, Phase Angle 
+272.36
+∘
+272.36
+∘
+)
+Distance: 
+369
+,
+592
+ km
+369,592 km (close to perigee)
+Fixed Star Alignment: Exact ecliptic conjunction with the Royal Archangel star Sirius (
+14
+∘
+ Cancer
+14
+∘
+ Cancer) and Canopus (
+14
+∘
+57
+′
+ Cancer
+14
+∘
+57
+′
+ Cancer).
+3. Planetary Ephemeris & Observational Status
+Body	Altitude (Jakarta)	Azimuth	Tropical Zodiac	Motion	Apparent Mag	Observational Status
+Mercury	
+−
+67.96
+∘
+−67.96
+∘
+	
+195.5
+∘
+ (SSW)
+195.5
+∘
+ (SSW)	
+04
+∘
+36
+′
+ Scorpio
+04
+∘
+36
+′
+ Scorpio	Direct	
+−
+0.1
+−0.1	Below Horizon
+Venus	
+−
+61.20
+∘
+−61.20
+∘
+	
+196.3
+∘
+ (SSW)
+196.3
+∘
+ (SSW)	
+08
+∘
+51
+′
+ Scorpio
+08
+∘
+51
+′
+ Scorpio	Direct	
+−
+4.7
+−4.7	Below Horizon
+Mars	
+−
+11.42
+∘
+−11.42
+∘
+	
+070.4
+∘
+ (ENE)
+070.4
+∘
+ (ENE)	
+03
+∘
+39
+′
+ Leo
+03
+∘
+39
+′
+ Leo	Direct	
++
+1.1
++1.1	Rises 
+∼
+01
+:
+30
+ AM WIB
+∼01:30 AM WIB
+Jupiter	
+−
+27.53
+∘
+−27.53
+∘
+	
+075.9
+∘
+ (ENE)
+075.9
+∘
+ (ENE)	
+20
+∘
+27
+′
+ Leo
+20
+∘
+27
+′
+ Leo	Direct	
+−
+1.9
+−1.9	Rises 
+∼
+02
+:
+35
+ AM WIB
+∼02:35 AM WIB
+Saturn	
++
+73.95
+∘
++73.95
+∘
+	
+300.3
+∘
+ (WNW)
+300.3
+∘
+ (WNW)	
+11
+∘
+44
+′
+ Aries
+11
+∘
+44
+′
+ Aries	Retrograde	
++
+0.2
++0.2	Dominant overhead in Jakarta sky
+Uranus	
++
+43.61
+∘
++43.61
+∘
+	
+052.9
+∘
+ (NE)
+052.9
+∘
+ (NE)	
+05
+∘
+51
+′
+ Gemini
+05
+∘
+51
+′
+ Gemini	Retrograde	
++
+5.6
++5.6	Visible via binoculars
+Neptune	
++
+67.05
+∘
++67.05
+∘
+	
+284.4
+∘
+ (WNW)
+284.4
+∘
+ (WNW)	
+03
+∘
+09
+′
+ Aries
+03
+∘
+09
+′
+ Aries	Retrograde	
++
+7.8
++7.8	Visible via telescope
+Pluto	
++
+12.75
+∘
++12.75
+∘
+	
+247.1
+∘
+ (WSW)
+247.1
+∘
+ (WSW)	
+03
+∘
+28
+′
+ Aquarius
+03
+∘
+28
+′
+ Aquarius	Retrograde	
++
+14.6
++14.6	Low in West-Southwest
+4. Prominent Fixed Stars Visible Above Jakarta Sky Right Now
+
+All of the following stars have an Altitude 
+>
+0
+∘
+>0
+∘
+ at this exact moment:
+
+Star	Altitude	Azimuth	Apparent Mag	Constellation	Astrological Longitude
+Saturn (Planet)	
++
+73.9
+∘
++73.9
+∘
+	
+300
+∘
+ (WNW)
+300
+∘
+ (WNW)	
++
+0.2
++0.2	Cetus / Pisces border	
+11
+∘
+44
+′
+ Aries
+11
+∘
+44
+′
+ Aries
+Fomalhaut	
++
+45.0
+∘
++45.0
+∘
+	
+234
+∘
+ (SW)
+234
+∘
+ (SW)	
++
+1.16
++1.16	Piscis Austrinus	
+03
+∘
+51
+′
+ Pisces
+03
+∘
+51
+′
+ Pisces
+Aldebaran	
++
+41.2
+∘
++41.2
+∘
+	
+062
+∘
+ (ENE)
+062
+∘
+ (ENE)	
++
+0.85
++0.85	Taurus (Eye of the Bull)	
+09
+∘
+47
+′
+ Gemini
+09
+∘
+47
+′
+ Gemini
+Achernar	
++
+39.0
+∘
++39.0
+∘
+	
+181
+∘
+ (Due South)
+181
+∘
+ (Due South)	
++
+0.46
++0.46	Eridanus	
+15
+∘
+18
+′
+ Pisces
+15
+∘
+18
+′
+ Pisces
+Rigel	
++
+37.1
+∘
++37.1
+∘
+	
+096
+∘
+ (East)
+096
+∘
+ (East)	
++
+0.13
++0.13	Orion (Foot of Orion)	
+16
+∘
+49
+′
+ Gemini
+16
+∘
+49
+′
+ Gemini
+Betelgeuse	
++
+25.3
+∘
++25.3
+∘
+	
+079
+∘
+ (ENE)
+079
+∘
+ (ENE)	
++
+0.50
++0.50	Orion (Red Supergiant)	
+28
+∘
+45
+′
+ Gemini
+28
+∘
+45
+′
+ Gemini
+Capella	
++
+19.3
+∘
++19.3
+∘
+	
+036
+∘
+ (NNE)
+036
+∘
+ (NNE)	
++
+0.08
++0.08	Auriga	
+21
+∘
+51
+′
+ Gemini
+21
+∘
+51
+′
+ Gemini
+Canopus	
++
+16.6
+∘
++16.6
+∘
+	
+143
+∘
+ (SE)
+143
+∘
+ (SE)	
+−
+0.74
+−0.74	Carina (2nd brightest star)	
+14
+∘
+57
+′
+ Cancer
+14
+∘
+57
+′
+ Cancer
+Sirius	
++
+15.3
+∘
++15.3
+∘
+	
+106
+∘
+ (ESE)
+106
+∘
+ (ESE)	
+−
+1.46
+−1.46	Canis Major (Brightest star)	
+14
+∘
+04
+′
+ Cancer
+14
+∘
+04
+′
+ Cancer
+The Moon	
++
+6.1
+∘
++6.1
+∘
+	
+062
+∘
+ (ENE)
+062
+∘
+ (ENE)	
+−
+11.5
+−11.5	Gemini / Cancer border	
+14
+∘
+13
+′
+ Cancer
+14
+∘
+13
+′
+ Cancer
+Deneb	
++
+6.1
+∘
++6.1
+∘
+	
+317
+∘
+ (NW)
+317
+∘
+ (NW)	
++
+1.25
++1.25	Cygnus	
+05
+∘
+19
+′
+ Pisces
+05
+∘
+19
+′
+ Pisces
+Altair	
++
+1.7
+∘
++1.7
+∘
+	
+279
+∘
+ (West)
+279
+∘
+ (West)	
++
+0.77
++0.77	Aquila (Setting)	
+01
+∘
+46
+′
+ Aquarius
+01
+∘
+46
+′
+ Aquarius
+5. Key Astrological Configurations & Patterns
+The Exact Mars–Pluto Opposition (
+179
+∘
+50
+′
+179
+∘
+50
+′
+, Orb 
+0
+∘
+10
+′
+0
+∘
+10
+′
+):
+Mars at 
+3
+∘
+39
+′
+ Leo
+3
+∘
+39
+′
+ Leo directly faces Pluto Retrograde at 
+3
+∘
+28
+′
+ Aquarius
+3
+∘
+28
+′
+ Aquarius. This intense aspect activates leadership, willpower, transformation, and structural renewal.
+The Sun–Saturn Opposition (
+179
+∘
+10
+′
+179
+∘
+10
+′
+, Orb 
+0
+∘
+50
+′
+0
+∘
+50
+′
+):
+Sun in Libra directly opposes Saturn Retrograde in Aries. Saturn is at astronomical opposition to the Sun, shining at its maximum brilliance and high in the midnight sky.
+Cardinal T-Square (Sun – Saturn – Moon):
+The Waning Moon at 
+14
+∘
+ Cancer
+14
+∘
+ Cancer squares both the Sun (
+10
+∘
+ Libra
+10
+∘
+ Libra) and Saturn (
+11
+∘
+ Aries
+11
+∘
+ Aries), focusing emotional balance, public matters, and internal discipline.
+Fixed T-Square (Mercury/Venus – Mars – Pluto):
+Mercury (
+4
+∘
+ Scorpio
+4
+∘
+ Scorpio) and Venus (
+8
+∘
+ Scorpio
+8
+∘
+ Scorpio) form tight squares to the Mars–Pluto axis, emphasizing deep investigation, financial strategy, and sharp communication.
+The Outer Planet Harmonious Triangle:
+Uranus (
+5
+∘
+ Gemini
+5
+∘
+ Gemini), Neptune (
+3
+∘
+ Aries
+3
+∘
+ Aries), and Pluto (
+3
+∘
+ Aquarius
+3
+∘
+ Aquarius) form a tight sextile/trine network (Neptune sextile Pluto at 
+0
+∘
+19
+′
+0
+∘
+19
+′
+ orb, Uranus trine Pluto at 
+2
+∘
+22
+′
+2
+∘
+22
+′
+ orb), marking a generational transition of technological and societal paradigms.

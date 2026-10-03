@@ -1,0 +1,356 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="1000" height="1000" style="background-color: #0b0f19; font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;">
+  <defs>
+    <!-- Gradients -->
+    <radialGradient id="spaceGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#141c2e"/>
+      <stop offset="70%" stop-color="#0e1422"/>
+      <stop offset="100%" stop-color="#080b12"/>
+    </radialGradient>
+    <radialGradient id="centerGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#1e293b" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.95"/>
+    </radialGradient>
+    
+    <!-- Filter for glow -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+
+    <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#f59e0b" />
+    </marker>
+    <marker id="arrowRed" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#ef4444" />
+    </marker>
+  </defs>
+
+  <style>
+    .title-text { fill: #f8fafc; font-size: 20px; font-weight: 700; letter-spacing: 2px; }
+    .subtitle-text { fill: #94a3b8; font-size: 13px; font-weight: 400; }
+    .sign-symbol { font-size: 20px; font-weight: bold; text-anchor: middle; dominant-baseline: central; }
+    .house-num { fill: #64748b; font-size: 13px; font-weight: 600; text-anchor: middle; dominant-baseline: central; }
+    .planet-glyph { font-size: 19px; font-weight: bold; text-anchor: middle; dominant-baseline: central; filter: drop-shadow(0 0 2px rgba(0,0,0,0.8)); }
+    .planet-label { font-size: 10px; font-weight: 600; text-anchor: middle; fill: #cbd5e1; }
+    .retrograde { fill: #f43f5e; font-size: 9px; font-weight: 800; }
+    .axis-label { font-size: 13px; font-weight: 800; fill: #f59e0b; }
+    .aspect-opp { stroke: #ef4444; stroke-width: 1.8; stroke-opacity: 0.85; }
+    .aspect-sqr { stroke: #f97316; stroke-width: 1.5; stroke-opacity: 0.8; stroke-dasharray: 4,3; }
+    .aspect-tri { stroke: #3b82f6; stroke-width: 1.5; stroke-opacity: 0.8; }
+    .aspect-sxt { stroke: #10b981; stroke-width: 1.2; stroke-opacity: 0.75; stroke-dasharray: 2,2; }
+    .aspect-cnj { stroke: #a855f7; stroke-width: 1.5; stroke-opacity: 0.85; }
+  </style>
+
+  <!-- Background Canvas -->
+  <rect width="1000" height="1000" fill="url(#spaceGrad)"/>
+
+  <!-- Chart Header & Metadata Card -->
+  <g transform="translate(50, 45)">
+    <text class="title-text" x="0" y="0">NATAL CHART WHEEL</text>
+    <text class="subtitle-text" x="0" y="22">Jakarta, Indonesia (6°12′32″ S, 106°50′44″ E) • 10m Elev.</text>
+    <text class="subtitle-text" x="0" y="40">Date: 4 October 2026, 00:38:00 WIB (17:38:00 UTC) • LST: 01h 35m 09s</text>
+    <text class="subtitle-text" x="0" y="58">System: Tropical Placidus • Geocentric • Swiss Ephemeris</text>
+  </g>
+
+  <g transform="translate(730, 45)">
+    <rect x="0" y="-15" width="220" height="85" rx="8" fill="#1e293b" fill-opacity="0.7" stroke="#334155" stroke-width="1"/>
+    <text x="15" y="10" fill="#f59e0b" font-size="12px" font-weight="700">KEY HORIZON ANGLES</text>
+    <text x="15" y="30" fill="#e2e8f0" font-size="11px">ASC: <tspan fill="#38bdf8" font-weight="600">19°39′ Cancer</tspan></text>
+    <text x="15" y="47" fill="#e2e8f0" font-size="11px">MC:  <tspan fill="#f87171" font-weight="600">25°40′ Aries</tspan></text>
+    <text x="15" y="64" fill="#94a3b8" font-size="10px">Moon: 12°50′ ♋ (Last Quarter)</text>
+  </g>
+
+  <!-- Main Horoscope Wheel: Center (500, 540) -->
+  <g id="chartWheel" transform="translate(500, 540)">
+    <!-- Base Concentric Circles -->
+    <!-- Outer rim -->
+    <circle r="410" fill="none" stroke="#334155" stroke-width="2"/>
+    <!-- Zodiac band: R 360 to 410 -->
+    <circle r="360" fill="none" stroke="#475569" stroke-width="1.5"/>
+    <!-- House cusp track: R 260 to 360 -->
+    <circle r="260" fill="none" stroke="#334155" stroke-width="1.5"/>
+    <!-- Inner aspect arena: R 220 -->
+    <circle r="220" fill="url(#centerGrad)" stroke="#1e293b" stroke-width="2"/>
+    <circle r="70" fill="#090d16" stroke="#1e293b" stroke-width="1"/>
+
+    <!-- ==================== ZODIAC SIGNS (Band: 360 to 410) ==================== -->
+    <!-- ASC = 109.65° (19°39' Cancer) is set at 180° (9 o'clock). -->
+    <!-- Angle formula: angle = (180 - (sign_start_deg - 109.65)) deg -->
+    
+    <!-- Cancer: 90° to 120° -> Center: 105° -> wheel angle: 180 - (105 - 109.65) = 184.65° -->
+    <path d="M -358.8 29.3 A 360 360 0 0 1 -342.3 -111.4 L -389.8 -126.9 A 410 410 0 0 0 -408.6 33.4 Z" fill="#1e3a8a" fill-opacity="0.35" stroke="#1e40af" stroke-width="0.8"/>
+    <!-- Leo: 120° to 150° -> Center: 135° -> wheel angle: 180 - (135 - 109.65) = 154.65° -->
+    <path d="M -342.3 -111.4 A 360 360 0 0 1 -248.8 -260.0 L -283.4 -296.1 A 410 410 0 0 0 -389.8 -126.9 Z" fill="#991b1b" fill-opacity="0.35" stroke="#b91c1c" stroke-width="0.8"/>
+    <!-- Virgo: 150° to 180° -> Center: 165° -> wheel angle: 124.65° -->
+    <path d="M -248.8 -260.0 A 360 360 0 0 1 -97.3 -346.6 L -110.8 -394.8 A 410 410 0 0 0 -283.4 -296.1 Z" fill="#065f46" fill-opacity="0.35" stroke="#047857" stroke-width="0.8"/>
+    <!-- Libra: 180° to 210° -> Center: 195° -> wheel angle: 94.65° -->
+    <path d="M -97.3 -346.6 A 360 360 0 0 1 82.5 -350.4 L 94.0 -399.1 A 410 410 0 0 0 -110.8 -394.8 Z" fill="#854d0e" fill-opacity="0.35" stroke="#a16207" stroke-width="0.8"/>
+    <!-- Scorpio: 210° to 240° -> Center: 225° -> wheel angle: 64.65° -->
+    <path d="M 82.5 -350.4 A 360 360 0 0 1 239.0 -269.1 L 272.2 -306.4 A 410 410 0 0 0 94.0 -399.1 Z" fill="#1e3a8a" fill-opacity="0.35" stroke="#1e40af" stroke-width="0.8"/>
+    <!-- Sagittarius: 240° to 270° -> Center: 255° -> wheel angle: 34.65° -->
+    <path d="M 239.0 -269.1 A 360 360 0 0 1 338.9 -121.5 L 385.9 -138.4 A 410 410 0 0 0 272.2 -306.4 Z" fill="#991b1b" fill-opacity="0.35" stroke="#b91c1c" stroke-width="0.8"/>
+    <!-- Capricorn: 270° to 300° -> Center: 285° -> wheel angle: 4.65° -->
+    <path d="M 338.9 -121.5 A 360 360 0 0 1 360.0 19.3 L 410.0 22.0 A 410 410 0 0 0 385.9 -138.4 Z" fill="#065f46" fill-opacity="0.35" stroke="#047857" stroke-width="0.8"/>
+    <!-- Aquarius: 300° to 330° -> Center: 315° -> wheel angle: -25.35° (334.65°) -->
+    <path d="M 360.0 19.3 A 360 360 0 0 1 297.2 203.4 L 338.5 231.6 A 410 410 0 0 0 410.0 22.0 Z" fill="#854d0e" fill-opacity="0.35" stroke="#a16207" stroke-width="0.8"/>
+    <!-- Pisces: 330° to 360° -> Center: 345° -> wheel angle: 304.65° -->
+    <path d="M 297.2 203.4 A 360 360 0 0 1 161.7 321.7 L 184.2 366.4 A 410 410 0 0 0 338.5 231.6 Z" fill="#1e3a8a" fill-opacity="0.35" stroke="#1e40af" stroke-width="0.8"/>
+    <!-- Aries: 0° to 30° -> Center: 15° -> wheel angle: 274.65° -->
+    <path d="M 161.7 321.7 A 360 360 0 0 1 -17.8 359.6 L -20.3 409.5 A 410 410 0 0 0 184.2 366.4 Z" fill="#991b1b" fill-opacity="0.35" stroke="#b91c1c" stroke-width="0.8"/>
+    <!-- Taurus: 30° to 60° -> Center: 45° -> wheel angle: 244.65° -->
+    <path d="M -17.8 359.6 A 360 360 0 0 1 -191.0 305.2 L -217.5 347.6 A 410 410 0 0 0 -20.3 409.5 Z" fill="#065f46" fill-opacity="0.35" stroke="#047857" stroke-width="0.8"/>
+    <!-- Gemini: 60° to 90° -> Center: 75° -> wheel angle: 214.65° -->
+    <path d="M -191.0 305.2 A 360 360 0 0 1 -317.1 170.8 L -361.1 194.5 A 410 410 0 0 0 -217.5 347.6 Z" fill="#854d0e" fill-opacity="0.35" stroke="#a16207" stroke-width="0.8"/>
+
+    <!-- Zodiac Sign Glyphs at R=385 -->
+    <!-- Cancer (Water) -->
+    <text class="sign-symbol" x="-383" y="31" fill="#60a5fa">♋</text>
+    <!-- Leo (Fire) -->
+    <text class="sign-symbol" x="-347" y="-165" fill="#f87171">♌</text>
+    <!-- Virgo (Earth) -->
+    <text class="sign-symbol" x="-219" y="-317" fill="#34d399">♍</text>
+    <!-- Libra (Air) -->
+    <text class="sign-symbol" x="-31" y="-384" fill="#fbbf24">♎</text>
+    <!-- Scorpio (Water) -->
+    <text class="sign-symbol" x="165" y="-348" fill="#60a5fa">♏</text>
+    <!-- Sagittarius (Fire) -->
+    <text class="sign-symbol" x="317" y="-219" fill="#f87171">♐</text>
+    <!-- Capricorn (Earth) -->
+    <text class="sign-symbol" x="384" y="-31" fill="#34d399">♑</text>
+    <!-- Aquarius (Air) -->
+    <text class="sign-symbol" x="348" y="164" fill="#fbbf24">♒</text>
+    <!-- Pisces (Water) -->
+    <text class="sign-symbol" x="219" y="316" fill="#60a5fa">♓</text>
+    <!-- Aries (Fire) -->
+    <text class="sign-symbol" x="31" y="384" fill="#f87171">♈</text>
+    <!-- Taurus (Earth) -->
+    <text class="sign-symbol" x="-165" y="347" fill="#34d399">♉</text>
+    <!-- Gemini (Air) -->
+    <text class="sign-symbol" x="-316" y="219" fill="#fbbf24">♊</text>
+
+    <!-- ==================== PLACIDUS HOUSE CUSPS ==================== -->
+    <!-- 1: Cancer 19°39' (180.0°) -->
+    <line x1="-220" y1="0" x2="-360" y2="0" stroke="#f59e0b" stroke-width="2.5"/>
+    <text class="house-num" x="-240" y="-15">I</text>
+    
+    <!-- 2: Leo 20°17' (140.28° -> 149.37°) -->
+    <line x1="-189.3" y1="-112.1" x2="-309.8" y2="-183.5" stroke="#475569" stroke-width="1.2" stroke-dasharray="3,3"/>
+    <text class="house-num" x="-205" y="-135">II</text>
+    
+    <!-- 3: Virgo 23°07' (173.12° -> 116.53°) -->
+    <line x1="-98.3" y1="-196.8" x2="-160.8" y2="-322.0" stroke="#475569" stroke-width="1.2" stroke-dasharray="3,3"/>
+    <text class="house-num" x="-115" y="-215">III</text>
+    
+    <!-- 4: Libra 25°40' (205.67° -> 83.98° / IC) -->
+    <line x1="23.0" y1="-218.8" x2="37.6" y2="-358.0" stroke="#f59e0b" stroke-width="2.5"/>
+    <text class="house-num" x="40" y="-235">IV</text>
+    
+    <!-- 5: Scorpio 25°24' (235.40° -> 54.25°) -->
+    <line x1="128.5" y1="-178.6" x2="210.3" y2="-292.2" stroke="#475569" stroke-width="1.2" stroke-dasharray="3,3"/>
+    <text class="house-num" x="145" y="-195">V</text>
+    
+    <!-- 6: Sagittarius 22°39' (262.65° -> 27.00°) -->
+    <line x1="196.0" y1="-99.9" x2="320.8" y2="-163.4" stroke="#475569" stroke-width="1.2" stroke-dasharray="3,3"/>
+    <text class="house-num" x="215" y="-115">VI</text>
+    
+    <!-- 7: Capricorn 19°39' (289.65° -> 0.0° / DSC) -->
+    <line x1="220" y1="0" x2="360" y2="0" stroke="#f59e0b" stroke-width="2.5"/>
+    <text class="house-num" x="240" y="15">VII</text>
+    
+    <!-- 8: Aquarius 20°17' (320.28° -> 329.37°) -->
+    <line x1="189.3" y1="112.1" x2="309.8" y2="183.5" stroke="#475569" stroke-width="1.2" stroke-dasharray="3,3"/>
+    <text class="house-num" x="205" y="135">VIII</text>
+    
+    <!-- 9: Pisces 23°07' (353.12° -> 296.53°) -->
+    <line x1="98.3" y1="196.8" x2="160.8" y2="322.0" stroke="#475569" stroke-width="1.2" stroke-dasharray="3,3"/>
+    <text class="house-num" x="115" y="215">IX</text>
+    
+    <!-- 10: Aries 25°40' (25.67° -> 263.98° / MC) -->
+    <line x1="-23.0" y1="218.8" x2="-37.6" y2="358.0" stroke="#f59e0b" stroke-width="2.5"/>
+    <text class="house-num" x="-40" y="235">X</text>
+    
+    <!-- 11: Taurus 25°24' (55.40° -> 234.25°) -->
+    <line x1="-128.5" y1="178.6" x2="-210.3" y2="292.2" stroke="#475569" stroke-width="1.2" stroke-dasharray="3,3"/>
+    <text class="house-num" x="-145" y="195">XI</text>
+    
+    <!-- 12: Gemini 22°39' (82.65° -> 207.00°) -->
+    <line x1="-196.0" y1="99.9" x2="-320.8" y2="163.4" stroke="#475569" stroke-width="1.2" stroke-dasharray="3,3"/>
+    <text class="house-num" x="-215" y="115">XII</text>
+
+
+    <!-- ==================== HORIZON & MERIDIAN AXES ==================== -->
+    <!-- ASC - DSC AXIS -->
+    <line x1="-425" y1="0" x2="425" y2="0" stroke="#f59e0b" stroke-width="2" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+    <text class="axis-label" x="-435" y="-8" text-anchor="end">ASC 19°39′ ♋</text>
+    <text class="axis-label" x="435" y="-8" text-anchor="start">DSC 19°39′ ♑</text>
+
+    <!-- MC - IC AXIS -->
+    <!-- MC at 263.98° (bottom in Cartesian, representing zenith sky orientation in chart wheel) -->
+    <line x1="43.7" y1="-422.7" x2="-43.7" y2="422.7" stroke="#ef4444" stroke-width="2" marker-start="url(#arrowRed)" marker-end="url(#arrowRed)"/>
+    <text class="axis-label" x="48" y="-430" fill="#ef4444" text-anchor="middle">IC 25°40′ ♎</text>
+    <text class="axis-label" x="-48" y="445" fill="#ef4444" text-anchor="middle">MC 25°40′ ♈</text>
+
+    <!-- ==================== ASPECT CHORDS (Inside R <= 220) ==================== -->
+    <!-- Coordinates on circle R=220:
+         Sun (190.53° -> 99.12°): (34.8, -217.2)
+         Moon (102.84° -> 186.81°): (-218.4, 26.1)
+         Mercury (214.22° -> 75.43°): (55.3, -212.9)
+         Venus (218.49° -> 71.16°): (71.0, -208.2)
+         Mars (123.27° -> 166.38°): (-213.8, -51.8)
+         Jupiter (140.08° -> 149.57°): (-189.7, -111.4)
+         Saturn (11.36° -> 278.29°): (31.7, 217.7)
+         Uranus (65.48° -> 224.17°): (-157.8, 153.3)
+         Neptune (2.79° -> 286.86°): (63.8, 210.5)
+         Pluto (303.11° -> -13.46° / 346.54°): (213.9, 51.2)
+    -->
+
+    <!-- OPPOSITIONS (Red solid) -->
+    <!-- Mars (Leo) opposite Pluto (Aquarius) - 0°10' orb! -->
+    <line x1="-213.8" y1="-51.8" x2="213.9" y2="51.2" class="aspect-opp" filter="url(#glow)"/>
+    <!-- Sun (Libra) opposite Saturn (Aries) - 0°50' orb! -->
+    <line x1="34.8" y1="-217.2" x2="31.7" y2="217.7" class="aspect-opp" filter="url(#glow)"/>
+
+    <!-- SQUARES (Orange dashed) - Forming Cardinal & Fixed T-Squares -->
+    <!-- Sun square Moon (Last Quarter) -->
+    <line x1="34.8" y1="-217.2" x2="-218.4" y2="26.1" class="aspect-sqr"/>
+    <!-- Moon square Saturn (Cardinal T-Square apex Moon) -->
+    <line x1="-218.4" y1="26.1" x2="31.7" y2="217.7" class="aspect-sqr"/>
+    <!-- Mercury square Mars (Fixed T-Square) -->
+    <line x1="55.3" y1="-212.9" x2="-213.8" y2="-51.8" class="aspect-sqr"/>
+    <!-- Mercury square Pluto (Fixed T-Square) -->
+    <line x1="55.3" y1="-212.9" x2="213.9" y2="51.2" class="aspect-sqr"/>
+    <!-- Venus square Mars -->
+    <line x1="71.0" y1="-208.2" x2="-213.8" y2="-51.8" class="aspect-sqr"/>
+
+    <!-- TRINES (Blue solid) -->
+    <!-- Mars trine Neptune (0°29' orb) -->
+    <line x1="-213.8" y1="-51.8" x2="63.8" y2="210.5" class="aspect-tri"/>
+    <!-- Uranus trine Pluto (2°22' orb) -->
+    <line x1="-157.8" y1="153.3" x2="213.9" y2="51.2" class="aspect-tri"/>
+    <!-- Moon trine Venus (4°21' orb) -->
+    <line x1="-218.4" y1="26.1" x2="71.0" y2="-208.2" class="aspect-tri"/>
+
+    <!-- SEXTILES (Green dashed) -->
+    <!-- Neptune sextile Pluto (0°19' orb) -->
+    <line x1="63.8" y1="210.5" x2="213.9" y2="51.2" class="aspect-sxt"/>
+    <!-- Mars sextile Uranus (2°12' orb) -->
+    <line x1="-213.8" y1="-51.8" x2="-157.8" y2="153.3" class="aspect-sxt"/>
+    <!-- Uranus sextile Neptune (2°41' orb) -->
+    <line x1="-157.8" y1="153.3" x2="63.8" y2="210.5" class="aspect-sxt"/>
+
+    <!-- CONJUNCTION (Purple) -->
+    <!-- Mercury conjunct Venus (4°16' orb) -->
+    <line x1="55.3" y1="-212.9" x2="71.0" y2="-208.2" class="aspect-cnj"/>
+
+    <!-- Center Label -->
+    <circle r="42" fill="#0f172a" stroke="#334155" stroke-width="1.5"/>
+    <text x="0" y="-8" fill="#94a3b8" font-size="10px" font-weight="700" text-anchor="middle">JAKARTA</text>
+    <text x="0" y="8" fill="#38bdf8" font-size="10px" font-weight="600" text-anchor="middle">00:38 WIB</text>
+    <text x="0" y="22" fill="#f59e0b" font-size="9px" text-anchor="middle">4 OCT 2026</text>
+
+
+    <!-- ==================== PLANETARY GLYPHS & DEGREE LABELS (Track R: 280 - 330) ==================== -->
+    
+    <!-- ☽ MOON: 12°50' Cancer (Wheel angle: 186.81°) -->
+    <g transform="translate(-307.7, 36.7)">
+      <circle r="16" fill="#1e293b" stroke="#38bdf8" stroke-width="1.5"/>
+      <text class="planet-glyph" x="0" y="1" fill="#38bdf8">☽</text>
+      <text class="planet-label" x="0" y="-19">12°50′ ♋</text>
+      <text x="0" y="27" fill="#94a3b8" font-size="8px" text-anchor="middle">Last Qtr</text>
+    </g>
+
+    <!-- ♂ MARS: 3°16' Leo (Wheel angle: 166.38°) -->
+    <g transform="translate(-301.2, -73.0)">
+      <circle r="16" fill="#1e293b" stroke="#f87171" stroke-width="1.5"/>
+      <text class="planet-glyph" x="0" y="1" fill="#f87171">♂</text>
+      <text class="planet-label" x="0" y="-19">3°16′ ♌</text>
+    </g>
+
+    <!-- ♃ JUPITER: 20°05' Leo (Wheel angle: 149.57°) -->
+    <g transform="translate(-267.2, -156.8)">
+      <circle r="16" fill="#1e293b" stroke="#fbbf24" stroke-width="1.5"/>
+      <text class="planet-glyph" x="0" y="1" fill="#fbbf24">♃</text>
+      <text class="planet-label" x="0" y="-19">20°05′ ♌</text>
+    </g>
+
+    <!-- ☉ SUN: 10°32' Libra (Wheel angle: 99.12°) -->
+    <g transform="translate(49.0, -306.1)">
+      <circle r="16" fill="#1e293b" stroke="#f59e0b" stroke-width="2"/>
+      <text class="planet-glyph" x="0" y="1" fill="#f59e0b">☉</text>
+      <text class="planet-label" x="0" y="-19">10°32′ ♎</text>
+      <text x="0" y="27" fill="#ef4444" font-size="8px" text-anchor="middle">Fall</text>
+    </g>
+
+    <!-- ☿ MERCURY: 4°13' Scorpio (Wheel angle: 75.43°) -->
+    <g transform="translate(77.9, -299.9)">
+      <circle r="15" fill="#1e293b" stroke="#2dd4bf" stroke-width="1.5"/>
+      <text class="planet-glyph" x="0" y="1" fill="#2dd4bf">☿</text>
+      <text class="planet-label" x="25" y="-12">4°13′ ♏</text>
+    </g>
+
+    <!-- ♀ VENUS Rx: 8°29' Scorpio (Wheel angle: 71.16°) -->
+    <g transform="translate(119.9, -285.8)">
+      <circle r="16" fill="#1e293b" stroke="#ec4899" stroke-width="1.5"/>
+      <text class="planet-glyph" x="0" y="1" fill="#ec4899">♀</text>
+      <text class="retrograde" x="8" y="-6">℞</text>
+      <text class="planet-label" x="28" y="12">8°29′ ♏</text>
+      <text x="0" y="26" fill="#f43f5e" font-size="8px" text-anchor="middle">Stat. Rx</text>
+    </g>
+
+    <!-- ♇ PLUTO Rx: 3°06' Aquarius (Wheel angle: 346.54°) -->
+    <g transform="translate(301.3, 72.1)">
+      <circle r="15" fill="#1e293b" stroke="#c084fc" stroke-width="1.5"/>
+      <text class="planet-glyph" x="0" y="1" fill="#c084fc">♇</text>
+      <text class="retrograde" x="8" y="-6">℞</text>
+      <text class="planet-label" x="0" y="-19">3°06′ ♒</text>
+    </g>
+
+    <!-- ♆ NEPTUNE Rx: 2°47' Aries (Wheel angle: 286.86°) -->
+    <g transform="translate(89.9, 296.6)">
+      <circle r="15" fill="#1e293b" stroke="#818cf8" stroke-width="1.5"/>
+      <text class="planet-glyph" x="0" y="1" fill="#818cf8">♆</text>
+      <text class="retrograde" x="8" y="-6">℞</text>
+      <text class="planet-label" x="0" y="27">2°47′ ♈</text>
+    </g>
+
+    <!-- ♄ SATURN Rx: 11°22' Aries (Wheel angle: 278.29°) -->
+    <g transform="translate(44.6, 306.8)">
+      <circle r="16" fill="#1e293b" stroke="#e2e8f0" stroke-width="2"/>
+      <text class="planet-glyph" x="0" y="1" fill="#e2e8f0">♄</text>
+      <text class="retrograde" x="8" y="-6">℞</text>
+      <text class="planet-label" x="0" y="27">11°22′ ♈</text>
+      <text x="0" y="-20" fill="#ef4444" font-size="8px" text-anchor="middle">Fall</text>
+    </g>
+
+    <!-- ♅ URANUS Rx: 5°29' Gemini (Wheel angle: 224.17°) -->
+    <g transform="translate(-222.4, 215.9)">
+      <circle r="15" fill="#1e293b" stroke="#38bdf8" stroke-width="1.5"/>
+      <text class="planet-glyph" x="0" y="1" fill="#38bdf8">♅</text>
+      <text class="retrograde" x="8" y="-6">℞</text>
+      <text class="planet-label" x="0" y="27">5°29′ ♊</text>
+    </g>
+
+  </g>
+
+  <!-- Bottom Legend / Aspect Key Card -->
+  <g transform="translate(60, 930)">
+    <rect x="0" y="0" width="880" height="48" rx="8" fill="#141c2e" stroke="#334155" stroke-width="1"/>
+    <!-- Legend items -->
+    <line x1="25" y1="24" x2="60" y2="24" class="aspect-opp"/>
+    <text x="68" y="28" fill="#e2e8f0" font-size="12px">Opposition (180°)</text>
+
+    <line x1="200" y1="24" x2="235" y2="24" class="aspect-sqr"/>
+    <text x="243" y="28" fill="#e2e8f0" font-size="12px">Square (90°)</text>
+
+    <line x1="365" y1="24" x2="400" y2="24" class="aspect-tri"/>
+    <text x="408" y="28" fill="#e2e8f0" font-size="12px">Trine (120°)</text>
+
+    <line x1="515" y1="24" x2="550" y2="24" class="aspect-sxt"/>
+    <text x="558" y="28" fill="#e2e8f0" font-size="12px">Sextile (60°)</text>
+
+    <line x1="675" y1="24" x2="710" y2="24" class="aspect-cnj"/>
+    <text x="718" y="28" fill="#e2e8f0" font-size="12px">Conjunction (0°)</text>
+
+    <text x="825" y="28" fill="#f43f5e" font-size="11px" font-weight="700">℞ Retrograde</text>
+  </g>
+</svg>

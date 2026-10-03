@@ -1,0 +1,29 @@
+{
+  "name": "astroval",
+  "version": "1.0.0",
+  "description": "Jakarta 100% Celestial & Grimoiric Intelligence System",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx serve .",
+    "build": "echo 'Static web assets ready.'",
+    "test": "node -e \"console.log('Astroval test suite ready.')\""
+  },
+  "keywords": [
+    "astronomy",
+    "astrology",
+    "ephemeris",
+    "swiss-ephemeris",
+    "jakarta",
+    "grimoire",
+    "picatrix",
+    "agrippa",
+    "shams-al-maarif",
+    "planetary-hours"
+  ],
+  "author": "Hernanda",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hernanda-git/astroval.git"
+  }
+}
