@@ -52,13 +52,23 @@ Rather than static emotional categories, Astroval maps 100% of human life and mu
 * **Bind / Fix (*'Aqd wa-Tathbīt*):** Freezing slanderers, locking perimeters, halting legal assaults.
 * **Dissolve / Sever (*Tafriq wa-Ibtāl*):** Cord-cutting, breaking curses, purging toxins, dissolving corruption.
 
-### 4. Master Four Operative Works Intelligence Console
-Interactive dedicated grimoiric console covering:
-- ❤️ **Love Work (*Al-Hubb & Al-'Ishq*):** Rigorous application of the *Picatrix* Scorpio-Venus doctrine (proscribing sweet attraction while Venus is in detriment/retrograde; detailing cord-cutting *Tafriq* & PGM Underworld Aphrodite sovereignty rites).
-- 🔒 **Binding Work (*Al-'Aqd & Defixiones*):** Saturn culmination at $+75.25^\circ$ NW near Zenith, 3x3 Magic Square (*Wafq*), cold iron padlocks, lead lamellae, and tongue-tying (*'Aqd al-Lisan*).
-- 🌊 **Cleansing Work (*Al-Taharah & Lustratio*):** Domicile Moon in Cancer conjunct Sirius, 7-herb lustral baths (*Ghusl al-Ibtal*), uncrossing curses (*Ibtal al-Sihr*), and auric repair.
-- 🛡️ **Protection Work (*Al-Tahsin & Apotropaics*):** Mars-Pluto exact $0^\circ 10'$ opposition kinetic mirror shield, 4-corner iron boundary stakes, and Archangelic canopy.
-- **Master Manual:** [`docs/four_operative_works_master_manual.md`](docs/four_operative_works_master_manual.md).
+### 4. Master 14 Grimoiric Operative Works Intelligence Console
+Interactive dedicated grimoiric command console covering all 14 classical operations:
+- ❤️ **1. Love & Desire (*Al-Hubb & Al-'Ishq*):** Rigorous application of the *Picatrix* Scorpio-Venus doctrine (proscribing sweet attraction while Venus is in detriment/retrograde).
+- ✂️ **2. Cord-Cutting & Severance (*Al-Tafriq al-Batil*):** Irrevocable unbinding of toxic trauma bonds and soul-ties.
+- 🔒 **3. Binding & Tongue-Tying (*Al-'Aqd & Katadesmoi*):** Saturn Zenith culmination, 3x3 Magic Square (*Wafq*), cold lead defixiones, and silencing slanderers.
+- 🌊 **4. Cleansing & Uncrossing (*Al-Taharah & Lustratio*):** Domicile Moon conjunct Sirius, 7-herb lustral baths (*Ghusl al-Ibtal*), and auric repair.
+- 🛡️ **5. Protection & Boundary Armor (*Al-Tahsin & Hifz*):** Mars-Pluto exact $0^\circ 10'$ opposition kinetic mirror shield and 4-corner iron boundary stakes.
+- ⚔️ **6. War & Dismantling Oppressors (*Al-Harb & Victoria*):** Shattering oppressive institutional power and smashing adversary fortifications.
+- 🕊️ **7. Pacification & Quelling Wrath (*Thymokatochon*):** Moon entering Mansion 9 (*Al-Tarf*) to disarm hostile judges, kings, and enraged superiors.
+- 👁️ **8. Occult Knowledge & Prophecy (*Al-Kashf & Gnosis*):** Exact Mercury trine Royal Star Fomalhaut ($0^\circ 01'$ orb), scrying, and deciphering ciphers.
+- 💰 **9. Wealth & Commercial Abundance (*Al-Rizq & Al-Jalb*):** Jupiter-Mars in 1st house trine Midheaven for structural business elevation.
+- 🩺 **10. Healing & Somatic Renewal (*Al-Shifa' & Hygieia*):** Sirius-Lunar cellular rejuvenation, prana replenishment, and nervous system recovery.
+- 👑 **11. Sovereignty, Honor & Authority (*Al-Jah & Basileia*):** Royal Star Aldebaran trine Sun for commanding respect and regal presence.
+- 🎭 **12. Discord Among Conspirators (*Ilqā' al-Fitnah*):** Fixed T-Square turning corrupt persecutors inward against each other.
+- 🌫️ **13. Invisibility & Psychic Cloaking (*Al-Ikhfā' & Aphanismos*):** 12th House Lunar-Neptunian shroud against remote viewing and surveillance.
+- 🌙 **14. Dream Incubation & Oneiromancy (*Al-Ru'yā al-Sadiqah*):** Isis-Sirius nocturnal portal for prophetic lucid dreaming and ancestral contact.
+- **Master Encyclopedia:** [`docs/all_operative_works_encyclopedia.md`](docs/all_operative_works_encyclopedia.md).
 
 ---
 
@@ -66,7 +76,7 @@ Interactive dedicated grimoiric console covering:
 
 ```
 astroval/
-├── index.html                      # Interactive Production Web Application
+├── index.html                      # Interactive Production Web Application (14-Work Console)
 ├── PLAN.md                         # Master 38KB Technical Architecture Blueprint
 ├── PROGRESS.md                     # Milestones, Changelog & Active Deliverables
 ├── STATUS.md                       # Operational Health & Accuracy Audit Report
@@ -77,9 +87,10 @@ astroval/
 ├── public/
 │   └── natal_chart.svg             # Standalone Scalable Vector Horoscope Wheel
 ├── docs/
+│   ├── all_operative_works_encyclopedia.md # Master Encyclopedia of All 14 Operative Works (44KB)
+│   ├── four_operative_works_master_manual.md # Foundations Manual: Love, Binding, Cleansing & Protection
 │   ├── conditions.md               # Consolidated Verbatim Sky Data Benchmark
 │   ├── expanded_domain_taxonomy.md # 12-Dimensional Life & Astral Taxonomy
-│   ├── four_operative_works_master_manual.md # Master Manual: Love, Binding, Cleansing & Protection
 │   ├── ritual_correspondences.md   # Grimoiric Sourcebook (Agrippa, Shams, Picatrix, PGM)
 │   ├── ritual_operations_manual.md # Domain-by-Domain Practical Operations Manual
 │   └── planetary_hours_guide.md    # 24-Hour Proportional Chronometry Delineations

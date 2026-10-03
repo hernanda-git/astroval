@@ -22,6 +22,7 @@
 | **M9: Verification & Accuracy Audit** | ✅ **COMPLETE** | 2026-10-04 | Benchmarked against NASA JPL Horizons and BMKG Jakarta tables in [`VERIFICATION.md`](VERIFICATION.md). |
 | **M10: Git Publication & CI/CD Pipeline** | ✅ **COMPLETE** | 2026-10-04 | Published repository to `hernanda-git/astroval` and enabled live GitHub Pages. |
 | **M11: Four Operative Works Engine** | ✅ **COMPLETE** | 2026-10-04 | Implemented Love, Binding, Cleansing & Protection console in `index.html` and authored [`docs/four_operative_works_master_manual.md`](docs/four_operative_works_master_manual.md). |
+| **M12: 14-Work Operative Pantheon** | ✅ **COMPLETE** | 2026-10-04 | Expanded to every single grimoiric work (14 total) with dynamic category filters, full interactive console, and authored [`docs/all_operative_works_encyclopedia.md`](docs/all_operative_works_encyclopedia.md). |
 
 ---
 
