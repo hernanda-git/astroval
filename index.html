@@ -53,15 +53,31 @@
       border-bottom: 2px solid #38bdf8;
     }
 
+    .hour-chip {
+      position: relative;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
     .hour-chip.active-live {
-      background: linear-gradient(135deg, rgba(2, 132, 199, 0.35) 0%, rgba(99, 102, 241, 0.35) 100%);
-      border-color: #38bdf8;
-      box-shadow: 0 0 18px rgba(56, 189, 248, 0.4);
+      background: linear-gradient(135deg, rgba(2, 132, 199, 0.45) 0%, rgba(30, 58, 138, 0.55) 100%) !important;
+      border-color: #38bdf8 !important;
+      box-shadow: 0 0 22px rgba(56, 189, 248, 0.6), inset 0 0 10px rgba(56, 189, 248, 0.25) !important;
     }
 
     .hour-chip.selected {
-      border-color: #f59e0b;
-      background: rgba(245, 158, 11, 0.15);
+      border-color: #f59e0b !important;
+      background: rgba(245, 158, 11, 0.25) !important;
+      box-shadow: 0 0 24px rgba(245, 158, 11, 0.7), inset 0 0 10px rgba(245, 158, 11, 0.3) !important;
+      outline: 2px solid #f59e0b !important;
+      outline-offset: 1px !important;
+    }
+
+    .hour-chip.active-live.selected {
+      background: linear-gradient(135deg, rgba(2, 132, 199, 0.5) 0%, rgba(245, 158, 11, 0.35) 100%) !important;
+      border-color: #38bdf8 !important;
+      outline: 2px solid #f59e0b !important;
+      outline-offset: 1px !important;
+      box-shadow: 0 0 30px rgba(56, 189, 248, 0.75), 0 0 16px rgba(245, 158, 11, 0.6), inset 0 0 12px rgba(245, 158, 11, 0.35) !important;
     }
 
     @keyframes pulseGlow {
@@ -3944,7 +3960,9 @@
       masterHoursData.forEach(h => {
         const btn = document.createElement('button');
         btn.id = `btn-hour-${h.id}`;
-        btn.className = `hour-chip text-left p-2.5 rounded-xl border border-slate-800 bg-slate-950/80 hover:border-slate-600 transition flex flex-col justify-between ${h.isLiveActive ? 'active-live' : ''}`;
+        const isLive = !!h.isLiveActive;
+        const isSelected = (window.currentlySelectedHour === h.id);
+        btn.className = `hour-chip text-left p-2.5 rounded-xl border border-slate-800 bg-slate-950/80 hover:border-slate-600 transition flex flex-col justify-between ${isLive ? 'active-live' : ''} ${isSelected ? 'selected' : ''}`;
         btn.onclick = () => {
           window.hasUserSelectedHourManual = true;
           selectHour(h.id);
@@ -3952,11 +3970,15 @@
 
         btn.innerHTML = `
           <div class="flex items-center justify-between w-full">
-            <span class="font-mono text-[10px] text-slate-400">${h.id} (${h.time.split(' – ')[0]})</span>
-            <span class="font-bold text-sm" style="color: ${h.color}">${h.glyph}</span>
+            <span class="font-mono text-[10px] ${isSelected ? 'text-amber-300 font-bold' : (isLive ? 'text-sky-300 font-bold' : 'text-slate-400')}">${h.id} (${h.time.split(' – ')[0]})</span>
+            <div class="badge-container flex items-center gap-1">
+              ${isSelected ? '<span class="dossier-active-badge px-1.5 py-0.5 rounded bg-amber-500/30 text-amber-300 border border-amber-500/60 text-[9px] font-bold tracking-tight">DOSSIER</span>' : ''}
+              ${isLive ? '<span class="live-pulse-badge px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/50 text-[9px] font-bold animate-pulse tracking-tight">● LIVE</span>' : ''}
+              <span class="font-bold text-sm ml-1" style="color: ${h.color}">${h.glyph}</span>
+            </div>
           </div>
-          <div class="mt-1 font-bold text-xs truncate text-slate-200">
-            ${h.ruler} ${h.isLiveActive ? '<span class="text-emerald-400 animate-pulse text-[10px]">● LIVE</span>' : ''}
+          <div class="mt-1 font-bold text-xs truncate ${isSelected ? 'text-amber-200' : 'text-slate-200'}">
+            ${h.ruler}
           </div>
         `;
 
@@ -3973,9 +3995,22 @@
       const data = masterHoursData.find(h => h.id === hourId);
       if (!data) return;
 
-      document.querySelectorAll('.hour-chip').forEach(c => c.classList.remove('selected'));
+      document.querySelectorAll('.hour-chip').forEach(c => {
+        c.classList.remove('selected');
+        const badge = c.querySelector('.dossier-active-badge');
+        if (badge) badge.remove();
+      });
       const activeBtn = document.getElementById(`btn-hour-${hourId}`);
-      if (activeBtn) activeBtn.classList.add('selected');
+      if (activeBtn) {
+        activeBtn.classList.add('selected');
+        const badgeCont = activeBtn.querySelector('.badge-container');
+        if (badgeCont && !badgeCont.querySelector('.dossier-active-badge')) {
+          const dTag = document.createElement('span');
+          dTag.className = 'dossier-active-badge px-1.5 py-0.5 rounded bg-amber-500/30 text-amber-300 border border-amber-500/60 text-[9px] font-bold tracking-tight';
+          dTag.textContent = 'DOSSIER';
+          badgeCont.insertBefore(dTag, badgeCont.firstChild);
+        }
+      }
 
       // Update Dossier Card
       document.getElementById('detailHourGlyph').textContent = data.glyph;
@@ -4042,8 +4077,45 @@
       setTimeout(() => card.classList.remove('ring-2', 'ring-sky-500'), 350);
     }
 
-    // Initialize grids (live active hour dynamically selected on Swiss Ephemeris snapshot load)
+    // Synchronously compute current active hour from local Jakarta time (WIB UTC+7)
+    function detectInitialActiveHour() {
+      try {
+        const now = new Date();
+        const utcMs = now.getTime() + (now.getTimezoneOffset() * 60000);
+        const wibDate = new Date(utcMs + (7 * 3600000));
+        const curSec = wibDate.getHours() * 3600 + wibDate.getMinutes() * 60 + wibDate.getSeconds();
+
+        for (const h of masterHoursData) {
+          if (h.time) {
+            const parts = h.time.split(' – ');
+            if (parts.length === 2) {
+              const parseSec = (str) => {
+                const s = str.replace(' WIB', '').trim().split(':').map(Number);
+                return s[0] * 3600 + s[1] * 60 + (s[2] || 0);
+              };
+              const sSec = parseSec(parts[0]);
+              const eSec = parseSec(parts[1]);
+              if (sSec <= eSec) {
+                if (curSec >= sSec && curSec < eSec) return h.id;
+              } else {
+                if (curSec >= sSec || curSec < eSec) return h.id;
+              }
+            }
+          }
+        }
+      } catch (e) {
+        console.warn('Fallback hour detection:', e);
+      }
+      return "D-04"; // Sunday mid-morning active hour
+    }
+
+    const initActiveId = detectInitialActiveHour();
+    masterHoursData.forEach(h => {
+      h.isLiveActive = (h.id === initActiveId);
+    });
+    window.currentlySelectedHour = initActiveId;
     renderHoursGrids();
+    selectHour(initActiveId);
     selectOperativeWork("binding");
 
     // ==================== PLANET INSPECTION LOGIC ====================
@@ -4783,6 +4855,6 @@
     window.generateHourOccultWorks = generateHourOccultWorks;
   </script>
   <!-- Real-Time Swiss Ephemeris Synchronization & WebSocket Engine -->
-  <script src="public/live_astroval.js?v=20261004_live_v4"></script>
+  <script src="public/live_astroval.js?v=20261004_live_v6"></script>
 </body>
 </html>

@@ -735,25 +735,63 @@ class AstrovalEngine:
         day_names_id = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu']
         month_names_id = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember']
 
-        arabic_day_ruler_map = {
-            "Sun": "Al-Shams (الشمس) — Yawm al-Ahad (يوم الأحد)",
-            "Moon": "Al-Qamar (القمر) — Yawm al-Ithnayn (يوم الإثنين)",
-            "Mars": "Al-Marikh (المريخ) — Yawm al-Thulatha (يوم الثلاثاء)",
-            "Mercury": "'Utarid (عطارد) — Yawm al-Arba'a (يوم الأربعاء)",
-            "Jupiter": "Al-Mushtari (المشتري) — Yawm al-Khamis (يوم الخميس)",
-            "Venus": "Al-Zuhrah (الزهرة) — Yawm al-Jumu'ah (يوم الجمعة)",
-            "Saturn": "Zuhal (زحل) — Yawm al-Sabt (يوم السبت)"
+        # Classical Arabic Nomenclature & Planetary Sphere Alignment:
+        # In Islamic/Arabic time reckoning, the night belongs to the upcoming day (begins at Sunset).
+        # In Chaldean chronometry, the diurnal ruler governs from Sunrise to Sunset;
+        # the nocturnal ruler governs the first hour of night (N-01) from Sunset to Sunrise.
+        cycle_nomenclature = {
+            "sun": {
+                "day_name_ar": "Yawm al-Ahad (يوم الأحد)",
+                "night_name_ar": "Laylat al-Ithnayn (ليلة الإثنين)",
+                "diurnal_ruler_ar": "Al-Shams (الشمس) — Yawm al-Ahad (يوم الأحد)",
+                "nocturnal_ruler_ar": "Al-Mushtari (المشتري) — Laylat al-Ithnayn (ليلة الإثنين)",
+                "nocturnal_ruler_full": "♃ Jupiter (Al-Mushtari / المشتري) — Jam Malam Pertama (Laylat al-Ithnayn / ليلة الإثنين)"
+            },
+            "moon": {
+                "day_name_ar": "Yawm al-Ithnayn (يوم الإثنين)",
+                "night_name_ar": "Laylat al-Thulatha (ليلة الثلاثاء)",
+                "diurnal_ruler_ar": "Al-Qamar (القمر) — Yawm al-Ithnayn (يوم الإثنين)",
+                "nocturnal_ruler_ar": "Al-Zuhrah (الزهرة) — Laylat al-Thulatha (ليلة الثلاثاء)",
+                "nocturnal_ruler_full": "♀ Venus (Al-Zuhrah / الزهرة) — Jam Malam Pertama (Laylat al-Thulatha / ليلة الثلاثاء)"
+            },
+            "mars": {
+                "day_name_ar": "Yawm al-Thulatha (يوم الثلاثاء)",
+                "night_name_ar": "Laylat al-Arba'a (ليلة الأربعاء)",
+                "diurnal_ruler_ar": "Al-Marikh (المريخ) — Yawm al-Thulatha (يوم الثلاثاء)",
+                "nocturnal_ruler_ar": "Zuhal (زحل) — Laylat al-Arba'a (ليلة الأربعاء)",
+                "nocturnal_ruler_full": "♄ Saturn (Zuhal / زحل) — Jam Malam Pertama (Laylat al-Arba'a / ليلة الأربعاء)"
+            },
+            "mercury": {
+                "day_name_ar": "Yawm al-Arba'a (يوم الأربعاء)",
+                "night_name_ar": "Laylat al-Khamis (ليلة الخميس)",
+                "diurnal_ruler_ar": "'Utarid (عطارد) — Yawm al-Arba'a (يوم الأربعاء)",
+                "nocturnal_ruler_ar": "Al-Shams (الشمس) — Laylat al-Khamis (ليلة الخميس)",
+                "nocturnal_ruler_full": "☉ Sun (Al-Shams / الشمس) — Jam Malam Pertama (Laylat al-Khamis / ليلة الخميس)"
+            },
+            "jupiter": {
+                "day_name_ar": "Yawm al-Khamis (يوم الخميس)",
+                "night_name_ar": "Laylat al-Jumu'ah (ليلة الجمعة)",
+                "diurnal_ruler_ar": "Al-Mushtari (المشتري) — Yawm al-Khamis (يوم الخميس)",
+                "nocturnal_ruler_ar": "Al-Qamar (القمر) — Laylat al-Jumu'ah (ليلة الجمعة)",
+                "nocturnal_ruler_full": "☽ Moon (Al-Qamar / القمر) — Jam Malam Pertama (Laylat al-Jumu'ah / ليلة الجمعة)"
+            },
+            "venus": {
+                "day_name_ar": "Yawm al-Jumu'ah (يوم الجمعة)",
+                "night_name_ar": "Laylat al-Sabt (ليلة السبت)",
+                "diurnal_ruler_ar": "Al-Zuhrah (الزهرة) — Yawm al-Jumu'ah (يوم الجمعة)",
+                "nocturnal_ruler_ar": "Al-Marikh (المريخ) — Laylat al-Sabt (ليلة السبت)",
+                "nocturnal_ruler_full": "♂ Mars (Al-Marikh / المريخ) — Jam Malam Pertama (Laylat al-Sabt / ليلة السبت)"
+            },
+            "saturn": {
+                "day_name_ar": "Yawm al-Sabt (يوم السبت)",
+                "night_name_ar": "Laylat al-Ahad (ليلة الأحد)",
+                "diurnal_ruler_ar": "Zuhal (زحل) — Yawm al-Sabt (يوم السبت)",
+                "nocturnal_ruler_ar": "'Utarid (عطارد) — Laylat al-Ahad (ليلة الأحد)",
+                "nocturnal_ruler_full": "☿ Mercury ('Utarid / عطارد) — Jam Malam Pertama (Laylat al-Ahad / ليلة الأحد)"
+            }
         }
 
-        arabic_night_ruler_map = {
-            "Sun": "Al-Shams (الشمس) — Laylat al-Ahad (ليلة الأحد)",
-            "Moon": "Al-Qamar (القمر) — Laylat al-Ithnayn (ليلة الإثنين)",
-            "Mars": "Al-Marikh (المريخ) — Laylat al-Thulatha (ليلة الثلاثاء)",
-            "Mercury": "'Utarid (عطارد) — Laylat al-Arba'a (ليلة الأربعاء)",
-            "Jupiter": "Al-Mushtari (المشتري) — Laylat al-Khamis (ليلة الخميس)",
-            "Venus": "Al-Zuhrah (الزهرة) — Laylat al-Jumu'ah (ليلة الجمعة)",
-            "Saturn": "Zuhal (زحل) — Laylat al-Sabt (ليلة السبت)"
-        }
+        cycle_info = cycle_nomenclature.get(day_ruler.lower(), {})
 
         return {
             "query_time_wib": jakarta_dt.strftime("%Y-%m-%d %H:%M:%S WIB"),
@@ -763,9 +801,12 @@ class AstrovalEngine:
             "hijri_date": "22 Rabi' al-Thani 1448 AH (٢٢ ربيع الثاني ١٤٤٨ هـ)",
             "astral_day_ruler": day_ruler.capitalize(),
             "diurnal_ruler": day_ruler.capitalize(),
-            "diurnal_ruler_arabic": arabic_day_ruler_map.get(day_ruler.capitalize(), day_ruler.capitalize()),
+            "diurnal_ruler_arabic": cycle_info.get("diurnal_ruler_ar", day_ruler.capitalize()),
             "nocturnal_ruler": noct_ruler.capitalize(),
-            "nocturnal_ruler_arabic": arabic_night_ruler_map.get(noct_ruler.capitalize(), noct_ruler.capitalize()),
+            "nocturnal_ruler_arabic": cycle_info.get("nocturnal_ruler_ar", noct_ruler.capitalize()),
+            "nocturnal_ruler_full": cycle_info.get("nocturnal_ruler_full", f"{noct_ruler.capitalize()} (Night Ruler)"),
+            "arabic_day_name": cycle_info.get("day_name_ar", ""),
+            "arabic_night_name": cycle_info.get("night_name_ar", ""),
             "sunrise_wib": self.jd_to_datetime_jakarta(sunrise_jd).strftime("%H:%M:%S"),
             "sunset_wib": self.jd_to_datetime_jakarta(sunset_jd).strftime("%H:%M:%S"),
             "next_sunrise_wib": self.jd_to_datetime_jakarta(next_sunrise_jd).strftime("%H:%M:%S"),

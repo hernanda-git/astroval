@@ -102,6 +102,8 @@
       activeCard.onclick = () => {
         window.hasUserSelectedHourManual = false;
         if (activeHourId && typeof window.selectHour === 'function') {
+          window.currentlySelectedHour = activeHourId;
+          if (typeof window.renderHoursGrids === 'function') window.renderHoursGrids();
           window.selectHour(activeHourId);
         }
       };
@@ -415,18 +417,21 @@
         }
       });
 
+      // Selection handling:
+      // If user hasn't manually clicked another hour, auto-select live active hour!
+      let targetHourId = activeH ? activeH.id : 'D-04';
+      if (window.hasUserSelectedHourManual && window.currentlySelectedHour) {
+        targetHourId = window.currentlySelectedHour;
+      } else {
+        window.currentlySelectedHour = targetHourId;
+      }
+
       if (typeof window.renderHoursGrids === 'function') {
         window.renderHoursGrids();
       }
 
-      // Selection handling:
-      // If user hasn't manually clicked another hour, auto-select live active hour!
-      if (!window.hasUserSelectedHourManual && activeH) {
-        if (typeof window.selectHour === 'function') {
-          window.selectHour(activeH.id);
-        }
-      } else if (window.currentlySelectedHour && typeof window.selectHour === 'function') {
-        window.selectHour(window.currentlySelectedHour);
+      if (typeof window.selectHour === 'function') {
+        window.selectHour(targetHourId);
       }
     }
 
