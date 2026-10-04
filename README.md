@@ -93,7 +93,8 @@ astroval/
 │   ├── expanded_domain_taxonomy.md # 12-Dimensional Life & Astral Taxonomy
 │   ├── ritual_correspondences.md   # Grimoiric Sourcebook (Agrippa, Shams, Picatrix, PGM)
 │   ├── ritual_operations_manual.md # Domain-by-Domain Practical Operations Manual
-│   └── planetary_hours_guide.md    # 24-Hour Proportional Chronometry Delineations
+│   ├── planetary_hours_guide.md    # 24-Hour Proportional Chronometry Delineations
+│   └── nocturnal_hours_and_chaldean_order_master_reference.md # Master Reference: Nocturnal Hours, Chaldean Order & Mathematical 7-Day Cycle Proof
 └── .github/
     └── workflows/
         └── deploy.yml              # Automated GitHub Pages CI/CD Workflow
