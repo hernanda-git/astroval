@@ -90,6 +90,17 @@
       clockContainer.insertBefore(inspectorBtn, clockContainer.children[2] || null);
     }
 
+    // Attach click listener to Live Active Hour Card to immediately select active hour
+    const activeCard = document.getElementById('liveActiveHourCard');
+    if (activeCard) {
+      activeCard.onclick = () => {
+        window.hasUserSelectedHourManual = false;
+        if (activeHourId && typeof window.selectHour === 'function') {
+          window.selectHour(activeHourId);
+        }
+      };
+    }
+
     // Append Modal HTML to body
     createDateModal();
   }
@@ -271,7 +282,12 @@
       const titleEl = document.getElementById('activeHourTitle');
       if (titleEl) {
         titleEl.textContent = `${activeH.num}${getOrdinal(activeH.num)} ${capitalize(activeH.period.toLowerCase())}: ${activeH.ruler} (${activeH.glyph})`;
-        titleEl.style.color = activeH.color;
+        titleEl.style.color = activeH.color || '#38bdf8';
+      }
+
+      const durEl = document.getElementById('activeHourDuration');
+      if (durEl) {
+        durEl.textContent = `Duration: ${Math.floor(activeHourTotalDurationSeconds / 60)}m ${activeHourTotalDurationSeconds % 60}s`;
       }
 
       updateCountdownDisplay();
@@ -325,7 +341,7 @@
         found.name = `${engH.num}${getOrdinal(engH.num)} ${capitalize(engH.period.toLowerCase())}: ${engH.ruler} (${engH.glyph})`;
         found.time = `${engH.start_wib} – ${engH.end_wib} WIB`;
         found.duration = `${Math.floor(engH.duration_seconds / 60)}m ${engH.duration_seconds % 60}s`;
-        found.isLiveActive = !!engH.is_active;
+        found.isLiveActive = !!(activeH && engH.id === activeH.id);
         found.sphere = engH.sphere || `${engH.ruler} Sphere`;
         found.archangel = engH.archangel || "";
         found.divineName = engH.divine_name || "";
@@ -599,13 +615,22 @@
             if (clockEl) clockEl.textContent = liveMsg.timestamp_wib.split(' ')[1] + ' WIB';
           }
           if (liveMsg.active_hour) {
-            activeHourRemainingSeconds = liveMsg.active_hour.seconds_remaining;
+            const hData = liveMsg.active_hour;
+            activeHourRemainingSeconds = hData.seconds_remaining;
             updateCountdownDisplay();
 
-            // Check if hour changed
-            if (activeHourId && liveMsg.active_hour.id !== activeHourId) {
-              activeHourId = liveMsg.active_hour.id;
-              playHourChime();
+            // Always update Active Hour Title directly from live socket!
+            const titleEl = document.getElementById('activeHourTitle');
+            if (titleEl && hData.ruler) {
+              titleEl.textContent = `${hData.num}${getOrdinal(hData.num)} ${capitalize(hData.period.toLowerCase())}: ${hData.ruler} (${hData.glyph})`;
+              titleEl.style.color = hData.color || '#38bdf8';
+            }
+
+            // Check if active hour changed or was not initialized
+            if (!activeHourId || (hData.id && hData.id !== activeHourId)) {
+              const wasInit = !activeHourId;
+              activeHourId = hData.id;
+              if (!wasInit) playHourChime();
               fetchSnapshot();
             }
           }

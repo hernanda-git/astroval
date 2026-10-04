@@ -173,15 +173,18 @@
         </div>
 
         <!-- Distinct Active Hour Mark Badge -->
-        <div id="liveActiveHourCard" class="flex items-center gap-3 bg-gradient-to-r from-sky-950 via-indigo-950 to-slate-900 border-2 border-sky-500/80 px-4 py-2.5 rounded-2xl shadow-lg">
+        <div id="liveActiveHourCard" class="flex items-center gap-3 bg-gradient-to-r from-sky-950 via-indigo-950 to-slate-900 border-2 border-sky-500/80 px-4 py-2.5 rounded-2xl shadow-lg cursor-pointer hover:border-sky-400 transition" title="Click to view live active hour dossier">
           <div class="w-3.5 h-3.5 rounded-full bg-emerald-400 animate-ping"></div>
           <div>
-            <div class="text-[10px] font-bold text-sky-400 uppercase tracking-widest">CURRENT ACTIVE HOUR MARK</div>
-            <div id="activeHourTitle" class="text-sm font-bold text-white font-mono">8th Night: Mercury ('Utarid)</div>
+            <div class="text-[10px] font-bold text-sky-400 uppercase tracking-widest flex items-center gap-1.5">
+              <span>CURRENT ACTIVE HOUR MARK</span>
+              <span class="text-[9px] text-emerald-400 bg-emerald-950/80 px-1.5 py-0.5 rounded border border-emerald-500/50">LIVE SYNC</span>
+            </div>
+            <div id="activeHourTitle" class="text-sm font-bold text-sky-300 font-mono">Synchronizing Astrometric Hour...</div>
           </div>
           <div class="border-l border-slate-700 pl-3">
-            <span id="activeHourCountdown" class="text-xs font-mono font-bold text-emerald-400 block">--m --s left</span>
-            <span class="text-[10px] text-slate-400 block">Duration: 59m 10s</span>
+            <span id="activeHourCountdown" class="text-xs font-mono font-bold text-emerald-400 block">--m --s remaining</span>
+            <span id="activeHourDuration" class="text-[10px] text-slate-400 block">Calculating...</span>
           </div>
         </div>
       </div>
@@ -223,28 +226,28 @@
           
           <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800/80 pb-4">
             <div class="flex items-center gap-3">
-              <span id="detailHourGlyph" class="text-4xl text-teal-400 font-bold">☿</span>
+              <span id="detailHourGlyph" class="text-4xl text-amber-400 font-bold">☉</span>
               <div>
                 <div class="flex items-center gap-2">
-                  <h3 id="detailHourName" class="text-lg font-bold text-white font-cinzel">8th Nocturnal Hour: Mercury ('Utarid)</h3>
-                  <span id="detailHourPeriodTag" class="px-2 py-0.5 rounded text-[10px] font-bold bg-sky-950 text-sky-400 border border-sky-800">NOCTURNAL</span>
+                  <h3 id="detailHourName" class="text-lg font-bold text-white font-cinzel">Synchronizing Planetary Hour...</h3>
+                  <span id="detailHourPeriodTag" class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-950 text-amber-400 border border-amber-800">DIURNAL</span>
                 </div>
-                <p id="detailHourTimeRange" class="text-xs font-mono text-amber-300 mt-0.5">00:40:37 – 01:39:46 WIB (Duration: 59m 10s)</p>
+                <p id="detailHourTimeRange" class="text-xs font-mono text-amber-300 mt-0.5">Connecting to NASA JPL Swiss Ephemeris DE441...</p>
               </div>
             </div>
 
             <div class="flex items-center gap-3 text-xs font-mono">
               <div class="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800">
                 <span class="text-slate-500 block text-[10px]">CHALDEAN SPHERE</span>
-                <span id="detailHourSphere" class="text-slate-200 font-bold">2nd Sphere</span>
+                <span id="detailHourSphere" class="text-slate-200 font-bold">Planetary Sphere</span>
               </div>
               <div class="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800">
                 <span class="text-slate-500 block text-[10px]">ARCHANGEL</span>
-                <span id="detailHourArchangel" class="text-sky-300 font-bold">Michael</span>
+                <span id="detailHourArchangel" class="text-sky-300 font-bold">Ruhaniyya Khodam</span>
               </div>
               <div class="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800">
                 <span class="text-slate-500 block text-[10px]">DIVINE NAME (SHAMS)</span>
-                <span id="detailHourDivineName" class="text-amber-300 font-bold">Yā 'Alīmu Yā Hakīm</span>
+                <span id="detailHourDivineName" class="text-amber-300 font-bold">Yā Hayyu Yā Qayyūm</span>
               </div>
             </div>
           </div>
@@ -3635,7 +3638,7 @@
         prescribed: "Kashf al-Asrar, scrying with clear quartz, deciphering encrypted texts, epiphany downloads",
         avoid: "Signing unexamined contracts, engaging in sharp malicious gossip",
         domainPeak: "DOM-03 (Intellect & Ciphers)",
-        isLiveActive: true // Marked as currently active live benchmark
+        isLiveActive: false
       },
       {
         id: "N-09",
@@ -4006,9 +4009,9 @@
       setTimeout(() => card.classList.remove('ring-2', 'ring-sky-500'), 350);
     }
 
-    // Initialize grids and select active live hour (N-08)
+    // Initialize grids (live active hour dynamically selected on snapshot load)
     renderHoursGrids();
-    selectHour("N-08");
+    selectHour("D-01");
     selectOperativeWork("binding");
 
     // ==================== PLANET INSPECTION LOGIC ====================
@@ -4748,6 +4751,6 @@
     window.generateHourOccultWorks = generateHourOccultWorks;
   </script>
   <!-- Real-Time Swiss Ephemeris Synchronization & WebSocket Engine -->
-  <script src="public/live_astroval.js"></script>
+  <script src="public/live_astroval.js?v=20261004_live_v3"></script>
 </body>
 </html>

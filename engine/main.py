@@ -215,7 +215,14 @@ async def serve_index():
     """Serves the master interactive Astroval application"""
     index_path = PROJECT_ROOT / "index.html"
     if index_path.exists():
-        return FileResponse(str(index_path))
+        return FileResponse(
+            str(index_path),
+            headers={
+                "Cache-Control": "no-cache, no-store, must-revalidate",
+                "Pragma": "no-cache",
+                "Expires": "0"
+            }
+        )
     return HTMLResponse("<h1>Astroval Engine Running</h1><p>Visit /api/live for data.</p>")
 
 
