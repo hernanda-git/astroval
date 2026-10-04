@@ -92,6 +92,79 @@ FIXED_STARS_CATALOG = [
     {"name": "Arcturus", "nom": "alBoo", "type": "Behenian Star / Bear Watcher", "mag": -0.05}
 ]
 
+PLANETARY_THEURGY = {
+    "saturn": {
+        "sphere": "7th Sphere (Saturn / Zuhal)",
+        "archangel": "Cassiel (Kafziel / كسفيائيل)",
+        "divine_name": "Yā Hayyu Yā Qayyūm (يا حي يا قيوم)",
+        "wafq": "3x3 Saturnian Kamea (Wafq Musallas)",
+        "metal": "Lead (Raṣāṣ)",
+        "incense": "Asafoetida (Hiltit), Sulfur, Dried Cypress",
+        "prescribed": "Binding foes, deep ancestral grounding, heavy structural consolidation, boundary freezing",
+        "avoid": "Lighthearted celebration, initiating swift ventures, romance"
+    },
+    "jupiter": {
+        "sphere": "6th Sphere (Jupiter / Mushtari)",
+        "archangel": "Sachiel (Zadkiel / سمسمائيل)",
+        "divine_name": "Yā 'Alīmu Yā Hakīm (يا عليم يا حكيم)",
+        "wafq": "4x4 Jupiterian Kamea (Wafq Murabba')",
+        "metal": "Tin (Qazdir)",
+        "incense": "Nutmeg, Cloves, Sumatra Benzoin, Cinnamon",
+        "prescribed": "Commercial abundance, expanding treasury, petitioning judges, judicial honors",
+        "avoid": "Petty disputes, parsimonious spending, isolation"
+    },
+    "mars": {
+        "sphere": "5th Sphere (Mars / Mirrikh)",
+        "archangel": "Samael (Amrael / سمائيل)",
+        "divine_name": "Yā Qawiyyu Yā Matīn (يا قوي يا متين)",
+        "wafq": "5x5 Martial Kamea (Wafq Mukhammas)",
+        "metal": "Forged Iron (Hadid)",
+        "incense": "Dragon's Blood Resin, Black Peppercorns, Tobacco Leaf",
+        "prescribed": "Severing oppressive adversaries, kinetic counter-strike defense, breaking stagnant inertia",
+        "avoid": "Delicate reconciliation, non-combative surgery, peaceful diplomacy"
+    },
+    "sun": {
+        "sphere": "4th Sphere (The Sun / Shams)",
+        "archangel": "Raphael (Ruqya'il / روقيائيل)",
+        "divine_name": "Yā Nūru Yā Bāsiṭ (يا نور يا باسط)",
+        "wafq": "6x6 Solar Kamea (Wafq Musaddas)",
+        "metal": "24k Gold (Dhahab)",
+        "incense": "Royal Frankincense Hojari, Ambergris, Saffron",
+        "prescribed": "Sovereignty rituals, gaining imperial favor, vitality renewal, executive leadership",
+        "avoid": "Nocturnal secrecy, deceptive camouflaging, timid withdrawal"
+    },
+    "venus": {
+        "sphere": "3rd Sphere (Venus / Zuharah)",
+        "archangel": "Anael (Anyail / عنيائيل)",
+        "divine_name": "Yā Wadūdu Yā Jāmi' (يا ودود يا جامع)",
+        "wafq": "7x7 Venusian Kamea (Wafq Musabba')",
+        "metal": "Polished Copper (Nuhas)",
+        "incense": "Damask Rose Otto, White Musk, Red Sandalwood",
+        "prescribed": "Artistic creations, inward self-sovereignty, beauty consecration, erotic shadow reconciliation",
+        "avoid": "Naive attraction spells when afflicted/retrograde, reckless financial speculation"
+    },
+    "mercury": {
+        "sphere": "2nd Sphere (Mercury / 'Utarid)",
+        "archangel": "Michael (Mika'il / ميكائيل)",
+        "divine_name": "Yā Badi'u Yā Rashīd (يا بديع يا رشيد)",
+        "wafq": "8x8 Mercurial Kamea (Wafq Musamman)",
+        "metal": "Electrum / Quicksilver (Zi'baq)",
+        "incense": "Mastic Resin, Storax, Mugwort, Star Anise",
+        "prescribed": "Occult deciphering, writing sacred scrolls, intellectual audit, contract drafting",
+        "avoid": "Rash verbal vows, reckless trade under afflicted aspects"
+    },
+    "moon": {
+        "sphere": "1st Sphere (The Moon / Qamar)",
+        "archangel": "Gabriel (Jibril / جبرائيل)",
+        "divine_name": "Yā Qaddūsu Yā Fattāh (يا قدوس يا فتاح)",
+        "wafq": "9x9 Lunar Kamea (Wafq Mutassa')",
+        "metal": "Sterling Silver (Fiddah)",
+        "incense": "White Sandalwood, Camphor, Aloe Resin",
+        "prescribed": "Purifying baths, dream incubation, removing curses, uncrossing astral miasma",
+        "avoid": "Permanent stone foundations, irreversible commitments during void of course"
+    }
+}
+
 # Static Catalog Metadata for the 14 Grimoiric Operative Works
 OPERATIVE_WORKS_CATALOG = [
     {
@@ -200,7 +273,7 @@ OPERATIVE_WORKS_CATALOG = [
         "authorities": "Picatrix Bk. II Ch. 7; Key of Solomon (Pentacles of Jupiter); Shams al-Ma'arif (Bab Jalb al-Arzaq); Agrippa Bk. II Ch. 39",
         "incense": "Cinnamon Bark, Cloves, Benzoin of Sumatra, Olibanum, Nutmeg",
         "metal_seal": "Cast Solid Tin or Fine Gold Plate engraved with 4x4 Jupiterian Kamea",
-        "warning": "Tie the talisman to the physical business ledger, cash box, or ledger ledger vault on Waxing Moon."
+        "warning": "Tie the talisman to the physical business ledger, cash box, or ledger vault on Waxing Moon."
     },
     {
         "id": 10,
@@ -264,6 +337,20 @@ OPERATIVE_WORKS_CATALOG = [
     }
 ]
 
+def get_house_for_lon(lon: float, cusps: List[float]) -> int:
+    """Calculates Placidus house number (1-12) for a given ecliptic longitude"""
+    lon = lon % 360.0
+    for i in range(12):
+        c1 = cusps[i] % 360.0
+        c2 = cusps[(i + 1) % 12] % 360.0
+        if c1 < c2:
+            if c1 <= lon < c2:
+                return i + 1
+        else:
+            if lon >= c1 or lon < c2:
+                return i + 1
+    return 1
+
 class AstrovalEngine:
     def __init__(self, lat: float = JAKARTA_LAT, lon: float = JAKARTA_LON, alt: float = JAKARTA_ALT, ephe_path: Optional[str] = None):
         self.lat = lat
@@ -312,8 +399,8 @@ class AstrovalEngine:
         m = int((rem - d) * 60)
         return f"{d:02d}°{m:02d}′ {ZODIAC_GLYPHS[sign_idx]}"
 
-    def calculate_body(self, jd: float, body_key: str) -> Dict[str, Any]:
-        """Calculates precise topocentric positions, speed, dignity, alt/az"""
+    def calculate_body(self, jd: float, body_key: str, cusps_lon: Optional[List[float]] = None) -> Dict[str, Any]:
+        """Calculates precise topocentric positions, speed, dignity, alt/az, and house"""
         body_info = PLANETS[body_key]
         body_id = body_info["id"]
 
@@ -340,6 +427,15 @@ class AstrovalEngine:
 
         dignity = self.evaluate_dignity(body_key, sign_idx)
 
+        # Sidereal position (Lahiri)
+        ayanamsa = swe.get_ayanamsa_ut(jd)
+        sidereal_lon = (lon - ayanamsa) % 360.0
+        s_sign_idx = int(sidereal_lon // 30)
+        s_rem = sidereal_lon % 30
+
+        # Calculate house if cusps provided
+        house_num = get_house_for_lon(lon, cusps_lon) if cusps_lon else 1
+
         return {
             "key": body_key,
             "name": body_info["name"],
@@ -359,7 +455,9 @@ class AstrovalEngine:
             "deg_in_sign": deg_in_sign,
             "altitude": altitude,
             "azimuth": azimuth,
-            "dignity": dignity
+            "dignity": dignity,
+            "house": house_num,
+            "sidereal_formatted": f"{int(s_rem):02d}°{int((s_rem*60)%60):02d}′ {ZODIAC_SIGNS[s_sign_idx]}"
         }
 
     def evaluate_dignity(self, body: str, sign_idx: int) -> str:
@@ -393,8 +491,10 @@ class AstrovalEngine:
         cusps, ascmc = swe.houses_ex(jd, self.lat, self.lon, b"P")
         
         houses = []
+        cusps_lon = []
         for i in range(12):
             c_lon = cusps[i]
+            cusps_lon.append(c_lon)
             houses.append({
                 "house": i + 1,
                 "longitude": c_lon,
@@ -405,6 +505,7 @@ class AstrovalEngine:
         return {
             "system": "Placidus",
             "cusps": houses,
+            "cusps_lon": cusps_lon,
             "ascendant": {"longitude": ascmc[0], "formatted": self.format_dms(ascmc[0]), "short": self.format_short(ascmc[0])},
             "midheaven": {"longitude": ascmc[1], "formatted": self.format_dms(ascmc[1]), "short": self.format_short(ascmc[1])},
             "descendant": {"longitude": (ascmc[0] + 180.0) % 360.0, "short": self.format_short((ascmc[0] + 180.0) % 360.0)},
@@ -458,7 +559,7 @@ class AstrovalEngine:
         utc_dt = datetime.datetime(year, month, day, h % 24, m, s, tzinfo=datetime.timezone.utc)
         return utc_dt.astimezone(JAKARTA_TZ)
 
-    def calculate_24_planetary_hours(self, query_dt: datetime.datetime) -> Dict[str, Any]:
+    def calculate_24_planetary_hours(self, query_dt: datetime.datetime, bodies: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
         """Calculates unequal proportional planetary hours for the query date/time"""
         jakarta_dt = query_dt.astimezone(JAKARTA_TZ)
         current_jd = self.get_julday(jakarta_dt)
@@ -469,6 +570,8 @@ class AstrovalEngine:
         prev_sunset_jd = transits["prev_sunset_jd"]
         next_sunrise_jd = transits["next_sunrise_jd"]
 
+        # Astral Day Ruler calculation:
+        # In Chaldean chronometry, the new astral day begins at SUNRISE!
         if current_jd < sunrise_jd:
             civic_day_idx = (jakarta_dt.weekday() + 1) % 7
             astral_day_idx = (civic_day_idx - 1) % 7
@@ -486,11 +589,12 @@ class AstrovalEngine:
         hours_list = []
         active_hour_info = None
 
-        # 12 Diurnal Hours
+        # 12 Diurnal Hours (Sunrise to Sunset)
         for i in range(12):
             h_start_jd = sunrise_jd + i * diurnal_hour_len_jd
             h_end_jd = sunrise_jd + (i + 1) * diurnal_hour_len_jd
             ruler = CHALDEAN_ORDER[(start_ruler_idx + i) % 7]
+            theurgy = PLANETARY_THEURGY.get(ruler, {})
             
             is_active = (h_start_jd <= current_jd < h_end_jd)
             h_obj = {
@@ -506,8 +610,23 @@ class AstrovalEngine:
                 "start_wib": self.jd_to_datetime_jakarta(h_start_jd).strftime("%H:%M:%S"),
                 "end_wib": self.jd_to_datetime_jakarta(h_end_jd).strftime("%H:%M:%S"),
                 "duration_seconds": int(diurnal_hour_len_jd * 86400),
-                "is_active": is_active
+                "is_active": is_active,
+                "sphere": theurgy.get("sphere", ""),
+                "archangel": theurgy.get("archangel", ""),
+                "divine_name": theurgy.get("divine_name", ""),
+                "wafq": theurgy.get("wafq", ""),
+                "metal": theurgy.get("metal", ""),
+                "incense": theurgy.get("incense", ""),
+                "prescribed": theurgy.get("prescribed", ""),
+                "avoid": theurgy.get("avoid", "")
             }
+            if bodies and ruler in bodies:
+                r_body = bodies[ruler]
+                h_obj["ruler_tropical"] = f"{r_body['formatted_short']} • House {r_body['house']}"
+                h_obj["ruler_alt_az"] = f"{r_body['altitude']:.1f}° / {r_body['azimuth']:.0f}°"
+                h_obj["ruler_dignity"] = r_body["dignity"]
+                h_obj["ruler_motion"] = r_body["motion_status"]
+
             if is_active:
                 rem_sec = int((h_end_jd - current_jd) * 86400)
                 elapsed_sec = int((current_jd - h_start_jd) * 86400)
@@ -519,11 +638,12 @@ class AstrovalEngine:
 
         noct_start_ruler_idx = (start_ruler_idx + 12) % 7
 
-        # 12 Nocturnal Hours
+        # 12 Nocturnal Hours (Sunset to Next Sunrise)
         for i in range(12):
             h_start_jd = sunset_jd + i * nocturnal_hour_len_jd
             h_end_jd = sunset_jd + (i + 1) * nocturnal_hour_len_jd
             ruler = CHALDEAN_ORDER[(noct_start_ruler_idx + i) % 7]
+            theurgy = PLANETARY_THEURGY.get(ruler, {})
 
             is_active = (h_start_jd <= current_jd < h_end_jd)
             h_obj = {
@@ -539,8 +659,23 @@ class AstrovalEngine:
                 "start_wib": self.jd_to_datetime_jakarta(h_start_jd).strftime("%H:%M:%S"),
                 "end_wib": self.jd_to_datetime_jakarta(h_end_jd).strftime("%H:%M:%S"),
                 "duration_seconds": int(nocturnal_hour_len_jd * 86400),
-                "is_active": is_active
+                "is_active": is_active,
+                "sphere": theurgy.get("sphere", ""),
+                "archangel": theurgy.get("archangel", ""),
+                "divine_name": theurgy.get("divine_name", ""),
+                "wafq": theurgy.get("wafq", ""),
+                "metal": theurgy.get("metal", ""),
+                "incense": theurgy.get("incense", ""),
+                "prescribed": theurgy.get("prescribed", ""),
+                "avoid": theurgy.get("avoid", "")
             }
+            if bodies and ruler in bodies:
+                r_body = bodies[ruler]
+                h_obj["ruler_tropical"] = f"{r_body['formatted_short']} • House {r_body['house']}"
+                h_obj["ruler_alt_az"] = f"{r_body['altitude']:.1f}° / {r_body['azimuth']:.0f}°"
+                h_obj["ruler_dignity"] = r_body["dignity"]
+                h_obj["ruler_motion"] = r_body["motion_status"]
+
             if is_active:
                 rem_sec = int((h_end_jd - current_jd) * 86400)
                 elapsed_sec = int((current_jd - h_start_jd) * 86400)
@@ -559,6 +694,7 @@ class AstrovalEngine:
                 h_end_jd = prev_sunset_jd + (i + 1) * prev_noct_len
                 if h_start_jd <= current_jd < h_end_jd:
                     ruler = CHALDEAN_ORDER[(prev_start_ruler_idx + i) % 7]
+                    theurgy = PLANETARY_THEURGY.get(ruler, {})
                     rem_sec = int((h_end_jd - current_jd) * 86400)
                     elapsed_sec = int((current_jd - h_start_jd) * 86400)
                     active_hour_info = {
@@ -576,8 +712,22 @@ class AstrovalEngine:
                         "duration_seconds": int(prev_noct_len * 86400),
                         "seconds_remaining": max(0, rem_sec),
                         "percentage_elapsed": min(100.0, max(0.0, round((elapsed_sec / (prev_noct_len * 86400)) * 100, 1))),
-                        "is_active": True
+                        "is_active": True,
+                        "sphere": theurgy.get("sphere", ""),
+                        "archangel": theurgy.get("archangel", ""),
+                        "divine_name": theurgy.get("divine_name", ""),
+                        "wafq": theurgy.get("wafq", ""),
+                        "metal": theurgy.get("metal", ""),
+                        "incense": theurgy.get("incense", ""),
+                        "prescribed": theurgy.get("prescribed", ""),
+                        "avoid": theurgy.get("avoid", "")
                     }
+                    if bodies and ruler in bodies:
+                        r_body = bodies[ruler]
+                        active_hour_info["ruler_tropical"] = f"{r_body['formatted_short']} • House {r_body['house']}"
+                        active_hour_info["ruler_alt_az"] = f"{r_body['altitude']:.1f}° / {r_body['azimuth']:.0f}°"
+                        active_hour_info["ruler_dignity"] = r_body["dignity"]
+                        active_hour_info["ruler_motion"] = r_body["motion_status"]
                     break
 
         return {
@@ -770,7 +920,7 @@ class AstrovalEngine:
             # 2. Retrograde Modifier
             if p_retrograde:
                 if work["category"] in ["Tafriq", "Aqd"]:
-                    score += 5.0 # Retrograde aids binding and past-severance
+                    score += 5.0
                     verdict_reasons.append(f"{p_body.get('name')} Retrograde assists contraction/severance")
                 else:
                     score -= 20.0
@@ -791,7 +941,6 @@ class AstrovalEngine:
 
             # 5. Work-Specific Custom Astrometric Rules
             if w_id == 1: # Love & Erotic Attraction
-                # Harsh penalty if Venus in Scorpio and square Mars
                 if p_body.get("sign") == "Scorpio":
                     score -= 25.0
                     verdict_reasons.append("Venus in Scorpio proscribed by Picatrix Bk. II Ch. 10")
@@ -802,7 +951,6 @@ class AstrovalEngine:
                         verdict_reasons.append(f"Venus {asp['aspect']} Mars triggers jealousy and conflict inversion")
 
             elif w_id == 2: # Cord-Cutting & Severance
-                # Boosted by Saturn/Mars power and waning moon
                 if not is_waxing:
                     score += 10.0
                     verdict_reasons.append("Waning Moon accelerates dissolution and severing ties")
@@ -941,19 +1089,20 @@ class AstrovalEngine:
 
         jd = self.get_julday(query_dt)
 
-        # 1. Planetary Positions
+        # 1. Placidus Houses (needed for body house calculation)
+        houses = self.calculate_houses(jd)
+        cusps_lon = houses["cusps_lon"]
+
+        # 2. Planetary Positions (with house assignment)
         bodies = {}
         for k in PLANETS.keys():
-            bodies[k] = self.calculate_body(jd, k)
-
-        # 2. Placidus Houses
-        houses = self.calculate_houses(jd)
+            bodies[k] = self.calculate_body(jd, k, cusps_lon)
 
         # 3. Interplanetary Aspects
         aspects = self.calculate_aspects(bodies)
 
-        # 4. Proportional Planetary Hours
-        chronometry = self.calculate_24_planetary_hours(query_dt)
+        # 4. Proportional Planetary Hours (with live ruler coordinates)
+        chronometry = self.calculate_24_planetary_hours(query_dt, bodies)
 
         # 5. Moon Phase & Mansions
         moon_lon = bodies["moon"]["longitude"]

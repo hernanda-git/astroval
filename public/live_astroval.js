@@ -48,6 +48,16 @@
     proscribed: { bg: '#e11d4822', text: '#f43f5e', border: '#e11d4855' }
   };
 
+  const DOMAIN_PEAK_MAP = {
+    "Saturn": "DOM-10 (Vocation), DOM-07 (Contracts) & DOM-08 (Crisis)",
+    "Jupiter": "DOM-09 (Higher Gnosis), DOM-02 (Wealth) & DOM-11 (Alliances)",
+    "Mars": "DOM-01 (Vitality), DOM-06 (Protection) & DOM-08 (Severance)",
+    "Sun": "DOM-01 (Sovereignty), DOM-10 (Authority) & DOM-05 (Fame)",
+    "Venus": "DOM-05 (Creativity), DOM-07 (Union) & DOM-02 (Abundance)",
+    "Mercury": "DOM-03 (Intellect & Ciphers), DOM-06 (Craft) & DOM-10 (Trade)",
+    "Moon": "DOM-04 (Sanctuary), DOM-12 (Occult Trance) & DOM-01 (Body Soul)"
+  };
+
   // Initialize
   document.addEventListener('DOMContentLoaded', () => {
     initEngineUI();
@@ -206,18 +216,28 @@
   }
 
   function applySnapshotToDOM(data) {
+    if (!data) return;
+
     // 1. Hero Overview
     const hDayRuler = document.getElementById('heroDayRuler');
-    if (hDayRuler) hDayRuler.textContent = data.chronometry.astral_day_ruler;
+    if (hDayRuler && data.chronometry) {
+      hDayRuler.textContent = `${data.chronometry.astral_day_ruler} (${getDayNameArabic(data.chronometry.astral_day_ruler)})`;
+    }
 
     const hAsc = document.getElementById('heroAscendant');
-    if (hAsc) hAsc.textContent = data.houses.ascendant.formatted_short || data.houses.ascendant.short;
+    if (hAsc && data.houses && data.houses.ascendant) {
+      hAsc.textContent = data.houses.ascendant.formatted_short || data.houses.ascendant.short || data.houses.ascendant.formatted;
+    }
 
     const hMc = document.getElementById('heroMidheaven');
-    if (hMc) hMc.textContent = data.houses.midheaven.formatted_short || data.houses.midheaven.short;
+    if (hMc && data.houses && data.houses.midheaven) {
+      hMc.textContent = data.houses.midheaven.formatted_short || data.houses.midheaven.short || data.houses.midheaven.formatted;
+    }
 
     const hMoon = document.getElementById('heroLunarPhase');
-    if (hMoon) hMoon.textContent = `${data.luminaries.moon_phase_name.split(' (')[0]} (${data.luminaries.moon_illumination_pct}%)`;
+    if (hMoon && data.luminaries) {
+      hMoon.textContent = `${data.luminaries.moon_phase_name.split(' (')[0]} (${data.luminaries.moon_illumination_pct}%)`;
+    }
 
     if (data.aspects && data.aspects.length > 0) {
       const hAspect = document.getElementById('heroPeakAspect');
@@ -241,7 +261,7 @@
     }
 
     // 2. Active Planetary Hour
-    const activeH = data.chronometry.active_hour;
+    const activeH = data.chronometry?.active_hour;
     if (activeH) {
       activeHourId = activeH.id;
       activeHourRemainingSeconds = activeH.seconds_remaining || 0;
@@ -257,42 +277,188 @@
       updateCountdownDisplay();
     }
 
-    // 3. Update 24-Hour Grid
-    if (data.chronometry.hours && typeof window.masterHoursData !== 'undefined') {
-      data.chronometry.hours.forEach(engHour => {
-        const found = window.masterHoursData.find(h => h.id === engHour.id);
-        if (found) {
-          found.time = `${engHour.start_wib} – ${engHour.end_wib} WIB`;
-          found.duration = `${Math.floor(engHour.duration_seconds / 60)}m ${engHour.duration_seconds % 60}s`;
-          found.isLiveActive = engHour.is_active;
-        }
-      });
-      if (typeof window.renderHoursGrids === 'function') {
-        window.renderHoursGrids();
+    // 3. Section Headers (Nocturnal & Diurnal)
+    if (data.chronometry) {
+      const c = data.chronometry;
+      const noctHeader = document.getElementById('nocturnalHeaderTitle');
+      const noctRuler = document.getElementById('nocturnalHeaderRuler');
+      const diurHeader = document.getElementById('diurnalHeaderTitle');
+      const diurRuler = document.getElementById('diurnalHeaderRuler');
+
+      const noctM = Math.floor((c.nocturnal_hour_seconds || 3600) / 60);
+      const noctS = (c.nocturnal_hour_seconds || 3600) % 60;
+      const diurM = Math.floor((c.diurnal_hour_seconds || 3600) / 60);
+      const diurS = (c.diurnal_hour_seconds || 3600) % 60;
+
+      if (noctHeader) {
+        const sunsetStr = (c.sunset_wib || '').slice(0, 5);
+        const nextSunStr = (c.next_sunrise_wib || '').slice(0, 5);
+        noctHeader.innerHTML = `<span>🌙</span> NOCTURNAL HOURS (Sunset ${sunsetStr} → Sunrise ${nextSunStr}) • Length: ${noctM}m ${noctS}s`;
+      }
+      if (noctRuler && c.nocturnal_day_ruler) {
+        noctRuler.textContent = `Ruler: ${c.nocturnal_day_ruler} (${getDayNameArabic(c.nocturnal_day_ruler)})`;
+      }
+
+      if (diurHeader) {
+        const sunrStr = (c.sunrise_wib || '').slice(0, 5);
+        const sunsStr = (c.sunset_wib || '').slice(0, 5);
+        diurHeader.innerHTML = `<span>☀️</span> DIURNAL HOURS (${c.astral_day_ruler} Day: Sunrise ${sunrStr} → Sunset ${sunsStr}) • Length: ${diurM}m ${diurS}s`;
+      }
+      if (diurRuler) {
+        diurRuler.textContent = `Ruler: ${c.astral_day_ruler} (${getDayNameArabic(c.astral_day_ruler)})`;
       }
     }
 
-    // 4. Update Operative Works Viability & Badges
+    // 4. Update window.masterHoursData and 24-Hour Grid
+    if (data.chronometry?.hours && window.masterHoursData) {
+      data.chronometry.hours.forEach(engH => {
+        let found = window.masterHoursData.find(h => h.id === engH.id);
+        if (!found) {
+          found = { id: engH.id };
+          window.masterHoursData.push(found);
+        }
+        found.num = engH.num;
+        found.period = engH.period;
+        found.ruler = engH.ruler;
+        found.glyph = engH.glyph;
+        found.color = engH.color;
+        found.name = `${engH.num}${getOrdinal(engH.num)} ${capitalize(engH.period.toLowerCase())}: ${engH.ruler} (${engH.glyph})`;
+        found.time = `${engH.start_wib} – ${engH.end_wib} WIB`;
+        found.duration = `${Math.floor(engH.duration_seconds / 60)}m ${engH.duration_seconds % 60}s`;
+        found.isLiveActive = !!engH.is_active;
+        found.sphere = engH.sphere || `${engH.ruler} Sphere`;
+        found.archangel = engH.archangel || "";
+        found.divineName = engH.divine_name || "";
+        found.prescribed = engH.prescribed || "";
+        found.avoid = engH.avoid || "";
+        found.domainPeak = DOMAIN_PEAK_MAP[engH.ruler] || "Universal Influence";
+
+        const rBody = data.bodies ? data.bodies[engH.ruler_key] : null;
+        if (rBody) {
+          found.tropical = engH.ruler_tropical || `${rBody.formatted_short} • House ${rBody.house}`;
+          found.sidereal = rBody.sidereal_formatted;
+          found.altAz = engH.ruler_alt_az || `${rBody.altitude > 0 ? '+' : ''}${rBody.altitude.toFixed(1)}° / ${rBody.azimuth.toFixed(0)}°`;
+          found.speed = engH.ruler_motion || rBody.motion_status;
+          found.dignity = engH.ruler_dignity || rBody.dignity;
+        }
+
+        // Planetary ruler active aspects
+        if (data.aspects) {
+          const rulerAspects = data.aspects.filter(a => 
+            a.body1.toLowerCase() === engH.ruler_key || 
+            a.body2.toLowerCase() === engH.ruler_key
+          ).map(a => `${a.aspect_glyph} ${a.aspect} ${a.body1.toLowerCase() === engH.ruler_key ? a.body2 : a.body1} (${a.orb_formatted})`);
+          found.aspects = rulerAspects.length > 0 ? rulerAspects : ["No major aspects active"];
+        }
+
+        // Stars & Luminaries alignment
+        if (data.bodies && data.luminaries) {
+          found.starsLuminaries = [
+            `☉ Sun Alt: ${data.bodies.sun.alt_formatted} (${data.bodies.sun.sign})`,
+            `☽ Moon Alt: ${data.bodies.moon.alt_formatted} (${data.luminaries.moon_illumination_pct}%)`
+          ];
+        }
+      });
+
+      if (typeof window.renderHoursGrids === 'function') {
+        window.renderHoursGrids();
+      }
+
+      // Selection handling:
+      // If user hasn't manually clicked another hour, auto-select live active hour!
+      if (!window.hasUserSelectedHourManual && activeH) {
+        if (typeof window.selectHour === 'function') {
+          window.selectHour(activeH.id);
+        }
+      } else if (window.currentlySelectedHour && typeof window.selectHour === 'function') {
+        window.selectHour(window.currentlySelectedHour);
+      }
+    }
+
+    // 5. Update Ephemeris Table (tab-ephemeris)
+    if (data.bodies) {
+      Object.keys(data.bodies).forEach(bKey => {
+        const b = data.bodies[bKey];
+        const row = document.getElementById(`ephem-row-${bKey}`);
+        if (row && row.cells.length >= 6) {
+          // cells[1]: Tropical
+          row.cells[1].textContent = b.formatted_short;
+          // cells[2]: Alt / Az
+          row.cells[2].textContent = `${b.altitude > 0 ? '+' : ''}${b.altitude.toFixed(1)}° / ${b.azimuth.toFixed(0)}°`;
+          row.cells[2].className = `py-2 font-mono ${b.altitude > 0 ? 'text-emerald-400 font-bold' : 'text-slate-400'}`;
+          // cells[3]: Mag
+          row.cells[3].textContent = (b.magnitude != null) ? (b.magnitude > 0 ? '+' : '') + b.magnitude.toFixed(1) : '—';
+          // cells[4]: Motion
+          row.cells[4].textContent = b.motion_status;
+          row.cells[4].className = `py-2 font-mono ${b.motion_status.includes('Rx') ? 'text-rose-400 font-bold' : 'text-emerald-400'}`;
+          // cells[5]: Dignity
+          row.cells[5].textContent = b.dignity;
+          row.cells[5].className = `py-2 font-bold ${getDignityTextColor(b.dignity)}`;
+        }
+      });
+    }
+
+    // 6. Update Planet Catalog & Inspector Box
+    if (data.bodies && window.planetCatalog) {
+      Object.keys(data.bodies).forEach(bKey => {
+        const b = data.bodies[bKey];
+        const p = window.planetCatalog[bKey];
+        if (p) {
+          p.sign = `${b.formatted} • House ${b.house}`;
+          p.badge = b.dignity;
+          p.badgeClass = getDignityBadgeClass(b.dignity);
+          p.sidereal = b.sidereal_formatted;
+          p.nakshatra = b.nakshatra;
+          p.alt = `${b.alt_formatted} (Az ${b.az_formatted})`;
+          p.motion = `${b.motion_status} (${b.speed_lon > 0 ? '+' : ''}${b.speed_lon.toFixed(3)}°/d)`;
+          if (data.aspects) {
+            p.aspects = data.aspects
+              .filter(a => a.body1.toLowerCase() === bKey || a.body2.toLowerCase() === bKey)
+              .map(a => ({
+                name: `${a.aspect_glyph} ${a.aspect} ${a.body1.toLowerCase() === bKey ? a.body2 : a.body1}`,
+                orb: a.orb_formatted,
+                color: getAspectColorClass(a.aspect)
+              }));
+          }
+        }
+      });
+
+      if (typeof window.inspectPlanet === 'function') {
+        window.inspectPlanet(window.currentlyInspectedPlanet || 'sun');
+      }
+    }
+
+    // 7. Update SVG Natal Chart Markers (Degrees Text)
+    if (data.bodies) {
+      Object.keys(data.bodies).forEach(bKey => {
+        const b = data.bodies[bKey];
+        const marker = document.getElementById(`marker-${bKey}`);
+        if (marker) {
+          const texts = marker.querySelectorAll('text');
+          texts.forEach(t => {
+            // Find degree label (contains ° or ′)
+            if (t.textContent.includes('°') || t.textContent.includes('′')) {
+              t.textContent = b.formatted_short;
+            }
+          });
+        }
+      });
+    }
+
+    // 8. Update Operative Works (14 Grimoiric Works)
     if (data.operative_works) {
       data.operative_works.forEach(opWork => {
         const slug = WORK_SLUG_MAP[opWork.id];
         if (!slug) return;
 
-        // Update card
         const card = document.getElementById(`work-card-${slug}`);
         if (card) {
-          // Fill width & text
           const gaugeFill = card.querySelector('.h-full.rounded-full');
-          if (gaugeFill) {
-            gaugeFill.style.width = `${opWork.viability_pct}%`;
-          }
+          if (gaugeFill) gaugeFill.style.width = `${opWork.viability_pct}%`;
 
           const gaugeText = card.querySelector('.flex.flex-col.items-end span.font-bold');
-          if (gaugeText) {
-            gaugeText.textContent = `${opWork.viability_pct}% Potency`;
-          }
+          if (gaugeText) gaugeText.textContent = `${opWork.viability_pct}% Potency`;
 
-          // Verdict badge text
           const verdictEl = card.querySelector('p.font-mono.font-semibold');
           if (verdictEl) {
             const bStyle = BADGE_COLOR_MAP[opWork.badge_type] || BADGE_COLOR_MAP.moderate;
@@ -300,7 +466,6 @@
             verdictEl.style.color = bStyle.text;
           }
 
-          // Active hour match highlight
           let hourMatchTag = card.querySelector('.active-hour-match-tag');
           if (opWork.is_current_hour_aligned) {
             if (!hourMatchTag) {
@@ -314,14 +479,12 @@
             hourMatchTag.remove();
           }
 
-          // Astrometric Engine Anchor
           const anchorEl = card.querySelector('.grid.grid-cols-1.md\\:grid-cols-2 p.text-slate-300');
           if (anchorEl && opWork.astrological_anchor) {
             anchorEl.textContent = opWork.astrological_anchor;
           }
         }
 
-        // Update allOperativeWorks array in window if present
         if (window.allOperativeWorks) {
           const wObj = window.allOperativeWorks.find(w => w.id === slug);
           if (wObj) {
@@ -335,6 +498,42 @@
         window.renderOperativeChips();
       }
     }
+  }
+
+  function getDayNameArabic(ruler) {
+    const map = {
+      "Sun": "Ahad",
+      "Moon": "Ithnayn",
+      "Mars": "Thulatha",
+      "Mercury": "Arba'a",
+      "Jupiter": "Khamis",
+      "Venus": "Jumu'ah",
+      "Saturn": "Sabt"
+    };
+    return map[ruler] || ruler;
+  }
+
+  function getDignityTextColor(dignity) {
+    if (!dignity) return 'text-slate-400';
+    if (dignity.includes('Domicile') || dignity.includes('Exaltation')) return 'text-blue-400';
+    if (dignity.includes('Fall') || dignity.includes('Detriment')) return 'text-red-400';
+    return 'text-slate-400';
+  }
+
+  function getDignityBadgeClass(dignity) {
+    if (!dignity) return 'bg-slate-900 text-slate-300 border-slate-700';
+    if (dignity.includes('Domicile') || dignity.includes('Exaltation')) return 'bg-blue-950 text-blue-300 border-blue-800';
+    if (dignity.includes('Fall') || dignity.includes('Detriment')) return 'bg-red-950 text-red-300 border-red-800';
+    return 'bg-slate-900 text-slate-300 border-slate-700';
+  }
+
+  function getAspectColorClass(aspName) {
+    if (!aspName) return 'text-slate-400';
+    const l = aspName.toLowerCase();
+    if (l.includes('trine') || l.includes('sextile')) return 'text-blue-400';
+    if (l.includes('square') || l.includes('opposition')) return 'text-red-400';
+    if (l.includes('conjunction')) return 'text-purple-400';
+    return 'text-slate-400';
   }
 
   function startSecondTimer() {
