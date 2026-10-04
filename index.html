@@ -189,31 +189,64 @@
         </div>
       </div>
 
-      <!-- Nocturnal & Diurnal Hour Grids -->
+      <!-- Master Date & Planetary Rulers Alignment Bar -->
+      <div class="mt-4 p-4 rounded-2xl bg-slate-950/90 border border-slate-800 grid grid-cols-1 md:grid-cols-3 gap-3 font-mono text-xs">
+        <!-- Col 1: Current Date & Hijri Epoch -->
+        <div class="flex items-center gap-3 border-b md:border-b-0 md:border-r border-slate-800/80 pb-3 md:pb-0 md:pr-3">
+          <span class="text-2xl">📅</span>
+          <div>
+            <div class="text-[10px] text-slate-500 uppercase font-bold tracking-wider">CURRENT CHRONOMETRIC DATE</div>
+            <div id="matrixCurrentDate" class="text-white font-bold text-sm font-cinzel">Minggu, 4 Oktober 2026</div>
+            <div id="matrixHijriDate" class="text-[11px] text-amber-400 font-medium">22 Rabi' al-Thani 1448 AH (ربيع الثاني)</div>
+          </div>
+        </div>
+
+        <!-- Col 2: Diurnal Planetary Ruler -->
+        <div class="flex items-center gap-3 border-b md:border-b-0 md:border-r border-slate-800/80 pb-3 md:pb-0 md:pr-3">
+          <span class="text-2xl text-amber-400">☀️</span>
+          <div>
+            <div class="text-[10px] text-amber-400/90 uppercase font-bold tracking-wider">DIURNAL DAY RULER (SIANG)</div>
+            <div id="matrixDiurnalRuler" class="text-amber-300 font-bold text-xs sm:text-sm">☉ The Sun (Al-Shams / Ahad)</div>
+            <div id="matrixDiurnalWindow" class="text-[11px] text-slate-400">Sunrise 05:37:11 → Sunset 17:45:44 WIB</div>
+          </div>
+        </div>
+
+        <!-- Col 3: Nocturnal Planetary Ruler -->
+        <div class="flex items-center gap-3">
+          <span class="text-2xl text-indigo-400">🌙</span>
+          <div>
+            <div class="text-[10px] text-indigo-400/90 uppercase font-bold tracking-wider">NOCTURNAL NIGHT RULER (MALAM)</div>
+            <div id="matrixNocturnalRuler" class="text-indigo-300 font-bold text-xs sm:text-sm">♃ Jupiter (Al-Mushtari / Laylat al-Ithnayn)</div>
+            <div id="matrixNocturnalWindow" class="text-[11px] text-slate-400">Sunset 17:45:44 → Sunrise 05:36:40 WIB</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Diurnal & Nocturnal Hour Grids (Chronological: Sunrise to Sunset, then Sunset to Sunrise) -->
       <div class="mt-6 flex flex-col gap-5">
         
-        <!-- Nocturnal Grid -->
+        <!-- Diurnal Grid (Daytime Hours) -->
         <div>
           <div class="flex items-center justify-between mb-2.5">
-            <span id="nocturnalHeaderTitle" class="text-xs font-bold text-slate-300 flex items-center gap-1.5 font-mono">
-              <span>🌙</span> NOCTURNAL HOURS (Saturday Night: Sunset 17:46 $\rightarrow$ Sunrise 05:36) • Length: 59m 10s
+            <span id="diurnalHeaderTitle" class="text-xs font-bold text-amber-300 flex items-center gap-1.5 font-mono">
+              <span>☀️</span> DIURNAL HOURS (Sunday Day: Sunrise 05:37 $\rightarrow$ Sunset 17:45 WIB) • Length: 60m 42s
             </span>
-            <span id="nocturnalHeaderRuler" class="text-[11px] text-slate-400 font-mono">Ruler: Saturn (Sabt)</span>
+            <span id="diurnalHeaderRuler" class="text-[11px] text-amber-400/90 font-mono font-bold bg-amber-950/60 px-2 py-0.5 rounded border border-amber-800/60">Day Ruler: ☉ Sun (Ahad)</span>
           </div>
-          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2" id="nocturnalGrid">
+          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2" id="diurnalGrid">
             <!-- Rendered dynamically by JavaScript -->
           </div>
         </div>
 
-        <!-- Diurnal Grid -->
+        <!-- Nocturnal Grid (Nighttime Hours) -->
         <div>
           <div class="flex items-center justify-between mb-2.5">
-            <span id="diurnalHeaderTitle" class="text-xs font-bold text-slate-300 flex items-center gap-1.5 font-mono">
-              <span>☀️</span> DIURNAL HOURS (Sunday Day: Sunrise 05:36 $\rightarrow$ Sunset 17:46) • Length: 60m 49s
+            <span id="nocturnalHeaderTitle" class="text-xs font-bold text-indigo-300 flex items-center gap-1.5 font-mono">
+              <span>🌙</span> NOCTURNAL HOURS (Sunday Night → Monday Dawn: Sunset 17:45 $\rightarrow$ Sunrise 05:36 WIB) • Length: 59m 18s
             </span>
-            <span id="diurnalHeaderRuler" class="text-[11px] text-slate-400 font-mono">Ruler: Sun (Ahad)</span>
+            <span id="nocturnalHeaderRuler" class="text-[11px] text-indigo-400/90 font-mono font-bold bg-indigo-950/60 px-2 py-0.5 rounded border border-indigo-800/60">Night Ruler: ♃ Jupiter (Al-Mushtari)</span>
           </div>
-          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2" id="diurnalGrid">
+          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2" id="nocturnalGrid">
             <!-- Rendered dynamically by JavaScript -->
           </div>
         </div>
@@ -4009,9 +4042,8 @@
       setTimeout(() => card.classList.remove('ring-2', 'ring-sky-500'), 350);
     }
 
-    // Initialize grids (live active hour dynamically selected on snapshot load)
+    // Initialize grids (live active hour dynamically selected on Swiss Ephemeris snapshot load)
     renderHoursGrids();
-    selectHour("D-01");
     selectOperativeWork("binding");
 
     // ==================== PLANET INSPECTION LOGIC ====================
@@ -4751,6 +4783,6 @@
     window.generateHourOccultWorks = generateHourOccultWorks;
   </script>
   <!-- Real-Time Swiss Ephemeris Synchronization & WebSocket Engine -->
-  <script src="public/live_astroval.js?v=20261004_live_v3"></script>
+  <script src="public/live_astroval.js?v=20261004_live_v4"></script>
 </body>
 </html>

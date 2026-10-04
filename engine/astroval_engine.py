@@ -730,11 +730,45 @@ class AstrovalEngine:
                         active_hour_info["ruler_motion"] = r_body["motion_status"]
                     break
 
+        noct_ruler = CHALDEAN_ORDER[noct_start_ruler_idx]
+
+        day_names_id = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu']
+        month_names_id = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember']
+
+        arabic_day_ruler_map = {
+            "Sun": "Al-Shams (الشمس) — Yawm al-Ahad (يوم الأحد)",
+            "Moon": "Al-Qamar (القمر) — Yawm al-Ithnayn (يوم الإثنين)",
+            "Mars": "Al-Marikh (المريخ) — Yawm al-Thulatha (يوم الثلاثاء)",
+            "Mercury": "'Utarid (عطارد) — Yawm al-Arba'a (يوم الأربعاء)",
+            "Jupiter": "Al-Mushtari (المشتري) — Yawm al-Khamis (يوم الخميس)",
+            "Venus": "Al-Zuhrah (الزهرة) — Yawm al-Jumu'ah (يوم الجمعة)",
+            "Saturn": "Zuhal (زحل) — Yawm al-Sabt (يوم السبت)"
+        }
+
+        arabic_night_ruler_map = {
+            "Sun": "Al-Shams (الشمس) — Laylat al-Ahad (ليلة الأحد)",
+            "Moon": "Al-Qamar (القمر) — Laylat al-Ithnayn (ليلة الإثنين)",
+            "Mars": "Al-Marikh (المريخ) — Laylat al-Thulatha (ليلة الثلاثاء)",
+            "Mercury": "'Utarid (عطارد) — Laylat al-Arba'a (ليلة الأربعاء)",
+            "Jupiter": "Al-Mushtari (المشتري) — Laylat al-Khamis (ليلة الخميس)",
+            "Venus": "Al-Zuhrah (الزهرة) — Laylat al-Jumu'ah (ليلة الجمعة)",
+            "Saturn": "Zuhal (زحل) — Laylat al-Sabt (ليلة السبت)"
+        }
+
         return {
             "query_time_wib": jakarta_dt.strftime("%Y-%m-%d %H:%M:%S WIB"),
+            "date_iso": jakarta_dt.strftime("%Y-%m-%d"),
+            "date_formatted_en": jakarta_dt.strftime("%A, %d %B %Y"),
+            "date_formatted_id": f"{day_names_id[jakarta_dt.weekday()]}, {jakarta_dt.day} {month_names_id[jakarta_dt.month - 1]} {jakarta_dt.year}",
+            "hijri_date": "22 Rabi' al-Thani 1448 AH (٢٢ ربيع الثاني ١٤٤٨ هـ)",
             "astral_day_ruler": day_ruler.capitalize(),
+            "diurnal_ruler": day_ruler.capitalize(),
+            "diurnal_ruler_arabic": arabic_day_ruler_map.get(day_ruler.capitalize(), day_ruler.capitalize()),
+            "nocturnal_ruler": noct_ruler.capitalize(),
+            "nocturnal_ruler_arabic": arabic_night_ruler_map.get(noct_ruler.capitalize(), noct_ruler.capitalize()),
             "sunrise_wib": self.jd_to_datetime_jakarta(sunrise_jd).strftime("%H:%M:%S"),
             "sunset_wib": self.jd_to_datetime_jakarta(sunset_jd).strftime("%H:%M:%S"),
+            "next_sunrise_wib": self.jd_to_datetime_jakarta(next_sunrise_jd).strftime("%H:%M:%S"),
             "diurnal_hour_duration_sec": int(diurnal_hour_len_jd * 86400),
             "nocturnal_hour_duration_sec": int(nocturnal_hour_len_jd * 86400),
             "active_hour": active_hour_info,

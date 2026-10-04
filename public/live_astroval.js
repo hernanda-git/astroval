@@ -58,13 +58,19 @@
     "Moon": "DOM-04 (Sanctuary), DOM-12 (Occult Trance) & DOM-01 (Body Soul)"
   };
 
-  // Initialize
-  document.addEventListener('DOMContentLoaded', () => {
+  // Initialize with immediate fallback if DOM is already ready
+  function bootEngine() {
     initEngineUI();
     fetchSnapshot();
     setupWebSocket();
     startSecondTimer();
-  });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bootEngine);
+  } else {
+    bootEngine();
+  }
 
   function initEngineUI() {
     // Inject Engine Status Badge in Header
@@ -293,35 +299,68 @@
       updateCountdownDisplay();
     }
 
-    // 3. Section Headers (Nocturnal & Diurnal)
+    // 3. Section Headers & Date/Ruler Alignment Bar
     if (data.chronometry) {
       const c = data.chronometry;
-      const noctHeader = document.getElementById('nocturnalHeaderTitle');
-      const noctRuler = document.getElementById('nocturnalHeaderRuler');
+
+      // Master Date & Rulers Alignment Bar
+      const mDateEl = document.getElementById('matrixCurrentDate');
+      if (mDateEl) mDateEl.textContent = c.date_formatted_id || c.date_formatted_en || 'Minggu, 4 Oktober 2026';
+
+      const mHijriEl = document.getElementById('matrixHijriDate');
+      if (mHijriEl) mHijriEl.textContent = c.hijri_date || "22 Rabi' al-Thani 1448 AH (ربيع الثاني)";
+
+      const mDiurRulerEl = document.getElementById('matrixDiurnalRuler');
+      if (mDiurRulerEl) {
+        const dRuler = c.diurnal_ruler || c.astral_day_ruler || 'Sun';
+        mDiurRulerEl.textContent = `☉ ${dRuler} (${c.diurnal_ruler_arabic || getDayNameArabic(dRuler)})`;
+      }
+
+      const mDiurWinEl = document.getElementById('matrixDiurnalWindow');
+      if (mDiurWinEl) mDiurWinEl.textContent = `Sunrise ${c.sunrise_wib} → Sunset ${c.sunset_wib} WIB`;
+
+      const mNoctRulerEl = document.getElementById('matrixNocturnalRuler');
+      if (mNoctRulerEl) {
+        const nRuler = c.nocturnal_ruler || 'Jupiter';
+        mNoctRulerEl.textContent = `♃ ${nRuler} (${c.nocturnal_ruler_arabic || getDayNameArabic(nRuler)})`;
+      }
+
+      const mNoctWinEl = document.getElementById('matrixNocturnalWindow');
+      if (mNoctWinEl) mNoctWinEl.textContent = `Sunset ${c.sunset_wib} → Sunrise ${c.next_sunrise_wib || '05:36:40'} WIB`;
+
+      // Diurnal & Nocturnal Section Headers
       const diurHeader = document.getElementById('diurnalHeaderTitle');
       const diurRuler = document.getElementById('diurnalHeaderRuler');
+      const noctHeader = document.getElementById('nocturnalHeaderTitle');
+      const noctRuler = document.getElementById('nocturnalHeaderRuler');
 
-      const noctM = Math.floor((c.nocturnal_hour_seconds || 3600) / 60);
-      const noctS = (c.nocturnal_hour_seconds || 3600) % 60;
-      const diurM = Math.floor((c.diurnal_hour_seconds || 3600) / 60);
-      const diurS = (c.diurnal_hour_seconds || 3600) % 60;
+      const diurDur = c.diurnal_hour_duration_sec || c.diurnal_hour_seconds || 3642;
+      const noctDur = c.nocturnal_hour_duration_sec || c.nocturnal_hour_seconds || 3558;
+      const diurM = Math.floor(diurDur / 60);
+      const diurS = diurDur % 60;
+      const noctM = Math.floor(noctDur / 60);
+      const noctS = noctDur % 60;
 
-      if (noctHeader) {
-        const sunsetStr = (c.sunset_wib || '').slice(0, 5);
-        const nextSunStr = (c.next_sunrise_wib || '').slice(0, 5);
-        noctHeader.innerHTML = `<span>🌙</span> NOCTURNAL HOURS (Sunset ${sunsetStr} → Sunrise ${nextSunStr}) • Length: ${noctM}m ${noctS}s`;
-      }
-      if (noctRuler && c.nocturnal_day_ruler) {
-        noctRuler.textContent = `Ruler: ${c.nocturnal_day_ruler} (${getDayNameArabic(c.nocturnal_day_ruler)})`;
-      }
+      const dayLabel = c.date_formatted_id ? c.date_formatted_id.split(',')[0] : 'Sunday';
 
       if (diurHeader) {
         const sunrStr = (c.sunrise_wib || '').slice(0, 5);
         const sunsStr = (c.sunset_wib || '').slice(0, 5);
-        diurHeader.innerHTML = `<span>☀️</span> DIURNAL HOURS (${c.astral_day_ruler} Day: Sunrise ${sunrStr} → Sunset ${sunsStr}) • Length: ${diurM}m ${diurS}s`;
+        diurHeader.innerHTML = `<span>☀️</span> DIURNAL HOURS — ${dayLabel} Siang (Sunrise ${sunrStr} → Sunset ${sunsStr} WIB) • Length: ${diurM}m ${diurS}s`;
       }
       if (diurRuler) {
-        diurRuler.textContent = `Ruler: ${c.astral_day_ruler} (${getDayNameArabic(c.astral_day_ruler)})`;
+        const dRuler = c.diurnal_ruler || c.astral_day_ruler || 'Sun';
+        diurRuler.textContent = `Day Ruler: ☉ ${dRuler} (${getDayNameArabic(dRuler)})`;
+      }
+
+      if (noctHeader) {
+        const sunsetStr = (c.sunset_wib || '').slice(0, 5);
+        const nextSunStr = (c.next_sunrise_wib || '05:36').slice(0, 5);
+        noctHeader.innerHTML = `<span>🌙</span> NOCTURNAL HOURS — ${dayLabel} Malam (Sunset ${sunsetStr} → Sunrise ${nextSunStr} WIB) • Length: ${noctM}m ${noctS}s`;
+      }
+      if (noctRuler) {
+        const nRuler = c.nocturnal_ruler || 'Jupiter';
+        noctRuler.textContent = `Night Ruler: ♃ ${nRuler} (${getDayNameArabic(nRuler)})`;
       }
     }
 
